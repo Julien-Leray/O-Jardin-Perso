@@ -1,0 +1,4 @@
+%syntax-version=1.0.0
+%project=ojardin
+
+init 2024-05-14T12:07:15Z Julien Leray <julien.leray@oclock.school> # mise en place de la structure de la BDD
