@@ -4,6 +4,7 @@ import path from "path";
 import { FlatCompat } from "@eslint/eslintrc";
 import pluginJs from "@eslint/js";
 import { fileURLToPath } from "url";
+import { fileURLToPath } from "url";
 
 // mimic CommonJS variables -- not needed if using CommonJS
 const __filename = fileURLToPath(import.meta.url);
