@@ -35,24 +35,17 @@ const datamapper = {
   },
 
   async updateProduct(id, dataToUpdate) {
-    // Récupérez les clés et les valeurs de dataToUpdate
     const fields = Object.keys(dataToUpdate);
     const values = Object.values(dataToUpdate);
 
     values.push(id);
 
-    // Construisez dynamiquement la partie SET de la requête
     const setClause = fields.map((field, index) => `"${field}" = $${index + 1}`).join(', ');
 
-    console.log(setClause);
-    console.log(values);
-
-    // Construisez la requête complète
     const query = `UPDATE product SET ${setClause} WHERE id = $${fields.length + 1} RETURNING *`;
 
-    // Exécutez la requête
     const { rows } = await client.query(query, values);
-    console.log(query);
+
     return rows[0];
   },
 
