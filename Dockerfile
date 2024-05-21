@@ -22,4 +22,4 @@ COPY sqitch.conf /usr/src/app/sqitch.conf
 
 EXPOSE 4000
 
-CMD ["sh", "-c", "until pg_isready -h $PGHOST -p 5432; do echo waiting for postgres; sleep 2; done && psql -h $PGHOST -d ojardin -f /usr/src/app/data/seeding_v2.sql && sqitch deploy && node index.js"]
+CMD ["sh", "-c", "sqitch deploy && node index.js"]
