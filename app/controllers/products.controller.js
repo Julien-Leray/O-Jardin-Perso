@@ -11,7 +11,7 @@ const controller = {
       else if (category) {
         if (category === 'Fruit' || category === 'Vegetable') {
           const data = await datamapper.getProductsByCategory(category);
-          res.json(data);
+          res.status(200).json(data);
         } else {
           res.status(400).send('Invalid category');
         }
@@ -25,6 +25,10 @@ const controller = {
     try {
       const id = parseInt(req.params.id);
       const data = await datamapper.getProductById(id);
+
+      if (!data) {
+        return res.status(404).send('Product not found.');
+      }
       res.json(data);
     } catch (error) {
       res.status(500).send(error.message);
@@ -37,7 +41,7 @@ const controller = {
       const data = await datamapper.createProduct(latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_type);
       res.json(data);
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).send({ message: error.message });
     }
   },
 
