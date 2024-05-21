@@ -20,7 +20,7 @@ const controller = {
       }
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      res.json({ token });
+      res.json({ token, user });
 
     } catch (error) {
       res.status(500).json({ error: error.message });

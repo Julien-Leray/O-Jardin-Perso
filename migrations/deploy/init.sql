@@ -33,7 +33,7 @@ CREATE TABLE "product" (
   "soil_type" text NOT NULL,
   "diseases" text NOT NULL,
   "watering_frequency" text NOT NULL,
-  "sowing_type" text NOT NULL,
+  "sowing_tips" text,
   "category_id" int NOT NULL REFERENCES "category"("id"),
   "created_at" timestamptz NOT NULL DEFAULT now(),
   "updated_at" timestamptz
