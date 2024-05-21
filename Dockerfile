@@ -13,6 +13,7 @@ COPY package.json ./package.json
 ENV PORT=4000
 ENV PGDATABASE=ojardin
 ENV PGPASSWORD=ojardin
+ENV JWT_SECRET=ojardin
 
 RUN npm install
 
