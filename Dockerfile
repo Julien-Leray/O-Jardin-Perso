@@ -20,7 +20,9 @@ COPY . .
 
 COPY sqitch.conf /usr/src/app/sqitch.conf
 
-RUN psql -d "ojardin" -f data/seeding_v1.sql
+COPY data/seeding_v2.sql /usr/src/app/data/seeding_v2.sql
+
+RUN psql -d "ojardin" -f data/seeding_v2.sql
 
 EXPOSE 4000
 
