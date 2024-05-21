@@ -3,6 +3,7 @@ import productsRouter from './products.router.js';
 import connectionRouter from './connection.router.js';
 import registrationRouter from './registration.router.js';
 import tutorialsRouter from './tutorials.router.js';
+import userGardenRouter from './userGarden.router.js';
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use('/products', productsRouter);
 router.use('/login', connectionRouter);
 router.use('/registration', registrationRouter);
 router.use('/tutorials', tutorialsRouter);
+router.use('/me/garden', userGardenRouter);
 
 export default router;
