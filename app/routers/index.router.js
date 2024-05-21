@@ -2,6 +2,7 @@ import express from 'express';
 import productsRouter from './products.router.js';
 import connectionRouter from './connection.router.js';
 import registrationRouter from './registration.router.js';
+import tutorialsRouter from './tutorials.router.js';
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.use((_, res, next) => {
 router.use('/products', productsRouter);
 router.use('/login', connectionRouter);
 router.use('/registration', registrationRouter);
+router.use('/tutorials', tutorialsRouter);
 
 export default router;
