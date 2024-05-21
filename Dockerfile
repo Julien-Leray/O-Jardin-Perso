@@ -20,6 +20,8 @@ COPY . .
 
 COPY sqitch.conf /usr/src/app/sqitch.conf
 
+RUN psql -d "ojardin" -f data/seeding_v1.sql
+
 EXPOSE 4000
 
 CMD ["sh", "-c", "sqitch deploy && node index.js"]
