@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(router);
+app.use('/api', router);
 
 router.use(notFoundMiddleware);
 
