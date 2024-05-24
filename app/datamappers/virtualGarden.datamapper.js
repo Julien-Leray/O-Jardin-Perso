@@ -22,8 +22,7 @@ const datamapper = {
     values.push(`${userId}`);
 
     const query = `INSERT INTO "user_plant_product"(${fields.map(field => `"${field}"`).join(', ')}, "user_id") VALUES (${fields.map((_, index) => `$${index + 1}`).join(', ')}, $${fields.length + 1}) RETURNING *`;
-    console.log(query);
-    console.log(values);
+
     const { rows } = await client.query(query, values);
     return rows[0];
   },
@@ -35,17 +34,19 @@ const datamapper = {
   },
 
   async updateProduct(userId, dataToUpdate) {
-    const fields = Object.keys(dataToUpdate);
-    const values = Object.values(dataToUpdate);
 
-    values.push(userId);
+    const { product_id, token, ...dataWithoutProductId } = dataToUpdate;
+
+    const fields = Object.keys(dataWithoutProductId);
+    const values = Object.values(dataWithoutProductId);
 
     const setClause = fields.map((field, index) => `"${field}" = $${index + 1}`).join(', ');
 
-    const query = `UPDATE user_plant_product SET ${setClause} WHERE user_id = $${fields.length + 1} RETURNING *`;
+    values.push(userId, product_id);
+
+    const query = `UPDATE user_plant_product SET ${setClause} WHERE user_id = $${fields.length + 1} AND product_id = $${fields.length + 2} RETURNING *`;
 
     const { rows } = await client.query(query, values);
-
     return rows[0];
   }
 };

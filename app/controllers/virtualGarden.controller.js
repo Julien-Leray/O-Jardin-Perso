@@ -35,8 +35,9 @@ const controller = {
       const userProduct = await datamapper.getOneVirtualGardenProduct(userId, product_id);
 
       if (userProduct) {
-        const quantity = userProduct.quantity + 1;
-        const updatedProduct = await datamapper.updateProduct(userId, { quantity });
+        const quantity = Number(userProduct.quantity) + Number(dataToAdd.quantity);
+        dataToAdd.quantity = quantity;
+        const updatedProduct = await datamapper.updateProduct(userId, dataToAdd);
         return res.status(200).json(updatedProduct);
       }
 
@@ -52,7 +53,7 @@ const controller = {
 
       const data = await datamapper.addProduct(dataToAdd, userId);
 
-      res.status(200).json(data);
+      res.status(201).json(data);
 
     } catch (error) {
       res.status(500).json({ message: "Failed to add product in virtual garden" });
@@ -63,6 +64,16 @@ const controller = {
     try {
       const userId = parseInt(req.params.id);
       const dataToUpdate = req.body;
+      const token = req.body.token;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      if (userId !== decoded.id || !userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       if (!dataToUpdate) {
         return res.status(400).json({ message: "Data to update is required" });
@@ -77,8 +88,8 @@ const controller = {
       if (!updatedData) {
         return res.status(404).json({ message: "Product not found or no changes made" });
       }
+      res.status(201).json(updatedData);
 
-      res.status(204).json({ message: "Product updated" });
     } catch (error) {
       res.status(500).json({ message: "Failed to update product" });
     }
@@ -88,12 +99,14 @@ const controller = {
     try {
       const userId = parseInt(req.params.id);
       const productToRemove = req.body.product_id;
+      const token = req.body.token;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       if (!productToRemove) {
         return res.status(400).json({ message: "Product to remove is required" });
       }
-      if (!userId) {
-        return res.status(400).json({ message: "User is required" });
+      if (userId !== decoded.id || !userId) {
+        return res.status(401).json({ message: "Unauthorized" });
       }
 
       await datamapper.removeProduct(userId, productToRemove);
