@@ -2,8 +2,8 @@ import client from './pg.client.js';
 
 const datamapper = {
 
-  async getAllFavorites(userId) {
-    const query = 'SELECT * FROM user_has_product WHERE user_id = $1';
+  async getAllFavoritesWithUserData(userId) {
+    const query = `SELECT get_user_and_products($1) AS result`;
     const { rows } = await client.query(query, [userId]);
     return rows;
   },
