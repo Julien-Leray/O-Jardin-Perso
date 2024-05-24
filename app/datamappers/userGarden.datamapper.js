@@ -14,10 +14,10 @@ const datamapper = {
     return rows[0];
   },
 
+
   async removeFavorite(userId, productToRemove) {
     const query = 'DELETE FROM user_has_product WHERE user_id = $1 AND product_id = $2';
     await client.query(query, [userId, productToRemove]);
-
   }
 };
 

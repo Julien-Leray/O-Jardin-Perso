@@ -4,6 +4,7 @@ import connectionRouter from './connection.router.js';
 import registrationRouter from './registration.router.js';
 import tutorialsRouter from './tutorials.router.js';
 import userGardenRouter from './userGarden.router.js';
+import virtualGardenRouter from './virtualGarden.router.js';
 
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.use('/login', connectionRouter);
 router.use('/registration', registrationRouter);
 router.use('/tutorials', tutorialsRouter);
 router.use('/me/garden', userGardenRouter);
+router.use('/me/virtual-garden', virtualGardenRouter);
 
 export default router;

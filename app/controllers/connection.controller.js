@@ -18,7 +18,7 @@ const controller = {
       if (!isValidPassword) {
         return res.status(401).json('Invalid data');
       }
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
       res.json({ token, user });
 

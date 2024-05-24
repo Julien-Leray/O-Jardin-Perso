@@ -5,12 +5,14 @@ import cors from 'cors';
 import router from './routers/index.router.js';
 import { notFoundMiddleware } from './middlewares/notFound.middleware.js';
 
+
+
 const app = express();
 
+app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.static('public'));
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set('views', 'app/views');
 
-app.use(router);
+app.use('/api', router);
 
 router.use(notFoundMiddleware);
 
