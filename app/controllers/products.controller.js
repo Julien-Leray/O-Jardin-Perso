@@ -74,9 +74,16 @@ const controller = {
     } catch (error) {
       res.status(500).send(error.message);
     }
+  },
+
+  renderAdminPage: async (req, res) => {
+    try {
+      const products = await datamapper.getAllProducts();
+      res.render('products', { products });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
   }
-
-
 };
 
 export default controller;

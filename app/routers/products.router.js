@@ -2,7 +2,7 @@ import express from 'express';
 import Controller from "../controllers/products.controller.js";
 
 const router = express.Router();
-
+router.route('/admin').get(Controller.renderAdminPage);
 router.route('/').get(Controller.getProducts);
 router.route('/').post(Controller.createProduct);
 

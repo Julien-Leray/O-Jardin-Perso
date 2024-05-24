@@ -4,7 +4,7 @@ import connectionRouter from './connection.router.js';
 import registrationRouter from './registration.router.js';
 import tutorialsRouter from './tutorials.router.js';
 import userGardenRouter from './userGarden.router.js';
-import adminRouter from './admin.router.js';
+
 
 const router = express.Router();
 
@@ -13,7 +13,6 @@ router.use((_, res, next) => {
   next();
 });
 
-router.use('/', adminRouter);
 router.use('/products', productsRouter);
 router.use('/login', connectionRouter);
 router.use('/registration', registrationRouter);
