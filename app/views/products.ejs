@@ -1,225 +1,99 @@
 <%- include('partials/header') %>
 
-<h1>Sélectionnez des Fruits ou Légumes</h1>
-<label for="category">Choisissez une catégorie :</label>
-<select id="category" onchange="fetchProducts()">
-    <option value="">--Veuillez choisir une option--</option>
-    <option value="Fruit">Fruit</option>
-    <option value="Vegetable">Légume</option>
-</select>
-
-<h2>Produits</h2>
-<label for="products">Choisissez un produit :</label>
-<select id="products">
-    <option value="">--Sélectionnez un produit--</option>
-</select>
-
-<h2>Détails du Produit</h2>
-<div id="productDetails">
-    <label>Nom : <input type="text" id="name"></label><br>
-    <label>Nom Latin : <input type="text" id="latin_name"></label><br>
-    <label>Image : <input type="text" id="picture"></label><br>
-    
-    <label>Date de Plantation :</label><br>
-    <div id="plantation_date" class="month-checkboxes">
-        <label class="month-checkbox"><input type="checkbox" value="1"> Janvier</label>
-        <label class="month-checkbox"><input type="checkbox" value="2"> Février</label>
-        <label class="month-checkbox"><input type="checkbox" value="3"> Mars</label>
-        <label class="month-checkbox"><input type="checkbox" value="4"> Avril</label>
-        <label class="month-checkbox"><input type="checkbox" value="5"> Mai</label>
-        <label class="month-checkbox"><input type="checkbox" value="6"> Juin</label>
-        <label class="month-checkbox"><input type="checkbox" value="7"> Juillet</label>
-        <label class="month-checkbox"><input type="checkbox" value="8"> Août</label>
-        <label class="month-checkbox"><input type="checkbox" value="9"> Septembre</label>
-        <label class="month-checkbox"><input type="checkbox" value="10"> Octobre</label>
-        <label class="month-checkbox"><input type="checkbox" value="11"> Novembre</label>
-        <label class="month-checkbox"><input type="checkbox" value="12"> Décembre</label>
-    </div><br>
-    
-    <label>Date de Récolte :</label><br>
-    <div id="harvest_date" class="month-checkboxes">
-        <label class="month-checkbox"><input type="checkbox" value="1"> Janvier</label>
-        <label class="month-checkbox"><input type="checkbox" value="2"> Février</label>
-        <label class="month-checkbox"><input type="checkbox" value="3"> Mars</label>
-        <label class="month-checkbox"><input type="checkbox" value="4"> Avril</label>
-        <label class="month-checkbox"><input type="checkbox" value="5"> Mai</label>
-        <label class="month-checkbox"><input type="checkbox" value="6"> Juin</label>
-        <label class="month-checkbox"><input type="checkbox" value="7"> Juillet</label>
-        <label class="month-checkbox"><input type="checkbox" value="8"> Août</label>
-        <label class="month-checkbox"><input type="checkbox" value="9"> Septembre</label>
-        <label class="month-checkbox"><input type="checkbox" value="10"> Octobre</label>
-        <label class="month-checkbox"><input type="checkbox" value="11"> Novembre</label>
-        <label class="month-checkbox"><input type="checkbox" value="12"> Décembre</label>
-    </div><br>
-
-    <label>Type de Sol : <input type="text" id="soil_type"></label><br>
-    <label>Maladies : <input type="text" id="diseases"></label><br>
-    <label>Fréquence d'Arrosage : <input type="text" id="watering_frequency"></label><br>
-    <label>Description : <input type="text" id="description"></label><br>
-    <label>Type de Semis : <input type="text" id="sowing_type"></label><br>
-    <button onclick="updateProduct()">Enregistrer les Modifications</button>
-    <button onclick="deleteProduct()">Supprimer le Produit</button>
-</div>
+<main>
 
 
+  <section>
+      <label><h2>Choisissez une catégorie :</h2></label>
+      <button onclick="fetchProducts('Fruit')">Fruit</button>
+      <button onclick="fetchProducts('Vegetable')">Légume</button>
+      <button onclick="fetchTutorials()">Tutoriel</button>
+  </section>
 
-<script>
+  <section id="productsSection" style="display: none;">
+      <h3>Produits</h3>
+      <label for="products">Choisissez un produit :</label>
+      <select id="products" onchange="handleProductSelection()">
+          <option value="">--Sélectionnez un produit--</option>
+          <option value="new">Ajouter un nouveau produit</option>
+      </select>
+  </section>
 
+  <section id="productDetails" style="display: none;">
+      <h3>Détails du Produit</h3>
+      <div>
+          <label>Nom : <input type="text" id="name" required></label><br>
+          <label>Nom Latin : <input type="text" id="latin_name"></label><br>
+          <label>Image : <input type="text" id="picture" oninput="updateImagePreview()"></label><br>
+          <img id="imagePreview" src="" alt="Prévisualisation de l'image"><br>
 
-let currentProductId = null;
+          <fieldset>
+              <legend>Date de Plantation :</legend>
+              <div id="plantation_date" class="month-checkboxes">
+                  <label><input type="checkbox" value="1"> Janvier</label>
+                  <label><input type="checkbox" value="2"> Février</label>
+                  <label><input type="checkbox" value="3"> Mars</label>
+                  <label><input type="checkbox" value="4"> Avril</label>
+                  <label><input type="checkbox" value="5"> Mai</label>
+                  <label><input type="checkbox" value="6"> Juin</label>
+                  <label><input type="checkbox" value="7"> Juillet</label>
+                  <label><input type="checkbox" value="8"> Août</label>
+                  <label><input type="checkbox" value="9"> Septembre</label>
+                  <label><input type="checkbox" value="10"> Octobre</label>
+                  <label><input type="checkbox" value="11"> Novembre</label>
+                  <label><input type="checkbox" value="12"> Décembre</label>
+              </div>
+          </fieldset>
 
-async function fetchProducts() {
-    const category = document.getElementById('category').value;
-    if (!category) {
-        return;
-    }
+          <fieldset>
+              <legend>Date de Récolte :</legend>
+              <div id="harvest_date" class="month-checkboxes">
+                  <label><input type="checkbox" value="1"> Janvier</label>
+                  <label><input type="checkbox" value="2"> Février</label>
+                  <label><input type="checkbox" value="3"> Mars</label>
+                  <label><input type="checkbox" value="4"> Avril</label>
+                  <label><input type="checkbox" value="5"> Mai</label>
+                  <label><input type="checkbox" value="6"> Juin</label>
+                  <label><input type="checkbox" value="7"> Juillet</label>
+                  <label><input type="checkbox" value="8"> Août</label>
+                  <label><input type="checkbox" value="9"> Septembre</label>
+                  <label><input type="checkbox" value="10"> Octobre</label>
+                  <label><input type="checkbox" value="11"> Novembre</label>
+                  <label><input type="checkbox" value="12"> Décembre</label>
+              </div>
+          </fieldset>
 
-    try {
-        const response = await fetch(`/products?category=${category}`);
-        const products = await response.json();
+          <label>Type de Sol : <input type="text" id="soil_type"></label><br>
+          <label>Maladies : <input type="text" id="diseases"></label><br>
+          <label>Fréquence d'Arrosage : <input type="text" id="watering_frequency"></label><br>
+          <label>Description : <input type="text" id="description"></label><br>
+          <label>Conseils de Semis : <input type="text" id="sowing_tips"></label><br>
 
-        const productsSelect = document.getElementById('products');
-        productsSelect.innerHTML = '<option value="">--Sélectionnez un produit--</option>';
+          <button id="saveButton" onclick="updateProduct()">Enregistrer les Modifications</button>
+          <button onclick="deleteProduct()">Supprimer le Produit</button>
+      </div>
+  </section>
+  <section id="tutorialsSection" style="display: none;">
+    <h2>Tutoriels</h2>
+    <label for="tutorials">Choisissez un tutoriel :</label>
+    <select id="tutorials" onchange="handleTutorialSelection()">
+      <option value="">--Sélectionnez un tutoriel--</option>
+      <option value="new">Ajouter un nouveau tutoriel</option>
+    </select>
+  </section>
 
-        products.forEach(product => {
-            const option = document.createElement('option');
-            option.value = product.id;
-            option.textContent = product.name;
-            productsSelect.appendChild(option);
-        });
+  <section id="tutorialDetails" style="display: none;">
+    <h2>Détails du Tutoriel</h2>
+    <div>
+      <label>Titre : <input type="text" id="title" required></label><br>
+      <label>Article : <textarea id="article" required></textarea></label><br>
+      <label>Image : <input type="text" id="picture" oninput="updateImagePreview()"></label><br>
+      <img id="imagePreview" src="" alt="Prévisualisation de l'image"><br>
+      <label>Thème : <input type="text" id="theme" required></label><br>
+      <button id="saveButton" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
+      <button onclick="deleteTutorial()">Supprimer le Tutoriel</button>
+    </div>
+  </section>
+</main>
 
-        productsSelect.onchange = fetchProductDetails;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des produits :', error);
-    }
-}
-
-async function fetchProductDetails() {
-    const productId = document.getElementById('products').value;
-    if (!productId) {
-        return;
-    }
-
-    currentProductId = productId;
-
-    try {
-        const response = await fetch(`/products/${productId}`);
-        const product = await response.json();
-
-        document.getElementById('name').value = product.name;
-        document.getElementById('latin_name').value = product.latin_name;
-        document.getElementById('picture').value = product.picture;
-
-        setCheckedMonths('plantation_date', product.plantation_date);
-        setCheckedMonths('harvest_date', product.harvest_date);
-        
-        document.getElementById('soil_type').value = product.soil_type;
-        document.getElementById('diseases').value = product.diseases;
-        document.getElementById('watering_frequency').value = product.watering_frequency;
-        document.getElementById('description').value = product.description;
-        document.getElementById('sowing_type').value = product.sowing_type;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des détails du produit :', error);
-    }
-}
-
-function setCheckedMonths(id, monthsString) {
-    const months = monthsString.replace(/{|}/g, '').split(', ').map(Number);
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = months.includes(parseInt(checkbox.value));
-    });
-}
-
-async function updateProduct() {
-    if (!currentProductId) {
-        alert("Aucun produit sélectionné");
-        return;
-    }
-
-    const updatedProduct = {
-        name: document.getElementById('name').value,
-        latin_name: document.getElementById('latin_name').value,
-        picture: document.getElementById('picture').value,
-        plantation_date: `{${getCheckedMonths('plantation_date').join(', ')}}`,
-        harvest_date: `{${getCheckedMonths('harvest_date').join(', ')}}`,
-        soil_type: document.getElementById('soil_type').value,
-        diseases: document.getElementById('diseases').value,
-        watering_frequency: document.getElementById('watering_frequency').value,
-        description: document.getElementById('description').value,
-        sowing_type: document.getElementById('sowing_type').value
-    };
-
-    try {
-        const response = await fetch(`/products/${currentProductId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedProduct)
-        });
-
-        if (response.ok) {
-            alert("Produit mis à jour avec succès");
-        } else {
-            alert("Erreur lors de la mise à jour du produit");
-        }
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour du produit :', error);
-    }
-}
-
-function getCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]:checked`);
-    return Array.from(checkboxes).map(checkbox => parseInt(checkbox.value));
-}
-
-async function deleteProduct() {
-    if (!currentProductId) {
-        alert("Aucun produit sélectionné");
-        return;
-    }
-
-    try {
-        const response = await fetch(`/products/${currentProductId}`, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            alert("Produit supprimé avec succès");
-            // Clear the form and reset the product selection
-            clearProductDetails();
-            currentProductId = null;
-        } else {
-            alert("Erreur lors de la suppression du produit");
-        }
-    } catch (error) {
-        console.error('Erreur lors de la suppression du produit :', error);
-    }
-}
-
-function clearProductDetails() {
-    document.getElementById('name').value = "";
-    document.getElementById('latin_name').value = "";
-    document.getElementById('picture').value = "";
-    clearCheckedMonths('plantation_date');
-    clearCheckedMonths('harvest_date');
-    document.getElementById('soil_type').value = "";
-    document.getElementById('diseases').value = "";
-    document.getElementById('watering_frequency').value = "";
-    document.getElementById('description').value = "";
-    document.getElementById('sowing_type').value = "";
-    document.getElementById('products').value = "";
-}
-
-function clearCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-    });
-}
-
-
-
-</script>
 <%- include('partials/footer') %>

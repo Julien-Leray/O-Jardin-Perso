@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import router from './routers/index.router.js';
-import { notFoundMiddleware } from './middlewares/notFound.middleware.js';
+import notFoundMiddleware from './middlewares/notFound.middleware.js';
+import errorHandlerMiddleware from './middlewares/errorHandler.middleware.js';
 
 
 
@@ -22,6 +23,7 @@ app.set('views', 'app/views');
 
 app.use('/api', router);
 
-router.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware);
 
 export default app;
