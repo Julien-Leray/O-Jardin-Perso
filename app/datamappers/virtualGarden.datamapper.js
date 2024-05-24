@@ -8,11 +8,22 @@ const datamapper = {
     return rows;
   },
 
-  async addProduct(data) {
-    const fields = Object.keys(data);
-    const values = Object.values(data);
+  async getOneVirtualGardenProduct(userId, productId) {
+    const query = 'SELECT * FROM user_plant_product WHERE user_id = $1 AND product_id = $2';
+    const { rows } = await client.query(query, [userId, productId]);
+    return rows[0];
+  },
 
-    const query = `INSERT INTO user_plant_product(${fields.join(', ')}) VALUES (${values.map((_, index) => `$${index + 1}`).join(', ')}) RETURNING *`;
+  async addProduct(data, userId) {
+    const { token, ...dataWithoutToken } = data;
+    const fields = Object.keys(dataWithoutToken);
+    const values = Object.values(dataWithoutToken);
+
+    values.push(`${userId}`);
+
+    const query = `INSERT INTO "user_plant_product"(${fields.map(field => `"${field}"`).join(', ')}, "user_id") VALUES (${fields.map((_, index) => `$${index + 1}`).join(', ')}, $${fields.length + 1}) RETURNING *`;
+    console.log(query);
+    console.log(values);
     const { rows } = await client.query(query, values);
     return rows[0];
   },
