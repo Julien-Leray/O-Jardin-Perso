@@ -4,7 +4,7 @@ import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 const controller = {
   getFavorites: asyncHandler(async (req, res) => {
     const userId = req.userId;
-    const data = await datamapper.getAllFavorites(userId);
+    const data = await datamapper.getAllFavoritesWithUserData(userId);
     if (data.length === 0) {
       return res.status(200).json('No favories found.');
     }
