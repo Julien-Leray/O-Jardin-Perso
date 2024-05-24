@@ -40,8 +40,7 @@ const datamapper = {
 
     values.push(id);
 
-    const setClause = fields.map((field, index) => `"${field}" = $${index + 1}`).join(', ');
-
+    const setClause = fields.map((field, index) => `"${field}" = $${index + 1}`).join(', '); 222
     const query = `UPDATE product SET ${setClause} WHERE id = $${fields.length + 1} RETURNING *`;
 
     const { rows } = await client.query(query, values);

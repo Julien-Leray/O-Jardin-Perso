@@ -8,7 +8,7 @@ const controller = {
       if (data.length === 0) {
         return res.status(200).json('No favories found.');
       }
-      res.json(data);
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ message: "Favorites not found" });
     }
@@ -16,7 +16,7 @@ const controller = {
 
   addFavorite: async (req, res) => {
     try {
-      const userId = req.query.id;
+      const userId = req.body.user_id;
       const productToAdd = req.body.product_id;
       const data = await datamapper.addFavorite(productToAdd, userId);
       res.json(data);

@@ -58,7 +58,7 @@ const controller = {
       if (!updatedData) {
         return res.status(404).send('Product not found or no changes made.');
       }
-      res.json(updatedData);
+      res.status(204).json(updatedData);
 
     } catch (error) {
       res.status(500).send(error.message);
