@@ -2,18 +2,7 @@ import datamapper from '../datamappers/products.datamapper.js';
 import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 
 const controller = {
-  getProducts: asyncHandler(async (req, res) => {
-    const category = (req.query.category);
-    if (!category) {
-      const data = await datamapper.getAllProducts();
-      res.json(data);
-    }
-    else if (category) {
-      if (category === 'Fruit' || category === 'Vegetable') {
-        const data = await datamapper.getProductsByCategory(category);
-        res.status(200).json(data);
-      } else {
-        res.status(400).json({ message: 'Invalid category' });
+
   getProducts: asyncHandler(async (req, res) => {
     const category = (req.query.category);
     if (!category) {
@@ -29,11 +18,7 @@ const controller = {
       }
     }
   }),
-  }),
 
-  getProductById: asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const data = await datamapper.getProductById(id);
   getProductById: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const data = await datamapper.getProductById(id);
@@ -51,9 +36,7 @@ const controller = {
     res.json(data);
   }),
 
-  updateProduct: asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const dataToUpdate = req.body;
+
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const dataToUpdate = req.body;
@@ -62,16 +45,7 @@ const controller = {
       return res.status(400).json({ message: 'No data provided to update.' });
     }
     const updatedData = await datamapper.updateProduct(id, dataToUpdate);
-    if (Object.keys(dataToUpdate).length === 0) {
-      return res.status(400).json({ message: 'No data provided to update.' });
-    }
-    const updatedData = await datamapper.updateProduct(id, dataToUpdate);
 
-    if (!updatedData) {
-      return res.status(404).json({ message: 'Product not found or no changes made.' });
-    }
-    res.status(204).json(updatedData);
-  }),
     if (!updatedData) {
       return res.status(404).json({ message: 'Product not found or no changes made.' });
     }
@@ -86,8 +60,15 @@ const controller = {
     }
     await datamapper.deleteProduct(id);
     res.status(204).json('Product deleted');
-  })
-
+  }),
+  renderAdminPage: async (req, res) => {
+    try {
+      const products = await datamapper.getAllProducts();
+      res.render('products', { products });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
 
 };
 
