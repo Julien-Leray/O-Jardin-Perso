@@ -6,9 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ojardin</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script  src="/js/common.js"></script>
+    <script  src="/js/products.js"></script>
+    <script  src="/js/tuto.js"></script>
+    <script src="/js/userManagement.js"></script>
 </head>
 
 <body>
     <header>
 
+
+        <section>
+            <label><h2>Choisissez une catégorie :</h2></label>
+            <button onclick="fetchProducts('Fruit')">Fruit</button>
+            <button onclick="fetchProducts('Vegetable')">Légume</button>
+            <button onclick="fetchTutorials()">Tutoriel</button>
+            <button onclick="fetchUsers()">Utilisateur</button>
+        </section>
     </header>

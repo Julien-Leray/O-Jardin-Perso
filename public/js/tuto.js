@@ -1,4 +1,3 @@
-
 let currentTutorialId = null;
 
 async function fetchTutorials() {
@@ -6,7 +5,7 @@ async function fetchTutorials() {
         const response = await fetch('/api/tutorials');
         const tutorials = await response.json();
 
-        const tutorialsSelect = document.getElementById('tutorials');
+        const tutorialsSelect = document.getElementById('tutorialsSelect');
         tutorialsSelect.innerHTML = '<option value="">--Sélectionnez un tutoriel--</option>';
         tutorialsSelect.innerHTML += '<option value="new">Ajouter un nouveau tutoriel</option>';
 
@@ -25,15 +24,15 @@ async function fetchTutorials() {
 }
 
 function handleTutorialSelection() {
-    const tutorialId = document.getElementById('tutorials').value;
+    const tutorialId = document.getElementById('tutorialsSelect').value;
     if (tutorialId === "new") {
         clearTutorialDetails();
-        document.getElementById('saveButton').onclick = createTutorial;
-        document.getElementById('saveButton').textContent = "Ajouter le Tutoriel";
+        document.getElementById('saveTutorialButton').onclick = createTutorial;
+        document.getElementById('saveTutorialButton').textContent = "Ajouter le Tutoriel";
         document.getElementById('tutorialDetails').style.display = 'block';
     } else if (tutorialId) {
-        document.getElementById('saveButton').onclick = updateTutorial;
-        document.getElementById('saveButton').textContent = "Enregistrer les Modifications";
+        document.getElementById('saveTutorialButton').onclick = updateTutorial;
+        document.getElementById('saveTutorialButton').textContent = "Enregistrer les Modifications";
         fetchTutorialDetails(tutorialId);
         document.getElementById('tutorialDetails').style.display = 'block';
     } else {
@@ -53,14 +52,14 @@ async function fetchTutorialDetails(tutorialId) {
         const tutorial = await response.json();
 
         if (tutorial) {
-            document.getElementById('title').value = tutorial.title;
-            document.getElementById('article').value = tutorial.article;
-            document.getElementById('picture').value = tutorial.picture;
-            document.getElementById('theme').value = tutorial.theme;
+            document.getElementById('tutorialTitle').value = tutorial.title;
+            document.getElementById('tutorialArticle').value = tutorial.article;
+            document.getElementById('tutorialPicture').value = tutorial.picture;
+            document.getElementById('tutorialTheme').value = tutorial.theme;
             updateImagePreview();
 
-            document.getElementById('tutorial_created_at').value = formatDate(tutorial.created_at);
-            document.getElementById('tutorial_updated_at').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
+            document.getElementById('tutorialCreatedAt').value = formatDate(tutorial.created_at);
+            document.getElementById('tutorialUpdatedAt').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du tutoriel :', error);
@@ -79,10 +78,10 @@ async function createTutorial() {
     const currentDate = new Date();
 
     const newTutorial = {
-        title: document.getElementById('title').value,
-        article: document.getElementById('article').value,
-        picture: document.getElementById('picture').value,
-        theme: document.getElementById('theme').value,
+        title: document.getElementById('tutorialTitle').value,
+        article: document.getElementById('tutorialArticle').value,
+        picture: document.getElementById('tutorialPicture').value,
+        theme: document.getElementById('tutorialTheme').value,
         created_at: currentDate.toISOString(),
         updated_at: currentDate.toISOString()
     };
@@ -123,10 +122,10 @@ async function updateTutorial() {
     const currentDate = new Date();
 
     const updatedTutorial = {
-        title: document.getElementById('title').value,
-        article: document.getElementById('article').value,
-        picture: document.getElementById('picture').value,
-        theme: document.getElementById('theme').value,
+        title: document.getElementById('tutorialTitle').value,
+        article: document.getElementById('tutorialArticle').value,
+        picture: document.getElementById('tutorialPicture').value,
+        theme: document.getElementById('tutorialTheme').value,
         updated_at: currentDate.toISOString()
     };
 
@@ -141,7 +140,7 @@ async function updateTutorial() {
 
         if (response.ok) {
             alert("Tutoriel mis à jour avec succès");
-            document.getElementById('tutorial_updated_at').value = formatDate(currentDate.toISOString());
+            document.getElementById('tutorialUpdatedAt').value = formatDate(currentDate.toISOString());
             fetchTutorials();
         } else {
             const errorText = await response.text();
@@ -181,11 +180,11 @@ async function deleteTutorial() {
 }
 
 function clearTutorialDetails() {
-    document.getElementById('title').value = "";
-    document.getElementById('article').value = "";
-    document.getElementById('picture').value = "";
-    document.getElementById('theme').value = "";
-    document.getElementById('imagePreview').src = "";
-    document.getElementById('tutorial_created_at').value = "";
-    document.getElementById('tutorial_updated_at').value = "";
+    document.getElementById('tutorialTitle').value = "";
+    document.getElementById('tutorialArticle').value = "";
+    document.getElementById('tutorialPicture').value = "";
+    document.getElementById('tutorialTheme').value = "";
+    document.getElementById('tutorialImagePreview').src = "";
+    document.getElementById('tutorialCreatedAt').value = "";
+    document.getElementById('tutorialUpdatedAt').value = "";
 }

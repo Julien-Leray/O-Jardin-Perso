@@ -1,6 +1,5 @@
 import e from "express";
 import datamapper from "../datamappers/admin.datamapper.js";
-import productsdatamapper from "../datamappers/products.datamapper.js";
 import asyncHandler from "../middlewares/asyncHandler.middleware.js";
 import bcrypt from "bcrypt";
 
@@ -72,8 +71,7 @@ const controller = {
   }),
   renderAdminPage: async (req, res) => {
     try {
-      const products = await productsdatamapper.getAllProducts();
-      res.render('products', { products });
+      res.render('gestion');
     } catch (error) {
       res.status(500).send(error.message);
     }

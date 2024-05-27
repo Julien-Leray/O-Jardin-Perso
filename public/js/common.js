@@ -36,4 +36,6 @@ function hideAllSections() {
     document.getElementById('productDetails').style.display = 'none';
     document.getElementById('tutorialsSection').style.display = 'none';
     document.getElementById('tutorialDetails').style.display = 'none';
+    document.getElementById('usersSection').style.display = 'none';
+    document.getElementById('userFormSection').style.display = 'none';
 }
