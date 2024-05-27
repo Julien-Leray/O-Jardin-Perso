@@ -2,7 +2,6 @@ import datamapper from '../datamappers/products.datamapper.js';
 import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 
 const controller = {
-
   getProducts: asyncHandler(async (req, res) => {
     const category = (req.query.category);
     if (!category) {
@@ -36,7 +35,6 @@ const controller = {
     res.json(data);
   }),
 
-
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const dataToUpdate = req.body;
@@ -60,15 +58,8 @@ const controller = {
     }
     await datamapper.deleteProduct(id);
     res.status(204).json('Product deleted');
-  }),
-  renderAdminPage: async (req, res) => {
-    try {
-      const products = await datamapper.getAllProducts();
-      res.render('products', { products });
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  },
+  })
+
 
 };
 
