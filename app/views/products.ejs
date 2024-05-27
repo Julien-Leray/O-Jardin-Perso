@@ -62,14 +62,24 @@
                   <label><input type="checkbox" value="12"> Décembre</label>
               </div>
           </fieldset>
-
-          <label>Type de Sol : <input type="text" id="soil_type"></label><br>
-          <label>Maladies : <input type="text" id="diseases"></label><br>
-          <label>Fréquence d'Arrosage : <input type="text" id="watering_frequency"></label><br>
-          <label>Description : <input type="text" id="description"></label><br>
-          <label>Conseils de Semis : <input type="text" id="sowing_tips"></label><br>
+          <label>Type de Sol : 
+            <textarea id="soil_type" rows="4" cols="50"></textarea>
+          </label><br>
+          <label>Maladies : 
+            <textarea id="diseases" rows="4" cols="50"></textarea>
+          </label><br>
+          <label>Fréquence d'Arrosage : 
+            <textarea id="watering_frequency" rows="4" cols="50"></textarea>
+          </label><br>
+          <label>Description : 
+            <textarea id="description" rows="4" cols="50"></textarea>
+          </label><br>
+          <label>Conseils de Semis : 
+            <textarea id="sowing_tips" rows="4" cols="50"></textarea>
+          </label><br>
 
           <button id="saveButton" onclick="updateProduct()">Enregistrer les Modifications</button>
+          
           <button onclick="deleteProduct()">Supprimer le Produit</button>
       </div>
   </section>

@@ -66,6 +66,7 @@ function handleTutorialSelection() {
     const tutorialId = document.getElementById('tutorials').value;
     if (tutorialId === "new") {
         clearTutorialDetails();
+        currentTutorialId = null;
         document.getElementById('saveButton').onclick = createTutorial;
         document.getElementById('saveButton').textContent = "Ajouter le Tutoriel";
         document.getElementById('tutorialDetails').style.display = 'block';
@@ -154,6 +155,11 @@ async function updateTutorial() {
         return;
     }
 
+    const confirmation = confirm("Êtes-vous sûr de vouloir mettre à jour ce tutoriel ?");
+    if (!confirmation) {
+        return;
+    }
+
     const updatedTutorial = {
         title: document.getElementById('title').value,
         article: document.getElementById('article').value,
@@ -174,17 +180,23 @@ async function updateTutorial() {
             alert("Tutoriel mis à jour avec succès");
             fetchTutorials();
         } else {
-            const errorText = await response.text();
-            alert("Erreur lors de la mise à jour du tutoriel: " + errorText);
+            const errorData = await response.json();
+            alert("Erreur lors de la mise à jour du tutoriel: " + errorData.message);
         }
     } catch (error) {
         console.error('Erreur lors de la mise à jour du tutoriel :', error);
+        alert("Une erreur inattendue s'est produite");
     }
 }
 
 async function deleteTutorial() {
     if (!currentTutorialId) {
         alert("Aucun tutoriel sélectionné");
+        return;
+    }
+
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce tutoriel ?");
+    if (!confirmation) {
         return;
     }
 
@@ -198,10 +210,12 @@ async function deleteTutorial() {
             clearTutorialDetails();
             fetchTutorials();
         } else {
-            alert("Erreur lors de la suppression du tutoriel");
+            const errorData = await response.json();
+            alert("Erreur lors de la suppression du tutoriel: " + errorData.message);
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du tutoriel :', error);
+        alert("Une erreur inattendue s'est produite");
     }
 }
 

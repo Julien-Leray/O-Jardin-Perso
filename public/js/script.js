@@ -33,6 +33,7 @@ async function fetchProducts(category) {
     }
 }
 
+
 function handleProductSelection() {
     const productId = document.getElementById('products').value;
     if (productId === "new") {
@@ -111,6 +112,11 @@ async function updateProduct() {
         return;
     }
 
+    const confirmation = confirm("Êtes-vous sûr de vouloir mettre à jour ce produit ?");
+    if (!confirmation) {
+        return;
+    }
+
     const updatedProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
@@ -124,7 +130,7 @@ async function updateProduct() {
         sowing_tips: document.getElementById('sowing_tips')?.value || ""
     };
 
-    console.log("Sending data to server:", updatedProduct);
+    console.log("Envoi des données au serveur :", updatedProduct);
 
     try {
         const response = await fetch(`/api/products/${currentProductId}`, {
@@ -150,10 +156,14 @@ function getCheckedMonths(id) {
     const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]:checked`);
     return Array.from(checkboxes).map(checkbox => parseInt(checkbox.value));
 }
-
 async function deleteProduct() {
     if (!currentProductId) {
         alert("Aucun produit sélectionné");
+        return;
+    }
+
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+    if (!confirmation) {
         return;
     }
 
