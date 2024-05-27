@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 
 const router = express.Router();
 
+router.get('/gestion', adminController.renderAdminPage);
 router.get('/users', authMiddleware, isAdmin, adminController.getAllUsers);
 router.get('/users/:id', authMiddleware, isAdmin, adminController.getOneUser);
 router.post('/users', authMiddleware, isAdmin, adminController.createUser);

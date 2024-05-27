@@ -58,8 +58,7 @@ const controller = {
     }
     await datamapper.deleteProduct(id);
     res.status(204).json('Product deleted');
-  })
-
+  }),
 
 };
 

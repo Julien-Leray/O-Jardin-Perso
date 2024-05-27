@@ -1,5 +1,6 @@
 import e from "express";
 import datamapper from "../datamappers/admin.datamapper.js";
+import productsdatamapper from "../datamappers/products.datamapper.js";
 import asyncHandler from "../middlewares/asyncHandler.middleware.js";
 import bcrypt from "bcrypt";
 
@@ -69,6 +70,14 @@ const controller = {
     await datamapper.deleteUser(id);
     res.status(204).end();
   }),
+  renderAdminPage: async (req, res) => {
+    try {
+      const products = await productsdatamapper.getAllProducts();
+      res.render('products', { products });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
 };
 
 export default controller;

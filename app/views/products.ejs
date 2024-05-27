@@ -101,8 +101,11 @@
   <section id="tutorialDetails" style="display: none;">
     <h2>Détails du Tutoriel</h2>
     <div>
-      <input type="text" id="tutorial_created_at" readonly />
-      <input type="text" id="tutorial_updated_at" readonly />
+      <label for="tutorial_created_at">Créé le:</label>
+      <input type="text" id="tutorial_created_at" readonly><br>
+  
+      <label for="tutorial_updated_at">Mis à jour le:</label>
+      <input type="text" id="tutorial_updated_at" readonly><br>
       <label>Titre : <input type="text" id="title" required></label><br>
       <label>Article : <textarea id="article" required></textarea></label><br>
       <label>Image : <input type="text" id="picture" oninput="updateImagePreview()"></label><br>
