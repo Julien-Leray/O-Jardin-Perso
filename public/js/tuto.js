@@ -1,43 +1,5 @@
+
 let currentTutorialId = null;
-
-function hideAllSections() {
-    document.getElementById('productsSection').style.display = 'none';
-    document.getElementById('productDetails').style.display = 'none';
-    document.getElementById('tutorialsSection').style.display = 'none';
-    document.getElementById('tutorialDetails').style.display = 'none';
-}
-
-async function fetchProducts(category) {
-    selectedCategory = category;
-    
-    if (!category) {
-        return;
-    }
-
-    try {
-        const response = await fetch(`/api/products?category=${category}`);
-        const products = await response.json();
-
-        const productsSelect = document.getElementById('products');
-        if (productsSelect) {
-            productsSelect.innerHTML = '<option value="">--Sélectionnez un produit--</option>';
-            productsSelect.innerHTML += '<option value="new">Ajouter un nouveau produit</option>';
-
-            products.forEach(product => {
-                const option = document.createElement('option');
-                option.value = product.id;
-                option.textContent = product.name;
-                productsSelect.appendChild(option);
-            });
-
-            // Afficher la section des produits
-            hideAllSections();
-            document.getElementById('productsSection').style.display = 'block';
-        }
-    } catch (error) {
-        console.error('Erreur lors de la récupération des produits :', error);
-    }
-}
 
 async function fetchTutorials() {
     try {
@@ -66,7 +28,6 @@ function handleTutorialSelection() {
     const tutorialId = document.getElementById('tutorials').value;
     if (tutorialId === "new") {
         clearTutorialDetails();
-        currentTutorialId = null;
         document.getElementById('saveButton').onclick = createTutorial;
         document.getElementById('saveButton').textContent = "Ajouter le Tutoriel";
         document.getElementById('tutorialDetails').style.display = 'block';
@@ -96,18 +57,13 @@ async function fetchTutorialDetails(tutorialId) {
             document.getElementById('article').value = tutorial.article;
             document.getElementById('picture').value = tutorial.picture;
             document.getElementById('theme').value = tutorial.theme;
-            updateImagePreview();  // Met à jour l'aperçu de l'image
+            updateImagePreview();
+
+            document.getElementById('tutorial_created_at').value = formatDate(tutorial.created_at);
+            document.getElementById('tutorial_updated_at').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du tutoriel :', error);
-    }
-}
-
-function updateImagePreview() {
-    const imageUrl = document.getElementById('picture').value;
-    const imagePreview = document.getElementById('imagePreview');
-    if (imagePreview) {
-        imagePreview.src = imageUrl;
     }
 }
 
@@ -120,11 +76,15 @@ async function saveTutorial() {
 }
 
 async function createTutorial() {
+    const currentDate = new Date();
+
     const newTutorial = {
         title: document.getElementById('title').value,
         article: document.getElementById('article').value,
         picture: document.getElementById('picture').value,
-        theme: document.getElementById('theme').value
+        theme: document.getElementById('theme').value,
+        created_at: currentDate.toISOString(),
+        updated_at: currentDate.toISOString()
     };
 
     try {
@@ -160,11 +120,14 @@ async function updateTutorial() {
         return;
     }
 
+    const currentDate = new Date();
+
     const updatedTutorial = {
         title: document.getElementById('title').value,
         article: document.getElementById('article').value,
         picture: document.getElementById('picture').value,
-        theme: document.getElementById('theme').value
+        theme: document.getElementById('theme').value,
+        updated_at: currentDate.toISOString()
     };
 
     try {
@@ -178,14 +141,14 @@ async function updateTutorial() {
 
         if (response.ok) {
             alert("Tutoriel mis à jour avec succès");
+            document.getElementById('tutorial_updated_at').value = formatDate(currentDate.toISOString());
             fetchTutorials();
         } else {
-            const errorData = await response.json();
-            alert("Erreur lors de la mise à jour du tutoriel: " + errorData.message);
+            const errorText = await response.text();
+            alert("Erreur lors de la mise à jour du tutoriel: " + errorText);
         }
     } catch (error) {
         console.error('Erreur lors de la mise à jour du tutoriel :', error);
-        alert("Une erreur inattendue s'est produite");
     }
 }
 
@@ -210,12 +173,10 @@ async function deleteTutorial() {
             clearTutorialDetails();
             fetchTutorials();
         } else {
-            const errorData = await response.json();
-            alert("Erreur lors de la suppression du tutoriel: " + errorData.message);
+            alert("Erreur lors de la suppression du tutoriel");
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du tutoriel :', error);
-        alert("Une erreur inattendue s'est produite");
     }
 }
 
@@ -225,4 +186,6 @@ function clearTutorialDetails() {
     document.getElementById('picture').value = "";
     document.getElementById('theme').value = "";
     document.getElementById('imagePreview').src = "";
+    document.getElementById('tutorial_created_at').value = "";
+    document.getElementById('tutorial_updated_at').value = "";
 }

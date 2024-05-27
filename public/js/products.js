@@ -1,5 +1,4 @@
 let currentProductId = null;
-let selectedCategory = null;
 
 async function fetchProducts(category) {
     selectedCategory = category;
@@ -25,14 +24,13 @@ async function fetchProducts(category) {
             });
 
             // Afficher la section des produits
+            hideAllSections();
             document.getElementById('productsSection').style.display = 'block';
-            document.getElementById('productDetails').style.display = 'none';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des produits :', error);
     }
 }
-
 
 function handleProductSelection() {
     const productId = document.getElementById('products').value;
@@ -63,27 +61,22 @@ async function fetchProductDetails(productId) {
         const product = await response.json();
 
         if (product) {
-            const nameElement = document.getElementById('name');
-            if (nameElement) nameElement.value = product.name;
-            const latinNameElement = document.getElementById('latin_name');
-            if (latinNameElement) latinNameElement.value = product.latin_name;
-            const pictureElement = document.getElementById('picture');
-            if (pictureElement) pictureElement.value = product.picture;
-            updateImagePreview();  // Met à jour l'aperçu de l'image
+            document.getElementById('name').value = product.name;
+            document.getElementById('latin_name').value = product.latin_name;
+            document.getElementById('picture').value = product.picture;
+            updateImagePreview();
 
             setCheckedMonths('plantation_date', product.plantation_date);
             setCheckedMonths('harvest_date', product.harvest_date);
 
-            const soilTypeElement = document.getElementById('soil_type');
-            if (soilTypeElement) soilTypeElement.value = product.soil_type;
-            const diseasesElement = document.getElementById('diseases');
-            if (diseasesElement) diseasesElement.value = product.diseases;
-            const wateringFrequencyElement = document.getElementById('watering_frequency');
-            if (wateringFrequencyElement) wateringFrequencyElement.value = product.watering_frequency;
-            const descriptionElement = document.getElementById('description');
-            if (descriptionElement) descriptionElement.value = product.description;
-            const sowingTipsElement = document.getElementById('sowing_tips');
-            if (sowingTipsElement) sowingTipsElement.value = product.sowing_tips || "";
+            document.getElementById('soil_type').value = product.soil_type;
+            document.getElementById('diseases').value = product.diseases;
+            document.getElementById('watering_frequency').value = product.watering_frequency;
+            document.getElementById('description').value = product.description;
+            document.getElementById('sowing_tips').value = product.sowing_tips || "";
+
+            document.getElementById('product_created_at').value = formatDate(product.created_at);
+            document.getElementById('product_updated_at').value = product.updated_at ? formatDate(product.updated_at) : '';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du produit :', error);
@@ -98,14 +91,6 @@ function setCheckedMonths(id, monthsString) {
     });
 }
 
-function updateImagePreview() {
-    const imageUrl = document.getElementById('picture').value;
-    const imagePreview = document.getElementById('imagePreview');
-    if (imagePreview) {
-        imagePreview.src = imageUrl;
-    }
-}
-
 async function updateProduct() {
     if (!currentProductId) {
         alert("Aucun produit sélectionné");
@@ -117,6 +102,8 @@ async function updateProduct() {
         return;
     }
 
+    const currentDate = new Date();
+
     const updatedProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
@@ -127,7 +114,8 @@ async function updateProduct() {
         diseases: document.getElementById('diseases')?.value || "",
         watering_frequency: document.getElementById('watering_frequency')?.value || "",
         description: document.getElementById('description')?.value || "",
-        sowing_tips: document.getElementById('sowing_tips')?.value || ""
+        sowing_tips: document.getElementById('sowing_tips')?.value || "",
+        updated_at: currentDate.toISOString() 
     };
 
     console.log("Envoi des données au serveur :", updatedProduct);
@@ -143,6 +131,7 @@ async function updateProduct() {
 
         if (response.ok) {
             alert("Produit mis à jour avec succès");
+            document.getElementById('product_updated_at').value = formatDate(currentDate.toISOString());
         } else {
             const errorText = await response.text();
             alert("Erreur lors de la mise à jour du produit: " + errorText);
@@ -152,10 +141,6 @@ async function updateProduct() {
     }
 }
 
-function getCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]:checked`);
-    return Array.from(checkboxes).map(checkbox => parseInt(checkbox.value));
-}
 async function deleteProduct() {
     if (!currentProductId) {
         alert("Aucun produit sélectionné");
@@ -174,7 +159,6 @@ async function deleteProduct() {
 
         if (response.ok) {
             alert("Produit supprimé avec succès");
-            // Clear the form and reset the product selection
             clearProductDetails();
             currentProductId = null;
             document.getElementById('productDetails').style.display = 'none';
@@ -193,29 +177,15 @@ function clearProductDetails() {
     ];
     
     elements.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.value = "";
-        }
+        document.getElementById(id).value = "";
     });
     
     clearCheckedMonths('plantation_date');
     clearCheckedMonths('harvest_date');
-    const productsElement = document.getElementById('products');
-    if (productsElement) {
-        productsElement.value = "";
-    }
-    const imagePreview = document.getElementById('imagePreview');
-    if (imagePreview) {
-        imagePreview.src = "";  // Réinitialiser l'aperçu de l'image
-    }
-}
-
-function clearCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-    });
+    document.getElementById('products').value = "";
+    document.getElementById('imagePreview').src = "";  
+    document.getElementById('product_created_at').value = "";
+    document.getElementById('product_updated_at').value = "";
 }
 
 async function createProduct() {
@@ -223,6 +193,8 @@ async function createProduct() {
         alert("Aucune catégorie sélectionnée");
         return;
     }
+
+    const currentDate = new Date();
 
     const newProduct = {
         name: document.getElementById('name')?.value || "",
@@ -235,7 +207,9 @@ async function createProduct() {
         watering_frequency: document.getElementById('watering_frequency')?.value || "",
         description: document.getElementById('description')?.value || "",
         sowing_tips: document.getElementById('sowing_tips')?.value || "",
-        category_id: selectedCategory === 'Fruit' ? 1 : 2 // Exemple: Assigner les catégories 1 pour Fruit et 2 pour Légume
+        category_id: selectedCategory === 'Fruit' ? 1 : 2, 
+        created_at: currentDate.toISOString(),
+        updated_at: currentDate.toISOString()
     };
 
     console.log("Sending data to server:", newProduct);
@@ -251,17 +225,7 @@ async function createProduct() {
 
         if (response.ok) {
             alert("Produit ajouté avec succès");
-            // Clear the form and hide it
             clearProductDetails();
-            const productsElement = document.getElementById('products');
-            if (productsElement) {
-                productsElement.value = "";  // Réinitialiser la sélection du produit
-            }
-            const productDetails = document.getElementById('productDetails');
-            if (productDetails) {
-                productDetails.style.display = 'none';
-            }
-            // Refresh product list
             fetchProducts(selectedCategory);
         } else {
             const errorText = await response.text();
