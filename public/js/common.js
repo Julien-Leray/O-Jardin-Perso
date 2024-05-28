@@ -11,13 +11,6 @@ function formatDate(isoString) {
     return date.toLocaleString('fr-FR', options);
 }
 
-function updateImagePreview() {
-    const imageUrl = document.getElementById('picture').value;
-    const imagePreview = document.getElementById('imagePreview');
-    if (imagePreview) {
-        imagePreview.src = imageUrl;
-    }
-}
 
 function clearCheckedMonths(id) {
     const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);

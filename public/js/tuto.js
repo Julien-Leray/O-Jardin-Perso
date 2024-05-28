@@ -56,7 +56,7 @@ async function fetchTutorialDetails(tutorialId) {
             document.getElementById('tutorialArticle').value = tutorial.article;
             document.getElementById('tutorialPicture').value = tutorial.picture;
             document.getElementById('tutorialTheme').value = tutorial.theme;
-            updateImagePreview();
+            updateImagePreviewTuto(); 
 
             document.getElementById('tutorialCreatedAt').value = formatDate(tutorial.created_at);
             document.getElementById('tutorialUpdatedAt').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';

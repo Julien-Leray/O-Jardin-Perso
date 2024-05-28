@@ -17,8 +17,10 @@
         <input type="text" id="tutorialUpdatedAt" readonly><br>
         <label for="tutorialTitle">Titre : </label><input type="text" id="tutorialTitle" required><br>
         <label for="tutorialArticle">Article : </label><textarea id="tutorialArticle" required></textarea><br>
-        <label for="tutorialPicture">Image : </label><input type="text" id="tutorialPicture" oninput="updateImagePreview()"><br>
-        <img id="tutorialImagePreview" src="" alt="Prévisualisation de l'image"><br>
+        
+        <label for="tutorialPicture">Image URL:</label>
+        <input type="text" id="tutorialPicture" oninput="updateImagePreviewTuto()">
+        <img id="imagePreviewTuto" src="" alt="Prévisualisation de l'image">
         <label for="tutorialTheme">Thème : </label><input type="text" id="tutorialTheme" required><br>
         <button id="saveTutorialButton" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
         <button onclick="deleteTutorial()">Supprimer le Tutoriel</button>

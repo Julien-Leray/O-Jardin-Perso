@@ -17,8 +17,15 @@
       <input type="text" id="product_updated_at" readonly><br>
       <label>Nom : <input type="text" id="name" required></label><br>
       <label>Nom Latin : <input type="text" id="latin_name"></label><br>
-      <label>Image : <input type="text" id="picture" oninput="updateImagePreview()"></label><br>
-      <img id="imagePreview" src="" alt="Prévisualisation de l'image"><br>
+
+      
+      <label>Image URL: <input type="text" id="picture" oninput="updateImagePreview()"></label><br>
+      <label for="imageUploadDownload">Télécharger une image : 
+          <input type="file" id="imageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownload()">
+      </label><br>
+      <img id="imagePreview" src="" alt="Prévisualisation de l'image" style="max-width: 200px; display: none; border: 1px solid #000;"><br>
+      <button id="downloadButton" onclick="uploadImage()" style="display: none;">Télécharger l'image</button>
+
 
       <fieldset>
         <legend>Date de Plantation :</legend>
