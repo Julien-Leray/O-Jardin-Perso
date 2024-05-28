@@ -56,7 +56,7 @@ async function fetchTutorialDetails(tutorialId) {
             document.getElementById('tutorialArticle').value = tutorial.article;
             document.getElementById('tutorialPicture').value = tutorial.picture;
             document.getElementById('tutorialTheme').value = tutorial.theme;
-            updateImagePreview();
+            updateImagePreviewTuto(); 
 
             document.getElementById('tutorialCreatedAt').value = formatDate(tutorial.created_at);
             document.getElementById('tutorialUpdatedAt').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
@@ -184,7 +184,12 @@ function clearTutorialDetails() {
     document.getElementById('tutorialArticle').value = "";
     document.getElementById('tutorialPicture').value = "";
     document.getElementById('tutorialTheme').value = "";
-    document.getElementById('tutorialImagePreview').src = "";
+    document.getElementById('imagePreviewTuto').src = "";
     document.getElementById('tutorialCreatedAt').value = "";
     document.getElementById('tutorialUpdatedAt').value = "";
+}
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
 }

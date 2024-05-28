@@ -1,49 +1,49 @@
-<section id="usersSection" style="display: none;">
-    <h2>Liste des Utilisateurs</h2>
+
+<div id="usersSection" style="display:none;">
+    <h1>Utilisateurs</h1>
+    <button onclick="showUserForm()">Ajouter un Utilisateur</button>
     <table id="usersTable">
         <thead>
             <tr>
-                <th id="userIdHeader">ID</th>
-                <th id="userEmailHeader">Email</th>
-                <th id="userFirstnameHeader">Prénom</th>
-                <th id="userLastnameHeader">Nom</th>
-                <th id="userActionsHeader">Actions</th>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Actions</th>
             </tr>
         </thead>
-        <tbody id="usersTableBody">
-            <!-- Les utilisateurs seront insérés ici par JavaScript -->
+        <tbody>
+            <!-- Les utilisateurs seront insérés ici -->
         </tbody>
     </table>
-    <button id="addUserButton" onclick="showUserForm()">Ajouter un Utilisateur</button>
-</section>
-<section id="userFormSection" style="display: none;">
+</div>
+<div id="userFormSection" style="display:none;">
     <h2>Détails de l'Utilisateur</h2>
-    <form id="userForm">
+    <form>
         <input type="hidden" id="userId">
         <label for="userEmail">Email:</label>
-        <input type="email" id="userEmail" required><br>
+        <input type="email" id="userEmail">
         <label for="userFirstname">Prénom:</label>
-        <input type="text" id="userFirstname" required><br>
+        <input type="text" id="userFirstname">
         <label for="userLastname">Nom:</label>
-        <input type="text" id="userLastname" required><br>
-        <label for="userPassword">Mot de Passe:</label>
-        <input type="password" id="userPassword"><br>
+        <input type="text" id="userLastname">
+        <label for="userPassword">Mot de passe:</label>
+        <input type="password" id="userPassword">
         <label for="userAddress">Adresse:</label>
-        <input type="text" id="userAddress"><br>
+        <input type="text" id="userAddress">
         <label for="userZipCode">Code Postal:</label>
-        <input type="text" id="userZipCode"><br>
+        <input type="text" id="userZipCode">
         <label for="userCity">Ville:</label>
-        <input type="text" id="userCity"><br>
+        <input type="text" id="userCity">
         <label for="userWateringAlert">Alerte Arrosage:</label>
-        <input type="checkbox" id="userWateringAlert"><br>
+        <input type="checkbox" id="userWateringAlert">
         <label for="userForecastAlert">Alerte Prévisions:</label>
-        <input type="checkbox" id="userForecastAlert"><br>
+        <input type="checkbox" id="userForecastAlert">
         <label for="userCreatedAt">Créé le:</label>
-        <input type="text" id="userCreatedAt" readonly><br>
+        <input type="text" id="userCreatedAt" disabled>
         <label for="userUpdatedAt">Mis à jour le:</label>
-        <input type="text" id="userUpdatedAt" readonly><br>
-        <button type="button" id="saveNewButton" onclick="saveNewUser()">Enregistrer Nouveau</button>
-        <button type="button" id="saveEditButton" onclick="saveEditUser()">Enregistrer Modification</button>
-        <button type="button" onclick="hideUserForm()">Annuler</button>
+        <input type="text" id="userUpdatedAt" disabled>
+        <button type="button" id="saveNewButton" onclick="saveNewUser()">Ajouter</button>
+        <button type="button" id="saveEditButton" onclick="saveEditUser()" style="display:none;">Enregistrer les Modifications</button>
     </form>
-</section>
+</div>

@@ -1,26 +1,27 @@
-<section id="tutorialsSection" style="display: none;">
-    <h2 id="tutorialsTitle">Tutoriels</h2>
-    <label for="tutorialsSelect">Choisissez un tutoriel :</label>
+<div id="tutorialsSection" style="display:none;">
+    <h1>Tutoriels</h1>
     <select id="tutorialsSelect" onchange="handleTutorialSelection()">
         <option value="">--Sélectionnez un tutoriel--</option>
         <option value="new">Ajouter un nouveau tutoriel</option>
     </select>
-</section>
-
-<section id="tutorialDetails" style="display: none;">
-    <h2 id="tutorialDetailsTitle">Détails du Tutoriel</h2>
-    <div>
+</div>
+<div id="tutorialDetails" style="display:none;">
+    <h2>Détails du Tutoriel</h2>
+    <form>
+        <label for="tutorialTitle">Titre:</label>
+        <input type="text" id="tutorialTitle">
+        <label for="tutorialArticle">Article:</label>
+        <textarea id="tutorialArticle"></textarea>
+        <label for="tutorialPicture">Image URL:</label>
+        <input type="text" id="tutorialPicture" oninput="updateImagePreviewTuto()">
+        <img id="imagePreviewTuto" src="" alt="Prévisualisation de l'image">
+        <label for="tutorialTheme">Thème:</label>
+        <input type="text" id="tutorialTheme">
         <label for="tutorialCreatedAt">Créé le:</label>
-        <input type="text" id="tutorialCreatedAt" readonly><br>
-
+        <input type="text" id="tutorialCreatedAt" disabled>
         <label for="tutorialUpdatedAt">Mis à jour le:</label>
-        <input type="text" id="tutorialUpdatedAt" readonly><br>
-        <label for="tutorialTitle">Titre : </label><input type="text" id="tutorialTitle" required><br>
-        <label for="tutorialArticle">Article : </label><textarea id="tutorialArticle" required></textarea><br>
-        <label for="tutorialPicture">Image : </label><input type="text" id="tutorialPicture" oninput="updateImagePreview()"><br>
-        <img id="tutorialImagePreview" src="" alt="Prévisualisation de l'image"><br>
-        <label for="tutorialTheme">Thème : </label><input type="text" id="tutorialTheme" required><br>
-        <button id="saveTutorialButton" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
-        <button onclick="deleteTutorial()">Supprimer le Tutoriel</button>
-    </div>
-</section>
+        <input type="text" id="tutorialUpdatedAt" disabled>
+        <button type="button" id="saveTutorialButton" onclick="saveTutorial()">Enregistrer</button>
+        <button type="button" onclick="deleteTutorial()">Supprimer</button>
+    </form>
+</div>

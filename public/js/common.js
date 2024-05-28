@@ -1,8 +1,7 @@
-
 let selectedCategory = null;
 
 function formatDate(isoString) {
-    if (!isoString) return ''; // Retourner une chaîne vide si isoString est null ou undefined
+    if (!isoString) return ''; 
     const date = new Date(isoString);
     const options = {
         year: 'numeric', month: 'long', day: 'numeric', 
@@ -11,13 +10,6 @@ function formatDate(isoString) {
     return date.toLocaleString('fr-FR', options);
 }
 
-function updateImagePreview() {
-    const imageUrl = document.getElementById('picture').value;
-    const imagePreview = document.getElementById('imagePreview');
-    if (imagePreview) {
-        imagePreview.src = imageUrl;
-    }
-}
 
 function clearCheckedMonths(id) {
     const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
