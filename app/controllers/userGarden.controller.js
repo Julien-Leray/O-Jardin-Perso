@@ -9,7 +9,7 @@ const controller = {
     if (data[0].result === null) {
       const userToFind = await datamapper.getUserById(userId);
       const userFinded = { ...userToFind, password: undefined };
-      return res.status(200).json([{ result: { user: userFinded } }, { products: 'No favorites found.' }]);
+      return res.status(200).json([{ result: { user: userFinded } }, { products: [] }]);
     }
 
     if (data.length === 0) {
