@@ -12,6 +12,7 @@ const controller = {
   }),
 
   addProduct: asyncHandler(async (req, res) => {
+    console.log(req.body);
     const dataToAdd = req.body;
     const userId = req.userId;
     const product_id = req.body.product_id;
@@ -32,6 +33,7 @@ const controller = {
     if (!userId) {
       return res.status(400).json({ message: "User is required" });
     }
+
 
     const data = await datamapper.addProduct(dataToAdd, userId);
 
