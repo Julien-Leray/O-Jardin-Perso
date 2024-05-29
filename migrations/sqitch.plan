@@ -5,3 +5,4 @@ init 2024-05-14T12:07:15Z Julien Leray <julien.leray@oclock.school> # mise en pl
 insertion_data_v1 2024-05-21T08:37:32Z Julien Leray <julien.leray@oclock.school> # première insertion de donnée
 SQL_function_myGarden 2024-05-24T13:12:51Z Julien Leray <julien.leray@oclock.school> # add a sql function to agregate data for mygarden page
 isAdmin_statut 2024-05-27T07:37:59Z Julien Leray <julien.leray@oclock.school> # add an admin statut in user_table
+SQL_function_updated_at 2024-05-29T08:08:03Z Julien Leray <julien.leray@oclock.school> # add a function to update time of modification automatically

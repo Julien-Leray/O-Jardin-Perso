@@ -2,6 +2,10 @@ import client from './pg.client.js';
 
 const datamapper = {
   async createUser(newUser) {
+    if (newUser.is_admin = true) {
+      newUser.is_admin = false;
+    }
+
     const fields = Object.keys(newUser);
     const values = Object.values(newUser);
 
