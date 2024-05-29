@@ -9,6 +9,7 @@ import alertsRouter from './alerts.router.js';
 import profileRouter from './profile.router.js';
 import adminRouter from './admin.router.js';
 
+
 const router = express.Router();
 
 router.use((_, res, next) => {
