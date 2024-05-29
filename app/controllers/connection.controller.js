@@ -14,6 +14,7 @@ const controller = {
     if (!user) {
       return res.status(401).json({ message: 'Invalid data' });
     }
+    console.log(user);
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid data' });
