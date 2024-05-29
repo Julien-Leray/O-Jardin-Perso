@@ -1,0 +1,34 @@
+<section id="tutorialsSection" style="display: none;">
+    <h2 id="tutorialsTitle">Tutoriels</h2>
+    <label for="tutorialsSelect">Choisissez un tutoriel :</label>
+    <select id="tutorialsSelect" onchange="handleTutorialSelection()">
+        <option value="">--Sélectionnez un tutoriel--</option>
+        <option value="new">Ajouter un nouveau tutoriel</option>
+    </select>
+</section>
+
+<section id="tutorialDetails" style="display: none;">
+    <h2 id="tutorialDetailsTitle">Détails du Tutoriel</h2>
+    <div>
+        <label for="tutorialCreatedAt">Créé le:</label>
+        <input type="text" id="tutorialCreatedAt" readonly><br>
+
+        <label for="tutorialUpdatedAt">Mis à jour le:</label>
+        <input type="text" id="tutorialUpdatedAt" readonly><br>
+        <label for="tutorialTitle">Titre : </label><input type="text" id="tutorialTitle" required><br>
+        <label for="tutorialArticle">Article : </label><textarea id="tutorialArticle" required></textarea><br>
+        
+        <label for="tutorialPicture">Image URL:</label>
+        <input type="text" id="tutorialPicture" oninput="updateImagePreviewTuto()"><br>
+        
+        <label for="tutorialImageUploadDownload">Image : 
+            <input type="file" id="tutorialImageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownloadTuto()">
+        </label><br>
+        
+        <img id="imagePreviewTuto" src="" alt="Prévisualisation de l'image" ><br>
+        
+        <label for="tutorialTheme">Thème : </label><input type="text" id="tutorialTheme" required><br>
+        <button id="saveTutorialButton" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
+        <button onclick="deleteTutorial()">Supprimer le Tutoriel</button>
+    </div>
+</section>

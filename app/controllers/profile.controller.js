@@ -34,7 +34,16 @@ const controller = {
     const userId = req.userId;
     await datamapper.deleteProfile(userId);
     res.status(204).json({ message: "Profile deleted" });
-  })
+  }),
+  renderAdminPage: async (req, res) => {
+    try {
+      const products = await datamapper.getAllProducts();
+      res.render('products', { products });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+
 };
 
 export default controller;

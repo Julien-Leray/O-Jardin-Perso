@@ -1,0 +1,71 @@
+<section id="productsSection" style="display: none;">
+  <h3>Produits</h3>
+  <label for="products">Choisissez un produit :</label>
+  <select id="products" onchange="handleProductSelection()">
+      <option value="">--Sélectionnez un produit--</option>
+      <option value="new">Ajouter un nouveau produit</option>
+  </select>
+</section>
+
+<section id="productDetails" style="display: none;">
+  <h3>Détails du Produit</h3>
+  <div>
+      <label for="product_created_at">Créé le:</label>
+      <input type="text" id="product_created_at" readonly><br>
+
+      <label for="product_updated_at">Mis à jour le:</label>
+      <input type="text" id="product_updated_at" readonly><br>
+      <label>Nom : <input type="text" id="name" required></label><br>
+      <label>Nom Latin : <input type="text" id="latin_name"></label><br>
+
+
+    
+      <label for="productsPicture">Image URL:</label>
+      <input type="text" id="productsPicture" name="productsPicture" oninput="updateImagePreviewProducts()">
+      <br>
+      <label for="imageUploadDownload">Image : 
+          <input type="file" id="imageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownload()" required>
+      </label><br>
+      <img id="imagePreviewProducts" src="" alt="Prévisualisation de l'image">
+      <br>
+
+
+      <fieldset>
+        <legend>Date de Plantation :</legend>
+        <div id="plantation_date" class="month-checkboxes">
+            <% const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]; %>
+            <% months.forEach((month, index) => { %>
+                <label><input type="checkbox" value="<%= index + 1 %>"> <%= month %></label>
+            <% }); %>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Date de Récolte :</legend>
+        <div id="harvest_date" class="month-checkboxes">
+            <% months.forEach((month, index) => { %>
+                <label><input type="checkbox" value="<%= index + 1 %>"> <%= month %></label>
+            <% }); %>
+        </div>
+    </fieldset>
+      <label>Type de Sol : 
+        <textarea id="soil_type" rows="4" cols="50"></textarea>
+      </label><br>
+      <label>Maladies : 
+        <textarea id="diseases" rows="4" cols="50"></textarea>
+      </label><br>
+      <label>Fréquence d'Arrosage : 
+        <textarea id="watering_frequency" rows="4" cols="50"></textarea>
+      </label><br>
+      <label>Description : 
+        <textarea id="description" rows="4" cols="50"></textarea>
+      </label><br>
+      <label>Conseils de Semis : 
+        <textarea id="sowing_tips" rows="4" cols="50"></textarea>
+      </label><br>
+
+      <button id="saveButton" onclick="updateProduct()">Enregistrer les Modifications</button>
+      
+      <button onclick="deleteProduct()">Supprimer le Produit</button>
+  </div>
+</section>
