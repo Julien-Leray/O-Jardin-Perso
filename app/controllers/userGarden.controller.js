@@ -4,6 +4,7 @@ import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 const controller = {
   getFavorites: asyncHandler(async (req, res) => {
     const userId = req.userId;
+    console.log(userId);
     const data = await datamapper.getAllFavoritesWithUserData(userId);
 
     if (data[0].result === null) {

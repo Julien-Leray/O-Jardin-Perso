@@ -12,7 +12,6 @@ const controller = {
   }),
 
   addProduct: asyncHandler(async (req, res) => {
-    console.log(req.body);
     const dataToAdd = req.body;
     const userId = req.userId;
     const product_id = req.body.product_id;
