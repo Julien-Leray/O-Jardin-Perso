@@ -38,11 +38,7 @@ const controller = {
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const dataToUpdate = req.body;
-    if (req.file) {
-      dataToUpdate.picture = `public/pictures/${req.file.filename}`;
-    }
 
-    console.log('Data to update:', dataToUpdate);
     if (Object.keys(dataToUpdate).length === 0) {
       return res.status(400).json({ message: 'No data provided to update.' });
     }

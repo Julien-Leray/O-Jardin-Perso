@@ -184,12 +184,7 @@ function clearTutorialDetails() {
     document.getElementById('tutorialArticle').value = "";
     document.getElementById('tutorialPicture').value = "";
     document.getElementById('tutorialTheme').value = "";
-    document.getElementById('imagePreviewTuto').src = "";
+    document.getElementById('tutorialImagePreview').src = "";
     document.getElementById('tutorialCreatedAt').value = "";
     document.getElementById('tutorialUpdatedAt').value = "";
-}
-
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-    return new Date(dateString).toLocaleDateString('fr-FR', options);
 }

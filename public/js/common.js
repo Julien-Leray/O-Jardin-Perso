@@ -1,7 +1,8 @@
+
 let selectedCategory = null;
 
 function formatDate(isoString) {
-    if (!isoString) return ''; 
+    if (!isoString) return ''; // Retourner une chaîne vide si isoString est null ou undefined
     const date = new Date(isoString);
     const options = {
         year: 'numeric', month: 'long', day: 'numeric', 
@@ -9,6 +10,7 @@ function formatDate(isoString) {
     };
     return date.toLocaleString('fr-FR', options);
 }
+
 
 
 function clearCheckedMonths(id) {

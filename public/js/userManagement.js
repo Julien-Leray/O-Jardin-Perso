@@ -2,7 +2,8 @@ let currentUserId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     function showUserForm() {
-        fetchUsers();
+        // ...
+        fetchUsers(); // Ajoutez ceci ici pour charger la liste des utilisateurs uniquement lorsque vous cliquez sur le bouton
     }
 });
 
@@ -145,6 +146,7 @@ async function saveEditUser() {
     const forecast_alert = document.getElementById('userForecastAlert').checked;
 
     const user = {
+
         firstname,
         lastname,
         password,

@@ -9,5 +9,4 @@ router.route('/:id').get(Controller.getProductById);
 router.route('/:id').patch(Controller.updateProduct);
 router.route('/:id').delete(Controller.deleteProduct);
 
-
 export default router;
