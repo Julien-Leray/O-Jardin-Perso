@@ -101,8 +101,6 @@ function setCheckedMonths(id, monthsString) {
     });
 }
 
-
-
 async function updateProduct() {
     if (!currentProductId) {
         alert("Aucun produit sélectionné");
@@ -114,12 +112,11 @@ async function updateProduct() {
         return;
     }
 
-    const currentDate = new Date();
 
     const updatedProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
-        picture: document.getElementById('picture')?.value || "",
+        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
         plantation_date: `{${getCheckedMonths('plantation_date').join(', ')}}`,
         harvest_date: `{${getCheckedMonths('harvest_date').join(', ')}}`,
         soil_type: document.getElementById('soil_type')?.value || "",
@@ -127,8 +124,25 @@ async function updateProduct() {
         watering_frequency: document.getElementById('watering_frequency')?.value || "",
         description: document.getElementById('description')?.value || "",
         sowing_tips: document.getElementById('sowing_tips')?.value || "",
-        updated_at: currentDate.toISOString() 
+        category_id: selectedCategory === 'Fruit' ? 1 : 2, // Assurez-vous que cette valeur est correcte
+        
     };
+
+    const fileInput = document.getElementById('imageUploadDownload');
+    const file = fileInput?.files[0];
+
+    if (file) {
+        try {
+            const base64String = await convertFileToBase64(file);
+            updatedProduct.picture = base64String; // Mettre à jour l'image en base64
+        } catch (error) {
+            console.error('Erreur lors de la conversion du fichier en base64 :', error);
+            alert('Erreur lors de la conversion du fichier en base64');
+            return;
+        }
+    } else {
+        console.warn('No file selected for upload.');
+    }
 
     console.log("Envoi des données au serveur :", updatedProduct);
 
@@ -143,7 +157,6 @@ async function updateProduct() {
 
         if (response.ok) {
             alert("Produit mis à jour avec succès");
-            document.getElementById('product_updated_at').value = formatDate(currentDate.toISOString());
         } else {
             const errorText = await response.text();
             alert("Erreur lors de la mise à jour du produit: " + errorText);

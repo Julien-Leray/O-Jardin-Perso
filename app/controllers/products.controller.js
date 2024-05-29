@@ -62,37 +62,58 @@ const controller = {
 }),
 
 
+updateProduct: asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
+  let updatedImagePath = '';
 
+  // Vérifiez si une image est incluse dans la requête
+  if (picture) {
+      const base64Image = picture.split(';base64,').pop();
+      updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le nom du produit
 
-  updateProduct: asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const dataToUpdate = req.body;
+      try {
+          await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
+          updatedImagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+          console.log('Image mise à jour avec succès à', updatedImagePath);
+      } catch (err) {
+          console.error('Erreur lors de l\'écriture du fichier :', err);
+          return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
+      }
+  }
 
-    console.log('Data to update:', dataToUpdate);
-    if (Object.keys(dataToUpdate).length === 0) {
-      return res.status(400).json({ message: 'No data provided to update.' });
-    }
-    
-    if (req.image) {
-      const base64Image = req.image.split(';base64,').pop();
-      // Mettre l'id du produit dans le nom de l'image
-      const outputPath = path.join('public/pictures', 'testbase64.jpg'); // Chemin de sortie
-      fs.writeFile(outputPath, base64Image, {encoding: 'base64'}, function(err) {
-          if (err) {
-              console.error('Erreur lors de l\'écriture du fichier :', err);
-          } else {
-              console.log('Image sauvegardée avec succès à', outputPath);
-          }
-      });
-    }
-    const updatedData = null;
-    //const updatedData = await datamapper.updateProduct(id, dataToUpdate);
+  // Créer un objet contenant les données à mettre à jour
+  const dataToUpdate = {
+      latin_name,
+      name,
+      plantation_date,
+      harvest_date,
+      soil_type,
+      diseases,
+      watering_frequency,
+      category_id, // Assurez-vous que cette valeur est bien présente
+      description,
+      sowing_tips,
+      
+  };
 
-    if (!updatedData) {
-      return res.status(404).json({ message: 'Product not found or no changes made.' });
-    }
-    res.status(204).json(updatedData);
-  }),
+  // Inclure le chemin de l'image mise à jour si elle existe
+  if (updatedImagePath) {
+      dataToUpdate.picture = updatedImagePath;
+  }
+
+  try {
+      const updatedData = await datamapper.updateProduct(id, dataToUpdate);
+      if (!updatedData) {
+          return res.status(404).json({ message: 'Product not found or no changes made.' });
+      }
+      res.status(200).json(updatedData);
+  } catch (error) {
+      console.error('Erreur lors de la mise à jour du produit :', error);
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du produit.' });
+  }
+}),
+
 
   deleteProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
