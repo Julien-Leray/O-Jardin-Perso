@@ -92,6 +92,7 @@ function setElementValue(id, value, isDisabled = false) {
         }
     }
 }
+
 function setCheckedMonths(id, monthsString) {
     const months = monthsString.replace(/{|}/g, '').split(', ').map(Number);
     const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
@@ -99,6 +100,8 @@ function setCheckedMonths(id, monthsString) {
         checkbox.checked = months.includes(parseInt(checkbox.value));
     });
 }
+
+
 
 async function updateProduct() {
     if (!currentProductId) {
@@ -182,20 +185,47 @@ async function deleteProduct() {
 function clearProductDetails() {
     const elements = [
         'name', 'latin_name', 'picture', 'soil_type', 
-        'diseases', 'watering_frequency', 'description', 'sowing_tips'
+        'diseases', 'watering_frequency', 'description', 'sowing_tips',
+        'productsPicture' // Ajout de productsPicture
     ];
     
     elements.forEach(id => {
-        document.getElementById(id).value = "";
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = "";
+        }
     });
     
     clearCheckedMonths('plantation_date');
     clearCheckedMonths('harvest_date');
-    document.getElementById('products').value = "";
-    document.getElementById('imagePreview').src = "";  
-    document.getElementById('product_created_at').value = "";
-    document.getElementById('product_updated_at').value = "";
+
+    const productsElement = document.getElementById('products');
+    if (productsElement) {
+        productsElement.value = "";
+    }
+
+    const imagePreviewElement = document.getElementById('imagePreview');
+    if (imagePreviewElement) {
+        imagePreviewElement.src = "";
+    }
+
+    const imagePreviewProductsElement = document.getElementById('imagePreviewProducts');
+    if (imagePreviewProductsElement) {
+        imagePreviewProductsElement.src = "";
+        imagePreviewProductsElement.style.display = 'none';
+    }
+
+    const createdAtElement = document.getElementById('product_created_at');
+    if (createdAtElement) {
+        createdAtElement.value = "";
+    }
+
+    const updatedAtElement = document.getElementById('product_updated_at');
+    if (updatedAtElement) {
+        updatedAtElement.value = "";
+    }
 }
+
 
 async function createProduct() {
     if (!selectedCategory) {
@@ -208,7 +238,7 @@ async function createProduct() {
     const newProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
-        picture: document.getElementById('picture')?.value || "",
+        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
         plantation_date: `{${getCheckedMonths('plantation_date').join(', ')}}`,
         harvest_date: `{${getCheckedMonths('harvest_date').join(', ')}}`,
         soil_type: document.getElementById('soil_type')?.value || "",
@@ -221,7 +251,23 @@ async function createProduct() {
         updated_at: currentDate.toISOString()
     };
 
-    console.log("Sending data to server:", newProduct);
+    const fileInput = document.getElementById('imageUploadDownload');
+    const file = fileInput?.files[0];
+
+    if (file) {
+        try {
+            const base64String = await convertFileToBase64(file);
+            newProduct.picture = base64String; // Mettre à jour l'image en base64
+        } catch (error) {
+            console.error('Erreur lors de la conversion du fichier en base64 :', error);
+            alert('Erreur lors de la conversion du fichier en base64');
+            return;
+        }
+    } else {
+        console.warn('No file selected for upload.');
+    }
+
+    console.log("Envoi des données au serveur :", newProduct);
 
     try {
         const response = await fetch(`/api/products`, {
