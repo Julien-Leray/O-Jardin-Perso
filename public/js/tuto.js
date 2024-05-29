@@ -73,18 +73,33 @@ async function saveTutorial() {
         updateTutorial();
     }
 }
-
 async function createTutorial() {
     const currentDate = new Date();
 
     const newTutorial = {
         title: document.getElementById('tutorialTitle').value,
         article: document.getElementById('tutorialArticle').value,
-        picture: document.getElementById('tutorialPicture').value,
+        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
         theme: document.getElementById('tutorialTheme').value,
         created_at: currentDate.toISOString(),
         updated_at: currentDate.toISOString()
     };
+
+    const fileInput = document.getElementById('tutorialImageUploadDownload');
+    const file = fileInput?.files[0];
+
+    if (file) {
+        try {
+            const base64String = await convertFileToBase64(file);
+            newTutorial.picture = base64String; // Mettre à jour l'image en base64
+        } catch (error) {
+            console.error('Erreur lors de la conversion du fichier en base64 :', error);
+            alert('Erreur lors de la conversion du fichier en base64');
+            return;
+        }
+    } else {
+        console.warn('No file selected for upload.');
+    }
 
     try {
         const response = await fetch(`/api/tutorials`, {
@@ -124,10 +139,27 @@ async function updateTutorial() {
     const updatedTutorial = {
         title: document.getElementById('tutorialTitle').value,
         article: document.getElementById('tutorialArticle').value,
-        picture: document.getElementById('tutorialPicture').value,
+        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
         theme: document.getElementById('tutorialTheme').value,
         updated_at: currentDate.toISOString()
     };
+
+    const fileInput = document.getElementById('tutorialImageUploadDownload');
+    const file = fileInput?.files[0];
+
+    if (file) {
+        try {
+            const base64String = await convertFileToBase64(file);
+            updatedTutorial.picture = base64String; // Mettre à jour l'image en base64
+        } catch (error) {
+            console.error('Erreur lors de la conversion du fichier en base64 :', error);
+            alert('Erreur lors de la conversion du fichier en base64');
+            return;
+        }
+    } else {
+        // Si aucune nouvelle image n'est téléchargée, utilisez l'URL existante
+        updatedTutorial.picture = document.getElementById('tutorialPicture').value;
+    }
 
     try {
         const response = await fetch(`/api/tutorials/${currentTutorialId}`, {
@@ -150,6 +182,7 @@ async function updateTutorial() {
         console.error('Erreur lors de la mise à jour du tutoriel :', error);
     }
 }
+
 
 async function deleteTutorial() {
     if (!currentTutorialId) {
@@ -178,13 +211,19 @@ async function deleteTutorial() {
         console.error('Erreur lors de la suppression du tutoriel :', error);
     }
 }
-
 function clearTutorialDetails() {
-    document.getElementById('tutorialTitle').value = "";
-    document.getElementById('tutorialArticle').value = "";
-    document.getElementById('tutorialPicture').value = "";
-    document.getElementById('tutorialTheme').value = "";
-    document.getElementById('tutorialImagePreview').src = "";
-    document.getElementById('tutorialCreatedAt').value = "";
-    document.getElementById('tutorialUpdatedAt').value = "";
+    const tutorialTitle = document.getElementById('tutorialTitle');
+    const tutorialArticle = document.getElementById('tutorialArticle');
+    const tutorialPicture = document.getElementById('tutorialPicture');
+    const tutorialTheme = document.getElementById('tutorialTheme');
+    const imagePreviewTuto = document.getElementById('imagePreviewTuto');
+
+    if (tutorialTitle) tutorialTitle.value = '';
+    if (tutorialArticle) tutorialArticle.value = '';
+    if (tutorialPicture) tutorialPicture.value = '';
+    if (tutorialTheme) tutorialTheme.value = '';
+    if (imagePreviewTuto) {
+        imagePreviewTuto.src = '';
+        imagePreviewTuto.style.display = 'none';
+    }
 }
