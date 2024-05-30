@@ -1,0 +1,195 @@
+#mainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px; /* Added gap for spacing */
+}
+
+#containerLeft, #containerCenter, #containerRight {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  text-align: center; /* Center text content */
+  min-width: 300px; /* Minimum width of 300px */
+  flex: 1 1 30%; /* Grow/shrink to 30% of the container */
+}
+
+#containerLeft label, #containerCenter label, #containerRight label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: left; /* Align labels to the left */
+}
+
+#containerLeft textarea, #containerCenter textarea, #containerRight textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  resize: vertical;
+}
+
+#containerLeft input[type="text"], #containerCenter input[type="text"], #containerRight input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+#containerLeft img, #containerCenter img, #containerRight img {
+  width: 100%; /* Image takes full width of the container */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 10px; /* Space below the image */
+}
+
+#containerLeft input[type="file"], #containerCenter input[type="file"], #containerRight input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+#dates_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#dates_container .month {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dates_container input[type="checkbox"] {
+  display: none;
+}
+
+#dates_container label {
+  width: 60px; /* Increased width */
+  height: 30px; /* Height */
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+  font-size: 12px; /* Smaller font size to fit text */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#dates_container input[type="checkbox"].plantation:checked + label {
+  background-color: #8bc34a;
+}
+
+#dates_container input[type="checkbox"].recolte:checked + label {
+  background-color: #ff9800;
+}
+
+#dates_container input[type="checkbox"].plantation.recolte:checked + label {
+  background: linear-gradient(to bottom right, #8bc34a 50%, #ff9800 50%);
+}
+
+#containerBottom {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+  display: flex; /* Use Flexbox */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  gap: 10px; /* Space between elements */
+}
+
+#containerBottom button {
+  padding: 10px 15px;
+  margin: 5px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#containerBottom button:nth-child(2) {
+  background-color: #dc3545; /* Red color for delete button */
+}
+
+#containerBottom .input-group {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+
+#containerBottom label {
+  font-weight: bold;
+  text-align: left; /* Align labels to the left */
+}
+
+#containerBottom input[type="text"] {
+  width: 200px;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #e9ecef; /* Light grey background for readonly input */
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.toggle-buttons button {
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.toggle-buttons button.active-plantation {
+  background-color: #8bc34a;
+  color: white;
+}
+
+.toggle-buttons button.active-recolte {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 900px) {
+  #mainContainer {
+    flex-direction: column;
+  }
+
+  #containerLeft, #containerCenter, #containerRight {
+    flex: 1 1 100%; /* Make containers take full width */
+    max-width: 100%; /* Ensure they don't exceed full width */
+  }
+}

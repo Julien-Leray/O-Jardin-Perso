@@ -1,5 +1,8 @@
 let currentProductId = null;
 
+
+
+
 async function fetchProducts(category) {
     selectedCategory = category;
     
@@ -23,7 +26,6 @@ async function fetchProducts(category) {
                 productsSelect.appendChild(option);
             });
 
-            // Afficher la section des produits
             hideAllSections();
             document.getElementById('productsSection').style.display = 'block';
         }
@@ -66,8 +68,8 @@ async function fetchProductDetails(productId) {
             setElementValue('productsPicture', product.picture);
             updateImagePreviewProducts(product.picture);
 
-            setCheckedMonths('plantation_date', product.plantation_date);
-            setCheckedMonths('harvest_date', product.harvest_date);
+            setCheckedMonths(product.plantation_date, 'plantation');
+            setCheckedMonths(product.harvest_date, 'recolte');
 
             document.getElementById('soil_type').value = product.soil_type;
             document.getElementById('diseases').value = product.diseases;
@@ -93,12 +95,29 @@ function setElementValue(id, value, isDisabled = false) {
     }
 }
 
-function setCheckedMonths(id, monthsString) {
-    const months = monthsString.replace(/{|}/g, '').split(', ').map(Number);
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
+function setCheckedMonths(monthsString, mode) {
+    const months = monthsString.replace(/{|}/g, '').split(', ').map(month => month.trim());
+    const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
     checkboxes.forEach(checkbox => {
-        checkbox.checked = months.includes(parseInt(checkbox.value));
+        if (months.includes(checkbox.value)) {
+            checkbox.classList.add(mode);
+            updateCheckboxLabel(checkbox);
+        }
     });
+}
+
+function getCheckedMonths() {
+    const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+    const checkedMonths = { plantation: [], recolte: [] };
+    checkboxes.forEach(checkbox => {
+        if (checkbox.classList.contains('plantation')) {
+            checkedMonths.plantation.push(checkbox.value);
+        }
+        if (checkbox.classList.contains('recolte')) {
+            checkedMonths.recolte.push(checkbox.value);
+        }
+    });
+    return checkedMonths;
 }
 
 async function updateProduct() {
@@ -112,20 +131,20 @@ async function updateProduct() {
         return;
     }
 
+    const checkedMonths = getCheckedMonths();
 
     const updatedProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
         picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
-        plantation_date: `{${getCheckedMonths('plantation_date').join(', ')}}`,
-        harvest_date: `{${getCheckedMonths('harvest_date').join(', ')}}`,
+        plantation_date: `{${checkedMonths.plantation.join(', ')}}`,
+        harvest_date: `{${checkedMonths.recolte.join(', ')}}`,
         soil_type: document.getElementById('soil_type')?.value || "",
         diseases: document.getElementById('diseases')?.value || "",
         watering_frequency: document.getElementById('watering_frequency')?.value || "",
         description: document.getElementById('description')?.value || "",
         sowing_tips: document.getElementById('sowing_tips')?.value || "",
         category_id: selectedCategory === 'Fruit' ? 1 : 2, // Assurez-vous que cette valeur est correcte
-        
     };
 
     const fileInput = document.getElementById('imageUploadDownload');
@@ -209,8 +228,7 @@ function clearProductDetails() {
         }
     });
     
-    clearCheckedMonths('plantation_date');
-    clearCheckedMonths('harvest_date');
+    clearCheckedMonths('dates_container');
 
     const productsElement = document.getElementById('products');
     if (productsElement) {
@@ -239,7 +257,6 @@ function clearProductDetails() {
     }
 }
 
-
 async function createProduct() {
     if (!selectedCategory) {
         alert("Aucune catégorie sélectionnée");
@@ -248,12 +265,14 @@ async function createProduct() {
 
     const currentDate = new Date();
 
+    const checkedMonths = getCheckedMonths();
+
     const newProduct = {
         name: document.getElementById('name')?.value || "",
         latin_name: document.getElementById('latin_name')?.value || "",
         picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
-        plantation_date: `{${getCheckedMonths('plantation_date').join(', ')}}`,
-        harvest_date: `{${getCheckedMonths('harvest_date').join(', ')}}`,
+        plantation_date: `{${checkedMonths.plantation.join(', ')}}`,
+        harvest_date: `{${checkedMonths.recolte.join(', ')}}`,
         soil_type: document.getElementById('soil_type')?.value || "",
         diseases: document.getElementById('diseases')?.value || "",
         watering_frequency: document.getElementById('watering_frequency')?.value || "",
@@ -302,4 +321,96 @@ async function createProduct() {
     } catch (error) {
         console.error('Erreur lors de l\'ajout du produit :', error);
     }
+}
+
+let currentMode = 'plantation';
+
+function setMode(mode) {
+  currentMode = mode;
+  const plantationButton = document.getElementById('plantationMode');
+  const recolteButton = document.getElementById('recolteMode');
+
+  if (mode === 'plantation') {
+    plantationButton.classList.add('active-plantation');
+    recolteButton.classList.remove('active-recolte');
+  } else if (mode === 'recolte') {
+    recolteButton.classList.add('active-recolte');
+    plantationButton.classList.remove('active-plantation');
+  }
+}
+
+function handleCheckboxChange(checkbox) {
+  const label = checkbox.nextElementSibling;
+
+  if (currentMode === 'plantation') {
+    checkbox.classList.toggle('plantation');
+  } else {
+    checkbox.classList.toggle('recolte');
+  }
+
+  updateCheckboxLabel(checkbox);
+}
+
+function updateCheckboxLabel(checkbox) {
+  const label = checkbox.nextElementSibling;
+  const isPlantationChecked = checkbox.classList.contains('plantation');
+  const isRecolteChecked = checkbox.classList.contains('recolte');
+
+  if (isPlantationChecked && isRecolteChecked) {
+    label.style.background = 'linear-gradient(to bottom right, #8bc34a 50%, #ff9800 50%)';
+  } else if (isPlantationChecked) {
+    label.style.background = '#8bc34a';
+  } else if (isRecolteChecked) {
+    label.style.background = '#ff9800';
+  } else {
+    label.style.background = '#f0f0f0';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setMode('plantation');
+  initializeCheckboxes();
+});
+
+function initializeCheckboxes() {
+  // This function should fetch data from your database to set initial states
+  const data = {
+    plantation: ["Janvier", "Mars", "Mai"],
+    recolte: ["Août", "Septembre", "Octobre"]
+  };
+
+  setCheckedMonths(data.plantation, 'plantation');
+  setCheckedMonths(data.recolte, 'recolte');
+}
+
+function setCheckedMonths(months, mode) {
+  const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+  checkboxes.forEach(checkbox => {
+    if (months.includes(checkbox.value)) {
+      checkbox.classList.add(mode);
+      updateCheckboxLabel(checkbox);
+    }
+  });
+}
+
+function clearCheckedMonths(id) {
+  const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
+  checkboxes.forEach(checkbox => {
+    checkbox.classList.remove('plantation', 'recolte');
+    updateCheckboxLabel(checkbox);
+  });
+}
+
+function getCheckedMonths() {
+  const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+  const checkedMonths = { plantation: [], recolte: [] };
+  checkboxes.forEach(checkbox => {
+    if (checkbox.classList.contains('plantation')) {
+      checkedMonths.plantation.push(checkbox.value);
+    }
+    if (checkbox.classList.contains('recolte')) {
+      checkedMonths.recolte.push(checkbox.value);
+    }
+  });
+  return checkedMonths;
 }

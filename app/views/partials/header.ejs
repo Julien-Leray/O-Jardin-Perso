@@ -5,23 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ojardin</title>
+    <link rel="stylesheet" href="/css/reset.css">>
+    <link rel="stylesheet" href="/css/comon.css">>
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/style.css">
-    <script  src="/js/common.js"></script>
-    <script src="/js/image.js"></script>
-    <script  src="/js/products.js"></script>
-    <script  src="/js/tuto.js"></script>
-    <script src="/js/userManagement.js"></script>
+    <script src="/js/common.js" defer></script>
+    <script src="/js/products.js" defer></script>
+    <script src="/js/tuto.js" defer></script>
+    <script src="/js/userManagement.js" defer></script>
+    <script src="/js/image.js" defer></script>
 </head>
 
-<body >
+<body>
     <header>
+        <section id="menuHeader">
+            <label></label>
 
 
-        <section>
-            <label><h2>Choisissez une catégorie :</h2></label>
-            <button onclick="fetchProducts('Fruit')">Fruit</button>
             <button onclick="fetchProducts('Vegetable')">Légume</button>
+            <section id="productsSection" style="display: none;">
+                    <select id="products" onchange="handleProductSelection()">
+                    <option value="">--Sélectionnez un produit--</option>
+                    <option value="new">Ajouter un nouveau produit</option>
+                </select>
+              </section>
+            <button onclick="fetchProducts('Fruit')">Fruit</button>
+            <section id="productsSection" style="display: none;">
+                    <select id="products" onchange="handleProductSelection()">
+                    <option value="">--Sélectionnez un produit--</option>
+                    <option value="new">Ajouter un nouveau produit</option>
+                </select>
+              </section>
             <button onclick="fetchTutorials()">Tutoriel</button>
+            <section id="tutorialsSection">
+                <label for="tutorialsSelect"></label>
+                <select id="tutorialsSelect" onchange="handleTutorialSelection()">
+                    <option value="">--Sélectionnez un tutoriel--</option>
+                    <option value="new">Ajouter un nouveau tutoriel</option>
+                </select>
+            </section>
             <button onclick="fetchUsers()">Utilisateur</button>
         </section>
     </header>

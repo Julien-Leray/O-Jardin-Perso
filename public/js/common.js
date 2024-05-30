@@ -1,4 +1,3 @@
-
 let selectedCategory = null;
 
 function formatDate(isoString) {
@@ -12,18 +11,6 @@ function formatDate(isoString) {
 }
 
 
-
-function clearCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-    });
-}
-
-function getCheckedMonths(id) {
-    const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]:checked`);
-    return Array.from(checkboxes).map(checkbox => parseInt(checkbox.value));
-}
 
 function hideAllSections() {
     document.getElementById('productsSection').style.display = 'none';
@@ -44,3 +31,4 @@ function convertFileToBase64(file) {
         reader.readAsDataURL(file);
     });
 }
+

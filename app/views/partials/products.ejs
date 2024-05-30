@@ -1,71 +1,107 @@
-<section id="productsSection" style="display: none;">
-  <h3>Produits</h3>
-  <label for="products">Choisissez un produit :</label>
-  <select id="products" onchange="handleProductSelection()">
-      <option value="">--Sélectionnez un produit--</option>
-      <option value="new">Ajouter un nouveau produit</option>
-  </select>
-</section>
-
-<section id="productDetails" style="display: none;">
+<section id="productDetails">
   <h3>Détails du Produit</h3>
-  <div>
-      <label for="product_created_at">Créé le:</label>
-      <input type="text" id="product_created_at" readonly><br>
-
-      <label for="product_updated_at">Mis à jour le:</label>
-      <input type="text" id="product_updated_at" readonly><br>
-      <label>Nom : <input type="text" id="name" required></label><br>
-      <label>Nom Latin : <input type="text" id="latin_name"></label><br>
-
-
-    
-      <label for="productsPicture">Image URL:</label>
-      <input type="text" id="productsPicture" name="productsPicture" oninput="updateImagePreviewProducts()">
-      <br>
-      <label for="imageUploadDownload">Image : 
-          <input type="file" id="imageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownload()" required>
-      </label><br>
+  <div id="mainContainer">
+    <div id="containerLeft">
       <img id="imagePreviewProducts" src="" alt="Prévisualisation de l'image">
-      <br>
-
-
-      <fieldset>
-        <legend>Date de Plantation :</legend>
-        <div id="plantation_date" class="month-checkboxes">
-            <% const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]; %>
-            <% months.forEach((month, index) => { %>
-                <label><input type="checkbox" value="<%= index + 1 %>"> <%= month %></label>
-            <% }); %>
-        </div>
-    </fieldset>
+      <label for="imageUploadDownload">Télécharger une image :
+        <input type="file" id="imageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownload()" required>
+      </label>
+    </div>
     
-    <fieldset>
-        <legend>Date de Récolte :</legend>
-        <div id="harvest_date" class="month-checkboxes">
-            <% months.forEach((month, index) => { %>
-                <label><input type="checkbox" value="<%= index + 1 %>"> <%= month %></label>
-            <% }); %>
-        </div>
-    </fieldset>
-      <label>Type de Sol : 
-        <textarea id="soil_type" rows="4" cols="50"></textarea>
-      </label><br>
-      <label>Maladies : 
-        <textarea id="diseases" rows="4" cols="50"></textarea>
-      </label><br>
-      <label>Fréquence d'Arrosage : 
-        <textarea id="watering_frequency" rows="4" cols="50"></textarea>
-      </label><br>
+    <div id="containerCenter">
+      <label for="name">Nom :</label>
+      <input type="text" id="name" required><br>
+      <label for="latin_name">Nom Latin :</label>
+      <input type="text" id="latin_name"><br>
+      <br>
       <label>Description : 
         <textarea id="description" rows="4" cols="50"></textarea>
       </label><br>
-      <label>Conseils de Semis : 
+    </div>
+    
+    <div id="containerRight">
+      <div id="fielDiv">
+        <div class="toggle-buttons">
+          <button type="button" id="plantationMode" onclick="setMode('plantation')">Date de Plantation</button>
+          <button type="button" id="recolteMode" onclick="setMode('recolte')">Date de Récolte</button>
+        </div>
+        <div id="dates_container" class="month-checkboxes">
+          <div class="month">
+            <input type="checkbox" id="month-1" value="1" data-month="Janvier" onchange="handleCheckboxChange(this)">
+            <label for="month-1">Janvier</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-2" value="2" data-month="Février" onchange="handleCheckboxChange(this)">
+            <label for="month-2">Février</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-3" value="3" data-month="Mars" onchange="handleCheckboxChange(this)">
+            <label for="month-3">Mars</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-4" value="4" data-month="Avril" onchange="handleCheckboxChange(this)">
+            <label for="month-4">Avril</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-5" value="5" data-month="Mai" onchange="handleCheckboxChange(this)">
+            <label for="month-5">Mai</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-6" value="6" data-month="Juin" onchange="handleCheckboxChange(this)">
+            <label for="month-6">Juin</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-7" value="7" data-month="Juillet" onchange="handleCheckboxChange(this)">
+            <label for="month-7">Juillet</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-8" value="8" data-month="Août" onchange="handleCheckboxChange(this)">
+            <label for="month-8">Août</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-9" value="9" data-month="Septembre" onchange="handleCheckboxChange(this)">
+            <label for="month-9">Septembre</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-10" value="10" data-month="Octobre" onchange="handleCheckboxChange(this)">
+            <label for="month-10">Octobre</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-11" value="11" data-month="Novembre" onchange="handleCheckboxChange(this)">
+            <label for="month-11">Novembre</label>
+          </div>
+          <div class="month">
+            <input type="checkbox" id="month-12" value="12" data-month="Décembre" onchange="handleCheckboxChange(this)">
+            <label for="month-12">Décembre</label>
+          </div>
+        </div>
+      </div>
+
+      <label for="soil_type">Type de Sol : 
+        <textarea id="soil_type" rows="4" cols="50"></textarea>
+      </label><br>
+      <label for="diseases">Maladies : 
+        <textarea id="diseases" rows="4" cols="50"></textarea>
+      </label><br>
+      <label for="watering_frequency">Fréquence d'Arrosage : 
+        <textarea id="watering_frequency" rows="4" cols="50"></textarea>
+      </label><br>
+      <label for="sowing_tips">Conseils de Semis : 
         <textarea id="sowing_tips" rows="4" cols="50"></textarea>
       </label><br>
-
-      <button id="saveButton" onclick="updateProduct()">Enregistrer les Modifications</button>
-      
-      <button onclick="deleteProduct()">Supprimer le Produit</button>
+    </div>
+  </div>
+  
+  <div id="containerBottom">
+    <button id="saveButton" onclick="updateProduct()">Enregistrer les Modifications</button>
+    <button onclick="deleteProduct()">Supprimer le Produit</button>
+    <div class="input-group">
+      <label for="product_created_at">Créé le:</label>
+      <input type="text" id="product_created_at" readonly><br>
+    </div>
+    <div class="input-group">
+      <label for="product_updated_at">Mis à jour le:</label>
+      <input type="text" id="product_updated_at" readonly><br>
+    </div>
   </div>
 </section>

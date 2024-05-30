@@ -1,0 +1,44 @@
+header section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#menuHeader {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.productsSection {
+    display: none;
+    position: absolute;
+    top: 60px; /* Adjust as needed */
+    right: 0; /* Position to the right */
+    background-color: #f0f0f0; /* Background color */
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+#productsSectionFruit {
+    background-color: #e0e0e0; /* Distinct style for Fruit section */
+}
+
+.productsSection select,
+#tutorialsSection select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+select {
+    width: 100%; /* Ensure full width within its container */
+}

@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header, footer {
+    background-color: #ffe600;
+    text-align: center;
+    padding: 4px 0;
+}
+
+
+button {
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #ff9f2e;
+}
+
+
+
+input[type="text"], input[type="email"], input[type="password"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+}
+
+
+#productsSection, #productDetails, #tutorialsSection, #tutorialDetails, #usersSection, #userFormSection {
+    display: none;
+}
+
+
+
+button#addUserButton, button#saveButton, button#saveTutorialButton, button#saveNewButton, button#saveEditButton {
+    background-color: #ff8c00;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button#addUserButton:hover, button#saveButton:hover, button#saveTutorialButton:hover, button#saveNewButton:hover, button#saveEditButton:hover {
+    background-color: #ff9f2e;
+}
+
+  #fielDiv {
+    margin-bottom: 20px; /* Espacement en bas du bloc */
+  }
+  
+  #fielDiv fieldset {
+    border: 1px solid #ccc; /* Bordure autour du fieldset */
+    padding: 10px; /* Espacement interne */
+    margin-bottom: 20px; /* Espacement en bas du fieldset */
+    background-color: #f9f9f9; /* Couleur de fond */
+    border-radius: 5px; /* Coins arrondis */
+  }
+  
+  #fielDiv legend {
+    font-weight: bold; /* Texte en gras pour les légendes */
+    padding: 0 10px; /* Espacement interne pour les légendes */
+  }
+  
+  .month-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  
+  .month-checkboxes label {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .month-checkboxes label:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .month-checkboxes input[type="checkbox"] {
+    display: none;
+  }
+  
+  .month-checkboxes input[type="checkbox"]:checked + label {
+    background-color: #ff8c00;
+    color: white;
+    border-color: #ff8c00;
+  }
