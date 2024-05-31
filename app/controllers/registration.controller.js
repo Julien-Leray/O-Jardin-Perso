@@ -39,7 +39,7 @@ const controller = {
     const { email } = req.body;
     const user = await connectionDatamapper.findByEmail(email);
     if (user) {
-      res.json({ exists: true });
+      res.status(200).json({ exists: true });
     } else {
       res.json({ exists: false });
     }
