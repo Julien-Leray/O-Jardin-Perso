@@ -1,8 +1,5 @@
 let currentProductId = null;
 
-
-
-
 async function fetchProducts(category) {
     selectedCategory = category;
     
@@ -68,6 +65,7 @@ async function fetchProductDetails(productId) {
             setElementValue('productsPicture', product.picture);
             updateImagePreviewProducts(product.picture);
 
+            clearCheckedMonths();
             setCheckedMonths(product.plantation_date, 'plantation');
             setCheckedMonths(product.harvest_date, 'recolte');
 
@@ -228,7 +226,7 @@ function clearProductDetails() {
         }
     });
     
-    clearCheckedMonths('dates_container');
+    clearCheckedMonths();
 
     const productsElement = document.getElementById('products');
     if (productsElement) {
@@ -326,91 +324,91 @@ async function createProduct() {
 let currentMode = 'plantation';
 
 function setMode(mode) {
-  currentMode = mode;
-  const plantationButton = document.getElementById('plantationMode');
-  const recolteButton = document.getElementById('recolteMode');
+    currentMode = mode;
+    const plantationButton = document.getElementById('plantationMode');
+    const recolteButton = document.getElementById('recolteMode');
 
-  if (mode === 'plantation') {
-    plantationButton.classList.add('active-plantation');
-    recolteButton.classList.remove('active-recolte');
-  } else if (mode === 'recolte') {
-    recolteButton.classList.add('active-recolte');
-    plantationButton.classList.remove('active-plantation');
-  }
+    if (mode === 'plantation') {
+        plantationButton.classList.add('active-plantation');
+        recolteButton.classList.remove('active-recolte');
+    } else if (mode === 'recolte') {
+        recolteButton.classList.add('active-recolte');
+        plantationButton.classList.remove('active-plantation');
+    }
 }
 
 function handleCheckboxChange(checkbox) {
-  const label = checkbox.nextElementSibling;
+    const label = checkbox.nextElementSibling;
 
-  if (currentMode === 'plantation') {
-    checkbox.classList.toggle('plantation');
-  } else {
-    checkbox.classList.toggle('recolte');
-  }
+    if (currentMode === 'plantation') {
+        checkbox.classList.toggle('plantation');
+    } else {
+        checkbox.classList.toggle('recolte');
+    }
 
-  updateCheckboxLabel(checkbox);
+    updateCheckboxLabel(checkbox);
 }
 
 function updateCheckboxLabel(checkbox) {
-  const label = checkbox.nextElementSibling;
-  const isPlantationChecked = checkbox.classList.contains('plantation');
-  const isRecolteChecked = checkbox.classList.contains('recolte');
+    const label = checkbox.nextElementSibling;
+    const isPlantationChecked = checkbox.classList.contains('plantation');
+    const isRecolteChecked = checkbox.classList.contains('recolte');
 
-  if (isPlantationChecked && isRecolteChecked) {
-    label.style.background = 'linear-gradient(to bottom right, #8bc34a 50%, #ff9800 50%)';
-  } else if (isPlantationChecked) {
-    label.style.background = '#8bc34a';
-  } else if (isRecolteChecked) {
-    label.style.background = '#ff9800';
-  } else {
-    label.style.background = '#f0f0f0';
-  }
+    if (isPlantationChecked && isRecolteChecked) {
+        label.style.background = 'linear-gradient(to bottom right, #8bc34a 50%, #ff9800 50%)';
+    } else if (isPlantationChecked) {
+        label.style.background = '#8bc34a';
+    } else if (isRecolteChecked) {
+        label.style.background = '#ff9800';
+    } else {
+        label.style.background = '#f0f0f0';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setMode('plantation');
-  initializeCheckboxes();
+    setMode('plantation');
+    initializeCheckboxes();
 });
 
 function initializeCheckboxes() {
-  // This function should fetch data from your database to set initial states
-  const data = {
-    plantation: ["Janvier", "Mars", "Mai"],
-    recolte: ["Août", "Septembre", "Octobre"]
-  };
+    // This function should fetch data from your database to set initial states
+    const data = {
+        plantation: ["1", "3", "5"],
+        recolte: ["8", "9", "10"]
+    };
 
-  setCheckedMonths(data.plantation, 'plantation');
-  setCheckedMonths(data.recolte, 'recolte');
+    setCheckedMonths(data.plantation, 'plantation');
+    setCheckedMonths(data.recolte, 'recolte');
 }
 
 function setCheckedMonths(months, mode) {
-  const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
-  checkboxes.forEach(checkbox => {
-    if (months.includes(checkbox.value)) {
-      checkbox.classList.add(mode);
-      updateCheckboxLabel(checkbox);
-    }
-  });
+    const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+    checkboxes.forEach(checkbox => {
+        if (months.includes(checkbox.value)) {
+            checkbox.classList.add(mode);
+            updateCheckboxLabel(checkbox);
+        }
+    });
 }
 
-function clearCheckedMonths(id) {
-  const checkboxes = document.querySelectorAll(`#${id} input[type=checkbox]`);
-  checkboxes.forEach(checkbox => {
-    checkbox.classList.remove('plantation', 'recolte');
-    updateCheckboxLabel(checkbox);
-  });
+function clearCheckedMonths() {
+    const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+    checkboxes.forEach(checkbox => {
+        checkbox.classList.remove('plantation', 'recolte');
+        updateCheckboxLabel(checkbox);
+    });
 }
 
 function getCheckedMonths() {
-  const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
-  const checkedMonths = { plantation: [], recolte: [] };
-  checkboxes.forEach(checkbox => {
-    if (checkbox.classList.contains('plantation')) {
-      checkedMonths.plantation.push(checkbox.value);
-    }
-    if (checkbox.classList.contains('recolte')) {
-      checkedMonths.recolte.push(checkbox.value);
-    }
-  });
-  return checkedMonths;
+    const checkboxes = document.querySelectorAll(`#dates_container input[type=checkbox]`);
+    const checkedMonths = { plantation: [], recolte: [] };
+    checkboxes.forEach(checkbox => {
+        if (checkbox.classList.contains('plantation')) {
+            checkedMonths.plantation.push(checkbox.value);
+        }
+        if (checkbox.classList.contains('recolte')) {
+            checkedMonths.recolte.push(checkbox.value);
+        }
+    });
+    return checkedMonths;
 }

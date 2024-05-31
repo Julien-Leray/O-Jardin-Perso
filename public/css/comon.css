@@ -100,8 +100,3 @@ button#addUserButton:hover, button#saveButton:hover, button#saveTutorialButton:h
     display: none;
   }
   
-  .month-checkboxes input[type="checkbox"]:checked + label {
-    background-color: #ff8c00;
-    color: white;
-    border-color: #ff8c00;
-  }

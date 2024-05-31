@@ -1,0 +1,123 @@
+#mainContainerTuto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px; /* Added gap for spacing */
+}
+
+#contenairLeftTuto, #contenairRightTuto, #contenairBottomTuto {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    text-align: center; /* Center text content */
+    min-width: 300px; /* Minimum width of 300px */
+}
+
+#contenairLeftTuto {
+    flex: 1 1 40%; /* Grow/shrink to 40% of the container */
+}
+
+#contenairRightTuto {
+    flex: 1 1 58%; /* Adjust to fill remaining space */
+}
+
+#contenairLeftTuto label, #contenairRightTuto label, #contenairBottomTuto label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left; /* Align labels to the left */
+}
+
+#contenairLeftTuto textarea, #contenairRightTuto textarea, #contenairBottomTuto textarea,
+#contenairLeftTuto input[type="text"], #contenairRightTuto input[type="text"], #contenairBottomTuto input[type="text"],
+#contenairLeftTuto input[type="file"], #contenairRightTuto input[type="file"], #contenairBottomTuto input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#contenairLeftTuto img {
+    width: 100%; /* Image takes full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px; /* Space below the image */
+}
+
+#contenairBottomTuto {
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Space between elements */
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+#contenairBottomTuto button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#saveTutorialButton {
+    background-color: #007bff;
+}
+
+#contenairBottomTuto button:nth-child(2) {
+    background-color: #dc3545; /* Red color for delete button */
+}
+
+#contenairBottomTuto .input-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and input */
+}
+
+#contenairBottomTuto .input-group-inline label {
+    margin: 0; /* Remove bottom margin for inline labels */
+}
+
+#contenairBottomTuto input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e9ecef; /* Light grey background for readonly input */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 900px) {
+    #mainContainerTuto {
+        flex-direction: column;
+    }
+
+    #contenairLeftTuto, #contenairRightTuto, #contenairBottomTuto {
+        flex: 1 1 100%; /* Make containers take full width */
+        max-width: 100%; /* Ensure they don't exceed full width */
+    }
+
+    #contenairBottomTuto {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #contenairBottomTuto .input-group-inline {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    #contenairBottomTuto input[type="text"] {
+        width: 100%;
+    }
+}
