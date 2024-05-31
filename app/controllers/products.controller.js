@@ -11,7 +11,7 @@ const controller = {
       if (data.length === 0) {
         return res.status(404).json({ message: 'No products found.' });
       }
-      res.statut(200).json(data);
+      res.status(200).json(data);
     }
     else if (category) {
       if (category === 'Fruit' || category === 'Vegetable') {
