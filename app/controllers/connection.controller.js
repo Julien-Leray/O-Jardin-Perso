@@ -19,8 +19,8 @@ const controller = {
       return res.status(401).json({ message: 'Invalid data' });
     }
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
-    console.log('Données renvoyées au front: ', { token, user });
-    res.json({ token, user });
+
+    res.json({ token });
   }),
 
 }
