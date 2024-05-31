@@ -1,0 +1,55 @@
+<div id="fruitDetails" style="display: none;">
+    <main id="mainContainerFruit">
+        <section id="containerLeftFruit">
+            <img id="fruit_imagePreview" style="display: none;">
+            <input type="file" id="fruit_imageUploadDownload" onchange="updateImagePreviewDownload('fruit')">
+            
+        </section>
+
+        <section id="containerCenterFruit">
+            <label for="fruit_name">Nom</label>
+            <input type="text" id="fruit_name">
+
+            <label for="fruit_latin_name">Nom Latin</label>
+            <input type="text" id="fruit_latin_name">
+
+            <label for="fruit_description">Description</label>
+            <textarea id="fruit_description"></textarea>
+
+            <label for="fruit_sowing_tips">Conseils de Semis</label>
+            <textarea id="fruit_sowing_tips"></textarea>
+        </section>
+
+        <section id="containerRightFruit">
+            <div id="fieldDivFruit">
+                <div class="plantationFruitContainer">
+                    <h3>Date de Plantation</h3>
+                    <div id="dates_container_plantation_fruit" class="month-checkboxes"></div>
+                </div>
+                <div class="recolteFruitContainer">
+                    <h3>Date de Récolte</h3>
+                    <div id="dates_container_recolte_fruit" class="month-checkboxes"></div>
+                </div>
+            </div>
+            <label for="fruit_soil_type">Type de Sol</label>
+            <input type="text" id="fruit_soil_type">
+
+            <label for="fruit_diseases">Maladies</label>
+            <input type="text" id="fruit_diseases">
+
+            <label for="fruit_watering_frequency">Fréquence d'Arrosage</label>
+            <input type="text" id="fruit_watering_frequency">
+        </section>
+    </main>
+
+    <section id="containerBottomFruit">
+        <button id="saveFruitButton">Enregistrer</button>
+        <button id="deleteFruitButton" onclick="deleteFruit()">Supprimer</button>
+
+        <label for="fruit_created_at">Créé le</label>
+        <input type="text" id="fruit_created_at" disabled>
+
+        <label for="fruit_updated_at">Mis à jour le</label>
+        <input type="text" id="fruit_updated_at" disabled>
+    </section>
+</div>

@@ -75,28 +75,7 @@ button#addUserButton:hover, button#saveButton:hover, button#saveTutorialButton:h
     font-weight: bold; /* Texte en gras pour les légendes */
     padding: 0 10px; /* Espacement interne pour les légendes */
   }
-  
-  .month-checkboxes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-  }
-  
-  .month-checkboxes label {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s, border-color 0.3s;
-  }
-  
-  .month-checkboxes label:hover {
-    background-color: #e6e6e6;
-  }
-  
-  .month-checkboxes input[type="checkbox"] {
-    display: none;
-  }
+
+
+
   
