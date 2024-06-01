@@ -8,9 +8,12 @@ const controller = {
     const data = await datamapper.getProfile(userId);
 
     if (!data) {
-      return res.status(200).json({ message: 'No profile found.' });
+      return res.status(400).json({ message: 'No profile found.' });
     }
-    res.status(200).json(data);
+    const dataWithoutPassword = { ...data };
+    delete dataWithoutPassword.password;
+
+    res.status(200).json(dataWithoutPassword);
   }),
 
   updateProfile: asyncHandler(async (req, res) => {

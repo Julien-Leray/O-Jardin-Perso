@@ -8,6 +8,12 @@ const datamapper = {
     return rows;
   },
 
+  async getOneFavorite(userId, productToAdd) {
+    const query = `SELECT * FROM user_has_product WHERE user_id = $1 AND product_id = $2`;
+    const { rows } = await client.query(query, [userId, productToAdd]);
+    return rows;
+  },
+
   async getUserById(userId) {
     const query = 'SELECT * FROM "user" WHERE id = $1';
     const { rows } = await client.query(query, [userId]);
