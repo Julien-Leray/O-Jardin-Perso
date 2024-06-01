@@ -4,7 +4,7 @@ function formatDate(isoString) {
     if (!isoString) return ''; // Retourner une chaîne vide si isoString est null ou undefined
     const date = new Date(isoString);
     const options = {
-        year: 'numeric', month: 'long', day: 'numeric', 
+        year: 'numeric', month: 'long', day: 'numeric',
         hour: '2-digit', minute: '2-digit', second: '2-digit'
     };
     return date.toLocaleString('fr-FR', options);
@@ -20,13 +20,7 @@ function convertFileToBase64(file) {
 }
 
 function handleProductSelection(category) {
-    let productId;
-    let detailsId;
-    let saveButtonId;
-    let fetchDetailsFunction;
-    let clearDetailsFunction;
-    let createProductFunction;
-    let updateProductFunction;
+    let productId, detailsId, saveButtonId, fetchDetailsFunction, clearDetailsFunction, createProductFunction, updateProductFunction;
 
     if (category === 'Fruit') {
         productId = document.getElementById('fruits').value;
@@ -64,16 +58,13 @@ function handleProductSelection(category) {
 async function fetchProducts(category) {
     selectedCategory = category;
 
-    if (!category) {
-        return;
-    }
+    if (!category) return;
 
     try {
         const response = await fetch(`/api/products?category=${category}`);
         const products = await response.json();
 
-        let productsSelect;
-        let sectionId;
+        let productsSelect, sectionId;
 
         if (category === 'Fruit') {
             productsSelect = document.getElementById('fruits');
@@ -93,6 +84,9 @@ async function fetchProducts(category) {
             productsSelect.appendChild(option);
         });
 
+        // Ajuster la largeur du select après avoir ajouté les options
+        adjustSelectWidth(productsSelect);
+
         hideAllSections();
         document.getElementById(sectionId).style.display = 'block';
     } catch (error) {
@@ -101,14 +95,10 @@ async function fetchProducts(category) {
 }
 
 function hideAllSections() {
-    document.getElementById('tutorialsSection').style.display = 'none';
-    document.getElementById('tutorialDetails').style.display = 'none';
-    document.getElementById('usersSection').style.display = 'none';
-    document.getElementById('userFormSection').style.display = 'none';
-    document.getElementById('fruitsSection').style.display = 'none';
-    document.getElementById('fruitDetails').style.display = 'none';
-    document.getElementById('legumesSection').style.display = 'none';
-    document.getElementById('legumeDetails').style.display = 'none';
+    const sections = ['tutorialsSection', 'tutorialDetails', 'usersSection', 'userFormSection', 'fruitsSection', 'fruitDetails', 'legumesSection', 'legumeDetails'];
+    sections.forEach(id => {
+        document.getElementById(id).style.display = 'none';
+    });
 }
 
 const months = [
@@ -158,11 +148,11 @@ function generateMonthCheckboxes(containerId, type, category, selectedMonths = [
 function clearCheckedMonths(category) {
     const plantationCheckboxes = document.querySelectorAll(`.${category.toLowerCase()}-plantation-month-checkbox`);
     const recolteCheckboxes = document.querySelectorAll(`.${category.toLowerCase()}-recolte-month-checkbox`);
-    
+
     plantationCheckboxes.forEach(checkbox => {
         checkbox.checked = false;
     });
-    
+
     recolteCheckboxes.forEach(checkbox => {
         checkbox.checked = false;
     });
@@ -254,19 +244,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function adjustSelectWidth(selectElement) {
-    const tempSelect = document.createElement('select');
-    const tempOption = document.createElement('option');
-    
-    tempOption.textContent = selectElement.options[selectElement.selectedIndex].text;
-    tempSelect.style.visibility = 'hidden';
-    tempSelect.style.position = 'fixed';
-    tempSelect.appendChild(tempOption);
-    document.body.appendChild(tempSelect);
-    
-    const tempSelectWidth = tempSelect.clientWidth;
-    document.body.removeChild(tempSelect);
-    
-    selectElement.style.width = tempSelectWidth + 'px';
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.style.whiteSpace = 'nowrap';
+    document.body.appendChild(tempDiv);
+
+    // Trouver la largeur maximale parmi toutes les options
+    let maxWidth = 0;
+    for (let i = 0; i < selectElement.options.length; i++) {
+        tempDiv.textContent = selectElement.options[i].text;
+        maxWidth = Math.max(maxWidth, tempDiv.clientWidth);
+    }
+
+    // Inclure un peu de marge pour le padding et la bordure
+    selectElement.style.width = `${maxWidth + 20}px`;
+
+    document.body.removeChild(tempDiv);
 }
 
 function toggleSection(sectionId, button) {
@@ -295,7 +289,7 @@ function toggleSection(sectionId, button) {
     } else {
         section.classList.add('active');
         section.style.display = 'flex';
-        
+
         const selectElement = section.querySelector('select');
         if (selectElement) {
             adjustSelectWidth(selectElement);
@@ -303,29 +297,29 @@ function toggleSection(sectionId, button) {
     }
 }
 
-document.querySelector('button[onclick="fetchProducts(\'Vegetable\')"]').addEventListener('click', function() {
+document.querySelector('button[onclick="fetchProducts(\'Vegetable\')"]').addEventListener('click', function () {
     toggleSection('legumesSection', this);
     fetchProducts('Vegetable');
 });
 
-document.querySelector('button[onclick="fetchProducts(\'Fruit\')"]').addEventListener('click', function() {
+document.querySelector('button[onclick="fetchProducts(\'Fruit\')"]').addEventListener('click', function () {
     toggleSection('fruitsSection', this);
     fetchProducts('Fruit');
 });
 
-document.querySelector('button[onclick="fetchTutorials()"]').addEventListener('click', function() {
+document.querySelector('button[onclick="fetchTutorials()"]').addEventListener('click', function () {
     toggleSection('tutorialsSection', this);
     fetchTutorials();
 });
 
-document.querySelector('button[onclick="fetchUsers()"]').addEventListener('click', function() {
+document.querySelector('button[onclick="fetchUsers()"]').addEventListener('click', function () {
     toggleSection('usersSection', this);
     fetchUsers();
 });
 
 // Adjust select width on content change
 document.querySelectorAll('select').forEach(select => {
-    select.addEventListener('change', function() {
+    select.addEventListener('change', function () {
         adjustSelectWidth(this);
     });
 });

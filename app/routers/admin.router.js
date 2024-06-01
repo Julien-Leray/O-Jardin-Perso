@@ -5,11 +5,11 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 
 const router = express.Router();
 
-router.get('/gestion', adminController.renderAdminPage);
-router.get('/users', adminController.getAllUsers);
-router.get('/users/:id', adminController.getOneUser);
-router.post('/users', adminController.createUser);
-router.patch('/users/:id', adminController.updateUser);
-router.delete('/users/:id', adminController.deleteUser);
+router.get('/gestion', authMiddleware, isAdmin, adminController.renderAdminPage);
+router.get('/users', authMiddleware, isAdmin, adminController.getAllUsers);
+router.get('/users/:id', authMiddleware, isAdmin, adminController.getOneUser);
+router.post('/users', authMiddleware, isAdmin, adminController.createUser);
+router.patch('/users/:id', authMiddleware, isAdmin, adminController.updateUser);
+router.delete('/users/:id', authMiddleware, isAdmin, adminController.deleteUser);
 
 export default router;
