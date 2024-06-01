@@ -10,10 +10,6 @@ function formatDate(isoString) {
     return date.toLocaleString('fr-FR', options);
 }
 
-
-
-
-
 function convertFileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -64,6 +60,7 @@ function handleProductSelection(category) {
         document.getElementById(detailsId).style.display = 'none';
     }
 }
+
 async function fetchProducts(category) {
     selectedCategory = category;
 
@@ -113,6 +110,7 @@ function hideAllSections() {
     document.getElementById('legumesSection').style.display = 'none';
     document.getElementById('legumeDetails').style.display = 'none';
 }
+
 const months = [
     { id: 1, name: "Janvier" },
     { id: 2, name: "Février" },
@@ -238,3 +236,96 @@ generateMonthCheckboxes('dates_container_recolte_fruit', 'recolte', 'Fruit', [])
 
 applyInitialCheckboxStyles('Legume');
 applyInitialCheckboxStyles('Fruit');
+
+function adjustTextareaHeight(textarea) {
+    textarea.style.height = 'auto'; // Réinitialiser la hauteur pour obtenir le défilement correct
+    textarea.style.height = (textarea.scrollHeight) + 'px'; // Ajuster la hauteur en fonction du scrollHeight
+}
+
+// Ajuster la hauteur des `textarea` au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            adjustTextareaHeight(textarea);
+        });
+        adjustTextareaHeight(textarea); // Ajuster la hauteur initiale
+    });
+});
+
+function adjustSelectWidth(selectElement) {
+    const tempSelect = document.createElement('select');
+    const tempOption = document.createElement('option');
+    
+    tempOption.textContent = selectElement.options[selectElement.selectedIndex].text;
+    tempSelect.style.visibility = 'hidden';
+    tempSelect.style.position = 'fixed';
+    tempSelect.appendChild(tempOption);
+    document.body.appendChild(tempSelect);
+    
+    const tempSelectWidth = tempSelect.clientWidth;
+    document.body.removeChild(tempSelect);
+    
+    selectElement.style.width = tempSelectWidth + 'px';
+}
+
+function toggleSection(sectionId, button) {
+    const section = document.getElementById(sectionId);
+    const allSections = document.querySelectorAll('#menuHeader > section');
+    const allButtons = document.querySelectorAll('#menuHeader > button');
+
+    allSections.forEach(sec => {
+        if (sec !== section) {
+            sec.classList.remove('active');
+            sec.style.display = 'none';
+        }
+    });
+
+    allButtons.forEach(btn => {
+        if (btn !== button) {
+            btn.style.flex = '0 1 60px';
+        } else {
+            btn.style.flex = '0 1 120px';
+        }
+    });
+
+    if (section.classList.contains('active')) {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    } else {
+        section.classList.add('active');
+        section.style.display = 'flex';
+        
+        const selectElement = section.querySelector('select');
+        if (selectElement) {
+            adjustSelectWidth(selectElement);
+        }
+    }
+}
+
+document.querySelector('button[onclick="fetchProducts(\'Vegetable\')"]').addEventListener('click', function() {
+    toggleSection('legumesSection', this);
+    fetchProducts('Vegetable');
+});
+
+document.querySelector('button[onclick="fetchProducts(\'Fruit\')"]').addEventListener('click', function() {
+    toggleSection('fruitsSection', this);
+    fetchProducts('Fruit');
+});
+
+document.querySelector('button[onclick="fetchTutorials()"]').addEventListener('click', function() {
+    toggleSection('tutorialsSection', this);
+    fetchTutorials();
+});
+
+document.querySelector('button[onclick="fetchUsers()"]').addEventListener('click', function() {
+    toggleSection('usersSection', this);
+    fetchUsers();
+});
+
+// Adjust select width on content change
+document.querySelectorAll('select').forEach(select => {
+    select.addEventListener('change', function() {
+        adjustSelectWidth(this);
+    });
+});

@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/comon.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/legumes.css">
-    <link rel="stylesheet" href="/css/fruits.css">
+    <link rel="stylesheet" href="/css/products.css">
     <link rel="stylesheet" href="/css/tuto.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <script src="/js/common.js" defer></script>
     <script src="/js/legumes.js" defer></script>
     <script src="/js/fruits.js" defer></script>
@@ -21,6 +21,10 @@
 
 <body>
     <header>
+        <section id="logoHeader">
+            <img src="/pictures/logo/logo.png" alt="logo O'jardin">
+        </section>
+        <div id="menuContenair">
         <section id="menuHeader">
             <button onclick="fetchProducts('Vegetable')">Légume</button>
             <section id="legumesSection" style="display: none;">
@@ -29,7 +33,7 @@
                     <option value="new">Ajouter un nouveau légume</option>
                 </select>
             </section>
-
+    
             <button onclick="fetchProducts('Fruit')">Fruit</button>
             <section id="fruitsSection" style="display: none;">
                 <select id="fruits" onchange="handleProductSelection('Fruit')">
@@ -37,7 +41,7 @@
                     <option value="new">Ajouter un nouveau fruit</option>
                 </select>
             </section>
-
+    
             <button onclick="fetchTutorials()">Tutoriel</button>
             <section id="tutorialsSection">
                 <label for="tutorialsSelect"></label>
@@ -46,7 +50,8 @@
                     <option value="new">Ajouter un nouveau tutoriel</option>
                 </select>
             </section>
-
+    
             <button onclick="fetchUsers()">Utilisateur</button>
         </section>
+    </div>
     </header>

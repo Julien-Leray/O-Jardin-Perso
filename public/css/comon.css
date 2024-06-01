@@ -5,12 +5,6 @@ body {
     background-color: #f9f9f9;
 }
 
-header, footer {
-    background-color: #ffe600;
-    text-align: center;
-    padding: 4px 0;
-}
-
 
 button {
     background-color: #ff8c00;
@@ -28,7 +22,7 @@ button:hover {
 
 
 
-input[type="text"], input[type="email"], input[type="password"], textarea, select {
+input[type="email"], input[type="password"], select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -59,23 +53,3 @@ button#addUserButton:hover, button#saveButton:hover, button#saveTutorialButton:h
     background-color: #ff9f2e;
 }
 
-  #fielDiv {
-    margin-bottom: 20px; /* Espacement en bas du bloc */
-  }
-  
-  #fielDiv fieldset {
-    border: 1px solid #ccc; /* Bordure autour du fieldset */
-    padding: 10px; /* Espacement interne */
-    margin-bottom: 20px; /* Espacement en bas du fieldset */
-    background-color: #f9f9f9; /* Couleur de fond */
-    border-radius: 5px; /* Coins arrondis */
-  }
-  
-  #fielDiv legend {
-    font-weight: bold; /* Texte en gras pour les légendes */
-    padding: 0 10px; /* Espacement interne pour les légendes */
-  }
-
-
-
-  

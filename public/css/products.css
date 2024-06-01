@@ -37,12 +37,14 @@
     width: 100%;
     padding: 12px; /* Augmentation du padding pour un meilleur confort */
     margin-top: 5px;
+    margin-bottom: 10px; /* Ajouter une marge inférieure */
     box-sizing: border-box;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
-    resize: vertical; /* Permettre le redimensionnement vertical pour les textareas */
+    resize: none; /* Empêcher le redimensionnement */
+    overflow: hidden; /* Cacher le débordement */
 }
 
 /* Styles pour les images */
@@ -58,6 +60,7 @@
     width: 100%;
     padding: 8px;
     margin-top: 5px;
+    margin-bottom: 10px; /* Ajouter une marge inférieure */
     box-sizing: border-box;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -103,7 +106,8 @@
 }
 
 /* Styles pour les inputs en lecture seule dans le conteneur du bas */
-#containerBottomFruit input[type="text"], #containerBottomVegetable input[type="text"] {
+#containerBottomFruit input[type="text"], #containerBottomVegetable input[type="text"],
+#containerBottomFruit textarea, #containerBottomVegetable textarea {
     width: 200px;
     padding: 8px;
     box-sizing: border-box;
@@ -111,15 +115,26 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #e9ecef; /* Couleur de fond gris clair pour l'entrée en lecture seule */
+    resize: none; /* Empêcher le redimensionnement */
+    overflow: hidden; /* Cacher le débordement */
 }
 
 #fieldDivFruit, #fieldDivLegume {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px; /* Espace entre les conteneurs de plantation et de récolte */
+    margin-bottom: 20px; /* Ajouter une marge inférieure */
 }
 
+.plantationFruitContainer, .recolteFruitContainer, .plantationLegumeContainer, .recolteLegumeContainer {
+    flex: 1 1 300px; /* Largeur minimale de 300px */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styles pour les cases à cocher des mois */
 .month-checkboxes {
     display: flex;
     flex-wrap: wrap;
@@ -174,5 +189,10 @@
     #containerBottomFruit, #containerBottomVegetable {
         flex-direction: column;
         align-items: center;
+    }
+
+    #fieldDivFruit, #fieldDivLegume {
+        flex-direction: column;
+        align-items: stretch;
     }
 }

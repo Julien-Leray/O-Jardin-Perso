@@ -3,21 +3,20 @@
         <section id="containerLeftFruit">
             <img id="fruit_imagePreview" style="display: none;">
             <input type="file" id="fruit_imageUploadDownload" onchange="updateImagePreviewDownload('fruit')">
-            
         </section>
 
         <section id="containerCenterFruit">
             <label for="fruit_name">Nom</label>
-            <input type="text" id="fruit_name">
+            <textarea id="fruit_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_latin_name">Nom Latin</label>
-            <input type="text" id="fruit_latin_name">
+            <textarea id="fruit_latin_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_description">Description</label>
-            <textarea id="fruit_description"></textarea>
-
+            <textarea id="fruit_description" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+           
             <label for="fruit_sowing_tips">Conseils de Semis</label>
-            <textarea id="fruit_sowing_tips"></textarea>
+            <textarea id="fruit_sowing_tips" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
 
         <section id="containerRightFruit">
@@ -32,13 +31,13 @@
                 </div>
             </div>
             <label for="fruit_soil_type">Type de Sol</label>
-            <input type="text" id="fruit_soil_type">
+            <textarea id="fruit_soil_type" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_diseases">Maladies</label>
-            <input type="text" id="fruit_diseases">
+            <textarea id="fruit_diseases" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_watering_frequency">Fréquence d'Arrosage</label>
-            <input type="text" id="fruit_watering_frequency">
+            <textarea id="fruit_watering_frequency" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
     </main>
 
@@ -47,9 +46,9 @@
         <button id="deleteFruitButton" onclick="deleteFruit()">Supprimer</button>
 
         <label for="fruit_created_at">Créé le</label>
-        <input type="text" id="fruit_created_at" disabled>
+        <textarea id="fruit_created_at" disabled rows="1"></textarea>
 
         <label for="fruit_updated_at">Mis à jour le</label>
-        <input type="text" id="fruit_updated_at" disabled>
+        <textarea id="fruit_updated_at" disabled rows="1"></textarea>
     </section>
 </div>

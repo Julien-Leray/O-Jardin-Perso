@@ -1,5 +1,6 @@
 let currentLegumeId = null;
 
+
 async function fetchLegumeDetails(legumeId) {
     if (!legumeId) {
         return;
@@ -29,12 +30,22 @@ async function fetchLegumeDetails(legumeId) {
 
             document.getElementById('legume_created_at').value = formatDate(legume.created_at);
             document.getElementById('legume_updated_at').value = legume.updated_at ? formatDate(legume.updated_at) : '';
+
+            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
+            adjustTextareaHeight(document.getElementById('legume_name'));
+            adjustTextareaHeight(document.getElementById('legume_latin_name'));
+            adjustTextareaHeight(document.getElementById('legume_description'));
+            adjustTextareaHeight(document.getElementById('legume_sowing_tips'));
+            adjustTextareaHeight(document.getElementById('legume_soil_type'));
+            adjustTextareaHeight(document.getElementById('legume_diseases'));
+            adjustTextareaHeight(document.getElementById('legume_watering_frequency'));
+            adjustTextareaHeight(document.getElementById('legume_created_at'));
+            adjustTextareaHeight(document.getElementById('legume_updated_at'));
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du légume :', error);
     }
 }
-
 async function createLegume() {
     const currentDate = new Date();
 
@@ -50,8 +61,11 @@ async function createLegume() {
         description: document.getElementById('legume_description').value,
         sowing_tips: document.getElementById('legume_sowing_tips').value || "",
         created_at: currentDate.toISOString(),
-        updated_at: currentDate.toISOString()
+        updated_at: currentDate.toISOString(),
+        category_id: 2 // Assurez-vous que cette valeur est correcte pour les légumes
     };
+
+    console.log("Données du nouveau légume :", newLegume);
 
     const fileInput = document.getElementById('legume_imageUploadDownload');
     const file = fileInput?.files[0];

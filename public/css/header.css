@@ -1,36 +1,60 @@
 header section {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px; /* Reduced gap between buttons */
 }
 
 #menuHeader {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping of elements */
+    align-items: center;
+    justify-content: space-around; /* Distribute space around buttons */
     max-width: 800px;
     margin: 20px auto;
     padding: 10px;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
-.productsSection {
-    display: none;
-    position: absolute;
-    top: 60px; /* Adjust as needed */
-    right: 0; /* Position to the right */
-    background-color: #f0f0f0; /* Background color */
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+#menuHeader > button {
+    flex: 0 1 120px; /* Fixed size for buttons */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #ff9800;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, flex 0.3s ease;
+    margin: 0 2px; /* Reduced margin for buttons */
 }
 
-#productsSectionFruit {
-    background-color: #e0e0e0; /* Distinct style for Fruit section */
+#menuHeader > button:hover {
+    background-color: #e67e22; /* Darker orange on hover */
 }
 
-.productsSection select,
-#tutorialsSection select {
-    width: 100%;
+#menuHeader > section {
+    flex: 0 1 auto; /* Allow sections to size automatically */
+    display: none; /* Initially hidden */
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background color for sections */
+    border-radius: 5px;
+    margin: 0 2px; /* Reduced margin for sections */
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    max-height: 0; /* Hide section initially */
+    overflow: hidden; /* Ensure the hidden section doesn't take space */
+}
+
+#menuHeader > section.active {
+    display: flex;
+    max-height: 200px; /* Adjust as necessary */
+    padding: 10px;
+}
+
+#menuHeader > section > select {
+    width: auto; /* Auto width for select to fit content */
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -40,5 +64,50 @@ header section {
 }
 
 select {
-    width: 100%; /* Ensure full width within its container */
+    width: auto; /* Ensure full width within its container */
 }
+
+#logoHeader {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+#menuContenair {
+    background-color: #f6d50e;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+
+/* Media Query for larger screens */
+@media (min-width: 901px) {
+    #menuHeader {
+        justify-content: space-around; /* Distribute space around buttons */
+    }
+
+    #menuHeader > button {
+        flex: 0 1 120px; /* Fixed size for buttons on larger screens */
+        margin: 0 2px; /* Reduced margin for buttons */
+    }
+
+    #menuHeader > section {
+        flex: 0 1 auto; /* Auto size for sections on larger screens */
+        margin: 0 2px; /* Reduced margin for sections */
+    }
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 900px) {
+    #menuHeader {
+        flex-direction: column;
+        align-items: stretch; /* Stretch items to fit the container */
+    }
+
+    #menuHeader > button, #menuHeader > section {
+        flex: 1 1 100%; /* Full width for buttons and sections on smaller screens */
+        margin: 5px 0;
+    }
+}
+
+

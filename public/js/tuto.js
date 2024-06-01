@@ -60,6 +60,14 @@ async function fetchTutorialDetails(tutorialId) {
 
             document.getElementById('tutorialCreatedAt').value = formatDate(tutorial.created_at);
             document.getElementById('tutorialUpdatedAt').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
+
+            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
+            adjustTextareaHeight(document.getElementById('tutorialTitle'));
+            adjustTextareaHeight(document.getElementById('tutorialArticle'));
+            adjustTextareaHeight(document.getElementById('tutorialPicture'));
+            adjustTextareaHeight(document.getElementById('tutorialTheme'));
+            adjustTextareaHeight(document.getElementById('tutorialCreatedAt'));
+            adjustTextareaHeight(document.getElementById('tutorialUpdatedAt'));
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du tutoriel :', error);

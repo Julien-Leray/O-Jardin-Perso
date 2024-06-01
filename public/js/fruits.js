@@ -29,12 +29,22 @@ async function fetchFruitDetails(fruitId) {
 
             document.getElementById('fruit_created_at').value = formatDate(fruit.created_at);
             document.getElementById('fruit_updated_at').value = fruit.updated_at ? formatDate(fruit.updated_at) : '';
+
+            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
+            adjustTextareaHeight(document.getElementById('fruit_name'));
+            adjustTextareaHeight(document.getElementById('fruit_latin_name'));
+            adjustTextareaHeight(document.getElementById('fruit_description'));
+            adjustTextareaHeight(document.getElementById('fruit_sowing_tips'));
+            adjustTextareaHeight(document.getElementById('fruit_soil_type'));
+            adjustTextareaHeight(document.getElementById('fruit_diseases'));
+            adjustTextareaHeight(document.getElementById('fruit_watering_frequency'));
+            adjustTextareaHeight(document.getElementById('fruit_created_at'));
+            adjustTextareaHeight(document.getElementById('fruit_updated_at'));
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails du fruit :', error);
     }
 }
-
 async function createFruit() {
     const currentDate = new Date();
 
@@ -50,7 +60,8 @@ async function createFruit() {
         description: document.getElementById('fruit_description').value,
         sowing_tips: document.getElementById('fruit_sowing_tips').value || "",
         created_at: currentDate.toISOString(),
-        updated_at: currentDate.toISOString()
+        updated_at: currentDate.toISOString(),
+        category_id: 1 // Assurez-vous que cette valeur est correcte pour les fruits
     };
 
     const fileInput = document.getElementById('fruit_imageUploadDownload');

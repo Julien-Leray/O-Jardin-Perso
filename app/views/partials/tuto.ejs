@@ -1,9 +1,8 @@
 <section id="tutorialDetails">
-    <h2 id="tutorialDetailsTitle">Détails du Tutoriel</h2>
     <div id="mainContainerTuto">
         <div id="contenairLeftTuto">
             <label for="tutorialPicture">Image URL:</label>
-            <input type="text" id="tutorialPicture" oninput="updateImagePreviewTuto()"><br>
+            <textarea id="tutorialPicture" oninput="updateImagePreviewTuto(); adjustTextareaHeight(this)" rows="1"></textarea><br>
             <label for="tutorialImageUploadDownload">Image : 
                 <input type="file" id="tutorialImageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownloadTuto()">
             </label><br>
@@ -11,19 +10,19 @@
         </div>
         <div id="contenairRightTuto">
             <label for="tutorialTitle">Titre : </label>
-            <input type="text" id="tutorialTitle" required><br>
+            <textarea id="tutorialTitle" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
             <label for="tutorialTheme">Thème : </label>
-            <input type="text" id="tutorialTheme" required><br>
+            <textarea id="tutorialTheme" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
             <label for="tutorialArticle">Article : </label>
-            <textarea id="tutorialArticle" required></textarea><br>
+            <textarea id="tutorialArticle" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
         </div>
     </div>
     <div id="contenairBottomTuto">
         <button id="saveTutorialButton" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
         <button onclick="deleteTutorial()">Supprimer le Tutoriel</button>
         <label for="tutorialCreatedAt">Créé le:</label>
-        <input type="text" id="tutorialCreatedAt" readonly><br>
+        <textarea id="tutorialCreatedAt" readonly rows="1"></textarea><br>
         <label for="tutorialUpdatedAt">Mis à jour le:</label>
-        <input type="text" id="tutorialUpdatedAt" readonly><br>
+        <textarea id="tutorialUpdatedAt" readonly rows="1"></textarea><br>
     </div>
 </section>
