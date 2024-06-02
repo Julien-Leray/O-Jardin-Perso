@@ -1,13 +1,13 @@
-<section id="usersSection" style="display: none;">
+<section id="usersSection" style="display: block;">
     <h2>Liste des Utilisateurs</h2>
     <table id="usersTable">
         <thead>
             <tr>
-                <th id="userIdHeader">ID</th>
-                <th id="userEmailHeader">Email</th>
-                <th id="userFirstnameHeader">Prénom</th>
-                <th id="userLastnameHeader">Nom</th>
-                <th id="userActionsHeader">Actions</th>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="usersTableBody">
@@ -16,32 +16,35 @@
     </table>
     <button id="addUserButton" onclick="showUserForm()">Ajouter un Utilisateur</button>
 </section>
+
 <section id="userFormSection" style="display: none;">
     <h2>Détails de l'Utilisateur</h2>
     <form id="userForm">
-        <input type="hidden" id="userId">
-        <label for="userEmail">Email:</label>
-        <input type="email" id="userEmail" required><br>
-        <label for="userFirstname">Prénom:</label>
-        <input type="text" id="userFirstname" required><br>
-        <label for="userLastname">Nom:</label>
-        <input type="text" id="userLastname" required><br>
-        <label for="userPassword">Mot de Passe:</label>
-        <input type="password" id="userPassword"><br>
-        <label for="userAddress">Adresse:</label>
-        <input type="text" id="userAddress"><br>
-        <label for="userZipCode">Code Postal:</label>
-        <input type="text" id="userZipCode"><br>
-        <label for="userCity">Ville:</label>
-        <input type="text" id="userCity"><br>
-        <label for="userWateringAlert">Alerte Arrosage:</label>
-        <input type="checkbox" id="userWateringAlert"><br>
-        <label for="userForecastAlert">Alerte Prévisions:</label>
-        <input type="checkbox" id="userForecastAlert"><br>
-        <label for="userCreatedAt">Créé le:</label>
-        <input type="text" id="userCreatedAt" readonly><br>
-        <label for="userUpdatedAt">Mis à jour le:</label>
-        <input type="text" id="userUpdatedAt" readonly><br>
+        <input type="hidden" id="userIdCreate">
+        <label for="userEmailCreate">Email:</label>
+        <input type="email" id="userEmailCreate" required><br>
+        <label for="userFirstnameCreate">Prénom:</label>
+        <input type="text" id="userFirstnameCreate" required><br>
+        <label for="userLastnameCreate">Nom:</label>
+        <input type="text" id="userLastnameCreate" required><br>
+        <label for="userPasswordCreate">Mot de Passe:</label>
+        <input type="password" id="userPasswordCreate" required><br>
+        <label for="userAddressCreate">Adresse:</label>
+        <input type="text" id="userAddressCreate"><br>
+        <label for="userZipCodeCreate">Code Postal:</label>
+        <input type="text" id="userZipCodeCreate"><br>
+        <label for="userCityCreate">Ville:</label>
+        <input type="text" id="userCityCreate"><br>
+        <label for="userWateringAlertCreate">Alerte Arrosage:</label>
+        <input type="checkbox" id="userWateringAlertCreate"><br>
+        <label for="userForecastAlertCreate">Alerte Prévisions:</label>
+        <input type="checkbox" id="userForecastAlertCreate"><br>
+        <label for="userIsAdminCreate">Admin:</label>
+        <input type="checkbox" id="userIsAdminCreate"><br>
+        <label for="userCreatedAtCreate">Créé le:</label>
+        <input type="text" id="userCreatedAtCreate" readonly><br>
+        <label for="userUpdatedAtCreate">Mis à jour le:</label>
+        <input type="text" id="userUpdatedAtCreate" readonly><br>
         <button type="button" id="saveNewButton" onclick="saveNewUser()">Enregistrer Nouveau</button>
         <button type="button" id="saveEditButton" onclick="saveEditUser()">Enregistrer Modification</button>
         <button type="button" onclick="hideUserForm()">Annuler</button>

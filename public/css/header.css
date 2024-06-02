@@ -1,3 +1,36 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Allows positioning of #authenticatedContent */
+}
+
+#logoHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#authenticatedContent {
+    position: absolute;
+    right: 0; /* Align to the right */
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+    display: none; /* Ensure it's hidden by default */
+}
+
+#logoDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+#logoDiv img {
+    display: block;
+}
+
 header section {
     display: flex;
     align-items: center;
@@ -67,18 +100,11 @@ select {
     width: auto; /* Ensure full width within its container */
 }
 
-#logoHeader {
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-}
 #menuContenair {
     background-color: #f6d50e;
     padding: 10px;
     margin-bottom: 20px;
-
 }
-
 
 /* Media Query for larger screens */
 @media (min-width: 901px) {

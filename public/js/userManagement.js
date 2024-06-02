@@ -1,57 +1,4 @@
-
 let currentUserId = null;
-
-async function fetchUsers() {
-    try {
-        const response = await fetch('/api/admin/users', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-        const users = await response.json();
-
-        if (!Array.isArray(users)) {
-            throw new Error('La réponse n\'est pas un tableau.');
-        }
-
-        const usersTableBody = document.querySelector('#usersTable tbody');
-        usersTableBody.innerHTML = '';
-
-        users.forEach(user => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${user.id}</td>
-                <td>${user.email}</td>
-                <td>${user.firstname}</td>
-                <td>${user.lastname}</td>
-                <td>
-                    <button onclick="editUser(${user.id})">Modifier</button>
-                    <button onclick="confirmDeleteUser(${user.id})">Supprimer</button>
-                </td>
-            `;
-            usersTableBody.appendChild(row);
-        });
-
-        document.getElementById('usersSection').style.display = 'block';
-    } catch (error) {
-        console.error('Erreur lors de la récupération des utilisateurs :', error);
-    }
-}
-
-function showUserForm() {
-    currentUserId = null;
-    clearUserDetails();
-    document.getElementById('userFormSection').style.display = 'block';
-    document.getElementById('usersSection').style.display = 'none';
-    document.getElementById('saveNewButton').style.display = 'inline-block';
-    document.getElementById('saveEditButton').style.display = 'none';
-}
-
-function hideUserForm() {
-    document.getElementById('userFormSection').style.display = 'none';
-    document.getElementById('usersSection').style.display = 'block';
-}
 
 async function editUser(userId) {
     currentUserId = userId;
@@ -70,116 +17,29 @@ async function fetchUserDetails(userId) {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
         const user = await response.json();
 
         if (user) {
-            currentUserId = user.id;
-            document.getElementById('userId').value = user.id;
-            document.getElementById('userEmail').value = user.email;
-            document.getElementById('userFirstname').value = user.firstname;
-            document.getElementById('userLastname').value = user.lastname;
-            document.getElementById('userAddress').value = user.address;
-            document.getElementById('userZipCode').value = user.zip_code;
-            document.getElementById('userCity').value = user.city;
-            document.getElementById('userWateringAlert').checked = user.watering_alert;
-            document.getElementById('userForecastAlert').checked = user.forecast_alert;
-            document.getElementById('userCreatedAt').value = formatDate(user.created_at);
-            document.getElementById('userUpdatedAt').value = formatDate(user.updated_at);
+            document.getElementById('userIdCreate').value = user.id;
+            document.getElementById('userEmailCreate').value = user.email || '';
+            document.getElementById('userFirstnameCreate').value = user.firstname || '';
+            document.getElementById('userLastnameCreate').value = user.lastname || '';
+            document.getElementById('userAddressCreate').value = user.address || '';
+            document.getElementById('userZipCodeCreate').value = user.zip_code || '';
+            document.getElementById('userCityCreate').value = user.city || '';
+            document.getElementById('userWateringAlertCreate').checked = user.watering_alert || false;
+            document.getElementById('userForecastAlertCreate').checked = user.forecast_alert || false;
+            document.getElementById('userIsAdminCreate').checked = user.is_admin || false;
+            document.getElementById('userCreatedAtCreate').value = formatDate(user.created_at) || '';
+            document.getElementById('userUpdatedAtCreate').value = formatDate(user.updated_at) || '';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
-    }
-}
-
-async function saveNewUser() {
-    const email = document.getElementById('userEmail').value;
-    const firstname = document.getElementById('userFirstname').value;
-    const lastname = document.getElementById('userLastname').value;
-    const password = document.getElementById('userPassword').value;
-    const address = document.getElementById('userAddress').value;
-    const zip_code = document.getElementById('userZipCode').value;
-    const city = document.getElementById('userCity').value;
-    const watering_alert = document.getElementById('userWateringAlert').checked;
-    const forecast_alert = document.getElementById('userForecastAlert').checked;
-
-    const user = {
-        email,
-        firstname,
-        lastname,
-        password,
-        address,
-        zip_code,
-        city,
-        watering_alert,
-        forecast_alert
-    };
-
-    try {
-        const response = await fetch('/api/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify(user)
-        });
-
-        if (response.ok) {
-            alert("Utilisateur ajouté avec succès");
-            hideUserForm();
-            fetchUsers();
-        } else {
-            const errorText = await response.text();
-            alert("Erreur lors de l'ajout de l'utilisateur : " + errorText);
-        }
-    } catch (error) {
-        console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
-    }
-}
-
-async function saveEditUser() {
-    const userId = document.getElementById('userId').value;
-    const email = document.getElementById('userEmail').value;
-    const firstname = document.getElementById('userFirstname').value;
-    const lastname = document.getElementById('userLastname').value;
-    const password = document.getElementById('userPassword').value;
-    const address = document.getElementById('userAddress').value;
-    const zip_code = document.getElementById('userZipCode').value;
-    const city = document.getElementById('userCity').value;
-    const watering_alert = document.getElementById('userWateringAlert').checked;
-    const forecast_alert = document.getElementById('userForecastAlert').checked;
-
-    const user = {
-        firstname,
-        lastname,
-        password,
-        address,
-        zip_code,
-        city,
-        watering_alert,
-        forecast_alert
-    };
-
-    try {
-        const response = await fetch(`/api/admin/users/${userId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify(user)
-        });
-
-        if (response.ok) {
-            alert("Utilisateur mis à jour avec succès");
-            hideUserForm();
-            fetchUsers();
-        } else {
-            const errorText = await response.text();
-            alert("Erreur lors de la mise à jour de l'utilisateur : " + errorText);
-        }
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
     }
 }
 
@@ -210,15 +70,172 @@ async function deleteUser(userId) {
     }
 }
 
-function clearUserDetails() {
-    document.getElementById('userId').value = "";
-    document.getElementById('userEmail').value = "";
-    document.getElementById('userFirstname').value = "";
-    document.getElementById('userLastname').value = "";
-    document.getElementById('userPassword').value = "";
-    document.getElementById('userAddress').value = "";
-    document.getElementById('userZipCode').value = "";
-    document.getElementById('userCity').value = "";
-    document.getElementById('userWateringAlert').checked = false;
-    document.getElementById('userForecastAlert').checked = false;
+async function saveNewUser() {
+    const email = document.getElementById('userEmailCreate').value;
+    const firstname = document.getElementById('userFirstnameCreate').value;
+    const lastname = document.getElementById('userLastnameCreate').value;
+    const password = document.getElementById('userPasswordCreate').value;
+    const address = document.getElementById('userAddressCreate').value;
+    const zip_code = document.getElementById('userZipCodeCreate').value;
+    const city = document.getElementById('userCityCreate').value;
+    const watering_alert = document.getElementById('userWateringAlertCreate').checked;
+    const forecast_alert = document.getElementById('userForecastAlertCreate').checked;
+    const is_admin = document.getElementById('userIsAdminCreate').checked;
+
+    // Basic validation
+    if (!email || !firstname || !lastname || !password) {
+        alert("Email, firstname, lastname, and password are required.");
+        return;
+    }
+
+    const user = {
+        email,
+        firstname,
+        lastname,
+        password,
+        address,
+        zip_code,
+        city,
+        watering_alert,
+        forecast_alert,
+        is_admin
+    };
+
+    // Log the user object to see what is being sent
+    console.log('Sending user data:', JSON.stringify(user));
+
+    try {
+        const response = await fetch('/api/admin/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(user)
+        });
+
+        if (response.ok) {
+            alert("Utilisateur ajouté avec succès");
+            hideUserForm();
+            fetchUsers();
+        } else {
+            const errorText = await response.text();
+            console.error('Error response from server:', errorText);
+            alert("Erreur lors de l'ajout de l'utilisateur : " + errorText);
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
+    }
 }
+
+async function saveEditUser() {
+    const userId = document.getElementById('userIdCreate').value;
+    const email = document.getElementById('userEmailCreate').value;
+    const firstname = document.getElementById('userFirstnameCreate').value;
+    const lastname = document.getElementById('userLastnameCreate').value;
+    const password = document.getElementById('userPasswordCreate').value;
+    const address = document.getElementById('userAddressCreate').value;
+    const zip_code = document.getElementById('userZipCodeCreate').value;
+    const city = document.getElementById('userCityCreate').value;
+    const watering_alert = document.getElementById('userWateringAlertCreate').checked;
+    const forecast_alert = document.getElementById('userForecastAlertCreate').checked;
+    const is_admin = document.getElementById('userIsAdminCreate').checked;
+
+    // Basic validation
+    if (!email || !firstname || !lastname) {
+        alert("Email, firstname, and lastname are required.");
+        return;
+    }
+
+    const user = {
+        firstname,
+        lastname,
+        password,
+        address,
+        zip_code,
+        city,
+        watering_alert,
+        forecast_alert,
+        is_admin
+    };
+
+    try {
+        const response = await fetch(`/api/admin/users/${userId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(user)
+        });
+
+        if (response.ok) {
+            alert("Utilisateur mis à jour avec succès");
+            hideUserForm();
+            fetchUsers();
+        } else {
+            const errorText = await response.text();
+            alert("Erreur lors de la mise à jour de l'utilisateur : " + errorText);
+        }
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
+    }
+}
+
+function hideUserForm() {
+    document.getElementById('userFormSection').style.display = 'none';
+    document.getElementById('usersSection').style.display = 'block';
+    document.getElementById('saveNewButton').style.display = 'inline-block';
+    document.getElementById('saveEditButton').style.display = 'none';
+}
+
+function showUserForm() {
+    document.getElementById('userFormSection').style.display = 'block';
+    document.getElementById('usersSection').style.display = 'none';
+    document.getElementById('saveNewButton').style.display = 'inline-block';
+    document.getElementById('saveEditButton').style.display = 'none';
+
+    // Clear the form
+    document.getElementById('userForm').reset();
+}
+
+async function fetchUsers() {
+    try {
+        const response = await fetch('/api/admin/users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const users = await response.json();
+        const usersTableBody = document.getElementById('usersTableBody');
+        usersTableBody.innerHTML = ''; // Clear current table body
+
+        users.forEach(user => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.email}</td>
+                <td>${user.firstname}</td>
+                <td>${user.lastname}</td>
+                <td>
+                    <button onclick="editUser(${user.id})">Edit</button>
+                    <button onclick="confirmDeleteUser(${user.id})">Delete</button>
+                </td>
+            `;
+
+            usersTableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+    }
+}
+
+// Fetch users on page load
+document.addEventListener('DOMContentLoaded', fetchUsers);

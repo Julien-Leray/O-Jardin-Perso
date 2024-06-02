@@ -182,7 +182,10 @@ async function deleteFruit() {
 
     try {
         const response = await fetch(`/api/products/${currentFruitId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         });
 
         if (response.ok) {
