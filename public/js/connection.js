@@ -1,13 +1,13 @@
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
-  
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-  
+
     if (email && password) {
         try {
             console.log(`Tentative de connexion avec : email: '${email}', password: '${password}'`);
-  
+
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -15,15 +15,39 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 },
                 body: JSON.stringify({ email, password })
             });
-  
+
             console.log('Réponse de la connexion:', response);
-  
+
             if (response.ok) {
                 const data = await response.json();
                 console.log('Données reçues:', data);
                 localStorage.setItem('token', data.token);
                 console.log('Token stocké:', data.token);  // Stocke le jeton dans localStorage
-                window.location.href = '/gestion'; // Redirige vers la page gestion
+
+                // Récupérer les informations de l'utilisateur
+                const userResponse = await fetch('/api/me/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`
+                    }
+                });
+
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    document.getElementById('userFirstname').textContent = userData.firstname;
+                    document.getElementById('userLastname').textContent = userData.lastname;
+                    document.getElementById('userEmail').textContent = userData.email;
+                    document.getElementById('userIsAdmin').textContent = userData.is_admin ? 'Oui' : 'Non';
+                    document.getElementById('userInfo').style.display = 'block';
+                    document.getElementById('loginForm').style.display = 'none';
+
+                    // Affiche le contenu authentifié
+                    document.getElementById('authenticatedContent').style.display = 'block';
+                    document.getElementById('authenticatedContentGestion').style.display = 'block';
+                    
+                } else {
+                    alert('Erreur lors de la récupération des informations utilisateur.');
+                }
             } else {
                 const errorData = await response.json();
                 alert(errorData.message);
@@ -37,44 +61,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }
 });
 
-function getToken() {
-    return localStorage.getItem('token');
-}
-
-async function fetchWithAuth(url, options = {}) {
-    const token = getToken();
-    if (!token) {
-        console.error('No token found');
-        throw new Error('No token found');
-    }
-
-    const headers = {
-        ...options.headers,
-        'Authorization': `Bearer ${token}`
-    };
-
-    const response = await fetch(url, {
-        ...options,
-        headers
-    });
-
-    if (response.status === 401) {
-        alert('Unauthorized, please log in again.');
-        window.location.href = '/';
-    }
-
-    return response;
-}
-
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        const response = await fetchWithAuth('/gestion');
-        if (response.ok) {
-            console.log('Accès autorisé à la page admin');
-        } else {
-            console.error('Accès refusé à la page admin');
-        }
-    } catch (error) {
-        console.error('Erreur:', error);
-    }
+document.getElementById('logoutButton').addEventListener('click', function() {
+    localStorage.removeItem('token'); // Supprime le jeton du localStorage
+    document.getElementById('userInfo').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('authenticatedContent').style.display = 'none';
+    document.getElementById('authenticatedContentGestion').style.display = 'none';
+    alert('Vous avez été déconnecté.');
 });

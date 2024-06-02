@@ -1,15 +1,14 @@
-let currentUserId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    function showUserForm() {
-        // ...
-        fetchUsers(); // Ajoutez ceci ici pour charger la liste des utilisateurs uniquement lorsque vous cliquez sur le bouton
-    }
-});
+let currentUserId = null;
 
 async function fetchUsers() {
     try {
-        const response = await fetch('users');
+        const response = await fetch('/api/admin/users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
         const users = await response.json();
 
         if (!Array.isArray(users)) {
@@ -34,7 +33,6 @@ async function fetchUsers() {
             usersTableBody.appendChild(row);
         });
 
-        hideAllSections();
         document.getElementById('usersSection').style.display = 'block';
     } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
@@ -66,7 +64,12 @@ async function editUser(userId) {
 
 async function fetchUserDetails(userId) {
     try {
-        const response = await fetch(`users/${userId}`);
+        const response = await fetch(`/api/admin/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
         const user = await response.json();
 
         if (user) {
@@ -112,10 +115,11 @@ async function saveNewUser() {
     };
 
     try {
-        const response = await fetch('users', {
+        const response = await fetch('/api/registration', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(user)
         });
@@ -146,7 +150,6 @@ async function saveEditUser() {
     const forecast_alert = document.getElementById('userForecastAlert').checked;
 
     const user = {
-
         firstname,
         lastname,
         password,
@@ -158,10 +161,11 @@ async function saveEditUser() {
     };
 
     try {
-        const response = await fetch(`users/${userId}`, {
+        const response = await fetch(`/api/admin/users/${userId}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(user)
         });
@@ -188,8 +192,11 @@ async function confirmDeleteUser(userId) {
 
 async function deleteUser(userId) {
     try {
-        const response = await fetch(`users/${userId}`, {
-            method: 'DELETE'
+        const response = await fetch(`/api/admin/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         });
 
         if (response.ok) {
@@ -214,6 +221,4 @@ function clearUserDetails() {
     document.getElementById('userCity').value = "";
     document.getElementById('userWateringAlert').checked = false;
     document.getElementById('userForecastAlert').checked = false;
-    document.getElementById('userCreatedAt').value = "";
-    document.getElementById('userUpdatedAt').value = "";
 }

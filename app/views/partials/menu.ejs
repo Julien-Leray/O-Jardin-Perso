@@ -1,0 +1,32 @@
+<main>
+<div id="menuContenair">
+    <section id="menuHeader">
+        <button onclick="fetchProducts('Vegetable')">Légume</button>
+        <section id="legumesSection" style="display: none;">
+            <select id="legumes" onchange="handleProductSelection('Vegetable')">
+                <option value="">--Sélectionnez un légume--</option>
+                <option value="new">Ajouter un nouveau légume</option>
+            </select>
+        </section>
+
+        <button onclick="fetchProducts('Fruit')">Fruit</button>
+        <section id="fruitsSection" style="display: none;">
+            <select id="fruits" onchange="handleProductSelection('Fruit')">
+                <option value="">--Sélectionnez un fruit--</option>
+                <option value="new">Ajouter un nouveau fruit</option>
+            </select>
+        </section>
+
+        <button onclick="fetchTutorials()">Tutoriel</button>
+        <section id="tutorialsSection">
+            <label for="tutorialsSelect"></label>
+            <select id="tutorialsSelect" onchange="handleTutorialSelection()">
+                <option value="">--Sélectionnez un tutoriel--</option>
+                <option value="new">Ajouter un nouveau tutoriel</option>
+            </select>
+        </section>
+
+        <button onclick="fetchUsers()">Utilisateur</button>
+    </section>
+
+    </div>

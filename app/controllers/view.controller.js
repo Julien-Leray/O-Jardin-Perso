@@ -1,8 +1,8 @@
 const controller = {
   
-    renderConnectionPage: async (req, res) => {
+    renderGestionPage: async (req, res) => {
       try {
-        res.render('connection');
+        res.render('gestion');
       } catch (error) {
         res.status(500).send(error.message);
       }

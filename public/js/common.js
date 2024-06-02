@@ -323,3 +323,4 @@ document.querySelectorAll('select').forEach(select => {
         adjustSelectWidth(this);
     });
 });
+
