@@ -9,6 +9,9 @@ async function fetchFruitDetails(fruitId) {
 
     try {
         const response = await fetch(`/api/products/${fruitId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch fruit details');
+        }
         const fruit = await response.json();
 
         if (fruit) {
@@ -30,7 +33,6 @@ async function fetchFruitDetails(fruitId) {
             document.getElementById('fruit_created_at').value = formatDate(fruit.created_at);
             document.getElementById('fruit_updated_at').value = fruit.updated_at ? formatDate(fruit.updated_at) : '';
 
-            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
             adjustTextareaHeight(document.getElementById('fruit_name'));
             adjustTextareaHeight(document.getElementById('fruit_latin_name'));
             adjustTextareaHeight(document.getElementById('fruit_description'));
@@ -45,13 +47,14 @@ async function fetchFruitDetails(fruitId) {
         console.error('Erreur lors de la récupération des détails du fruit :', error);
     }
 }
+
 async function createFruit() {
     const currentDate = new Date();
 
     const newFruit = {
         name: document.getElementById('fruit_name').value,
         latin_name: document.getElementById('fruit_latin_name').value,
-        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
+        picture: "", // Initially empty, will be updated if a file is selected
         plantation_date: getCheckedMonths('Fruit').plantation.join(', '),
         harvest_date: getCheckedMonths('Fruit').recolte.join(', '),
         soil_type: document.getElementById('fruit_soil_type').value,
@@ -61,7 +64,7 @@ async function createFruit() {
         sowing_tips: document.getElementById('fruit_sowing_tips').value || "",
         created_at: currentDate.toISOString(),
         updated_at: currentDate.toISOString(),
-        category_id: 1 // Assurez-vous que cette valeur est correcte pour les fruits
+        category_id: 1 // Make sure this value is correct for fruits
     };
 
     const fileInput = document.getElementById('fruit_imageUploadDownload');
@@ -70,7 +73,8 @@ async function createFruit() {
     if (file) {
         try {
             const base64String = await convertFileToBase64(file);
-            newFruit.picture = base64String; // Mettre à jour l'image en base64
+            newFruit.picture = base64String; // Update the picture to base64
+            updateImagePreviewFruits(); // Update the image preview
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
@@ -84,7 +88,8 @@ async function createFruit() {
         const response = await fetch('/api/products', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(newFruit)
         });
@@ -118,7 +123,7 @@ async function updateFruit() {
     const updatedFruit = {
         name: document.getElementById('fruit_name')?.value || "",
         latin_name: document.getElementById('fruit_latin_name')?.value || "",
-        picture: "", // Initialement vide, sera mis à jour si un fichier est sélectionné
+        picture: "", // Initially empty, will be updated if a file is selected
         plantation_date: `{${checkedMonths.plantation.join(', ')}}`,
         harvest_date: `{${checkedMonths.recolte.join(', ')}}`,
         soil_type: document.getElementById('fruit_soil_type')?.value || "",
@@ -126,7 +131,7 @@ async function updateFruit() {
         watering_frequency: document.getElementById('fruit_watering_frequency')?.value || "",
         description: document.getElementById('fruit_description')?.value || "",
         sowing_tips: document.getElementById('fruit_sowing_tips')?.value || "",
-        category_id: 1, // Assurez-vous que cette valeur est correcte pour les fruits
+        category_id: 1, // Make sure this value is correct for fruits
     };
 
     const fileInput = document.getElementById('fruit_imageUploadDownload');
@@ -135,15 +140,18 @@ async function updateFruit() {
     if (file) {
         try {
             const base64String = await convertFileToBase64(file);
-            updatedFruit.picture = base64String; // Mettre à jour l'image en base64
+            updatedFruit.picture = base64String; // Update the picture to base64
+            updateImagePreviewFruits(); // Update the image preview
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
             return;
         }
     } else {
-        // Si aucune nouvelle image n'est téléchargée, utilisez l'URL existante
-        updatedFruit.picture = document.getElementById('fruit_picture').value;
+        const existingPictureElement = document.getElementById('fruit_picture');
+        if (existingPictureElement) {
+            updatedFruit.picture = existingPictureElement.value;
+        }
     }
 
     console.log("Envoi des données au serveur :", updatedFruit);
@@ -152,7 +160,8 @@ async function updateFruit() {
         const response = await fetch(`/api/products/${currentFruitId}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(updatedFruit)
         });
@@ -184,7 +193,8 @@ async function deleteFruit() {
         const response = await fetch(`/api/products/${currentFruitId}`, {
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json' // Ajout du Content-Type
             }
         });
 
@@ -193,7 +203,8 @@ async function deleteFruit() {
             clearFruitDetails();
             fetchProducts('Fruit');
         } else {
-            alert("Erreur lors de la suppression du fruit");
+            const errorText = await response.text();
+            alert("Erreur lors de la suppression du fruit: " + errorText);
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du fruit :', error);

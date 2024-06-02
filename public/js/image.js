@@ -1,33 +1,21 @@
 function updateImagePreviewTuto(imageUrl = null) {
-    if (!imageUrl) {
-        imageUrl = document.getElementById('tutorialPicture').value;
+    const imagePreview = document.getElementById('imagePreviewTuto');
+    if (!imagePreview) {
+        console.error('Element with ID "imagePreviewTuto" not found.');
+        return;
     }
-    const imagePreviewTuto = document.getElementById('imagePreviewTuto');
-    imagePreviewTuto.src = imageUrl;
-    imagePreviewTuto.style.display = imageUrl ? 'block' : 'none';
-}
 
-function updateImagePreviewDownloadTuto() {
-    const fileInput = document.getElementById('tutorialImageUploadDownload');
-    const imagePreviewTuto = document.getElementById('imagePreviewTuto');
-
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imagePreviewTuto.src = e.target.result; // Update the tutorial preview with the uploaded image
-            imagePreviewTuto.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    }
-}function updateImagePreviewFruits(imageUrl = null) {
-    const imagePreview = document.getElementById('fruit_imagePreview');
     if (imageUrl) {
         imagePreview.src = imageUrl;
         imagePreview.style.display = 'block';
     } else {
-        const fileInput = document.getElementById('fruit_imageUploadDownload');
-        const file = fileInput?.files[0];
+        const fileInput = document.getElementById('tutorialImageUploadDownload');
+        if (!fileInput) {
+            console.error('Element with ID "tutorialImageUploadDownload" not found.');
+            return;
+        }
+
+        const file = fileInput.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -35,18 +23,65 @@ function updateImagePreviewDownloadTuto() {
                 imagePreview.style.display = 'block';
             }
             reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = 'none';
+        }
+    }
+}
+
+
+function updateImagePreviewFruits(imageUrl = null) {
+    const imagePreview = document.getElementById('fruit_imagePreview');
+    
+    if (!imagePreview) {
+        console.error('Element with ID "fruit_imagePreview" not found.');
+        return;
+    }
+    
+    if (imageUrl) {
+        imagePreview.src = imageUrl;
+        imagePreview.style.display = 'block';
+    } else {
+        const fileInput = document.getElementById('fruit_imageUploadDownload');
+        
+        if (!fileInput) {
+            console.error('Element with ID "fruit_imageUploadDownload" not found.');
+            return;
+        }
+        
+        const file = fileInput.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = 'none';
         }
     }
 }
 
 function updateImagePreviewLegumes(imageUrl = null) {
     const imagePreview = document.getElementById('legume_imagePreview');
+    if (!imagePreview) {
+        console.error('Element with ID "legume_imagePreview" not found.');
+        return;
+    }
+
     if (imageUrl) {
         imagePreview.src = imageUrl;
         imagePreview.style.display = 'block';
     } else {
         const fileInput = document.getElementById('legume_imageUploadDownload');
-        const file = fileInput?.files[0];
+        if (!fileInput) {
+            console.error('Element with ID "legume_imageUploadDownload" not found.');
+            return;
+        }
+
+        const file = fileInput.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -54,6 +89,8 @@ function updateImagePreviewLegumes(imageUrl = null) {
                 imagePreview.style.display = 'block';
             }
             reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = 'none';
         }
     }
 }

@@ -1,6 +1,5 @@
 let currentLegumeId = null;
 
-
 async function fetchLegumeDetails(legumeId) {
     if (!legumeId) {
         return;
@@ -10,6 +9,9 @@ async function fetchLegumeDetails(legumeId) {
 
     try {
         const response = await fetch(`/api/products/${legumeId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch legume details');
+        }
         const legume = await response.json();
 
         if (legume) {
@@ -31,7 +33,6 @@ async function fetchLegumeDetails(legumeId) {
             document.getElementById('legume_created_at').value = formatDate(legume.created_at);
             document.getElementById('legume_updated_at').value = legume.updated_at ? formatDate(legume.updated_at) : '';
 
-            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
             adjustTextareaHeight(document.getElementById('legume_name'));
             adjustTextareaHeight(document.getElementById('legume_latin_name'));
             adjustTextareaHeight(document.getElementById('legume_description'));
@@ -46,6 +47,7 @@ async function fetchLegumeDetails(legumeId) {
         console.error('Erreur lors de la récupération des détails du légume :', error);
     }
 }
+
 async function createLegume() {
     const currentDate = new Date();
 
@@ -65,8 +67,6 @@ async function createLegume() {
         category_id: 2 // Assurez-vous que cette valeur est correcte pour les légumes
     };
 
-    console.log("Données du nouveau légume :", newLegume);
-
     const fileInput = document.getElementById('legume_imageUploadDownload');
     const file = fileInput?.files[0];
 
@@ -74,6 +74,7 @@ async function createLegume() {
         try {
             const base64String = await convertFileToBase64(file);
             newLegume.picture = base64String; // Mettre à jour l'image en base64
+            updateImagePreviewLegumes(); // Mettre à jour l'aperçu de l'image
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
@@ -87,7 +88,8 @@ async function createLegume() {
         const response = await fetch('/api/products', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(newLegume)
         });
@@ -104,6 +106,7 @@ async function createLegume() {
         console.error('Erreur lors de l\'ajout du légume :', error);
     }
 }
+
 async function updateLegume() {
     if (!currentLegumeId) {
         alert("Aucun légume sélectionné");
@@ -138,14 +141,17 @@ async function updateLegume() {
         try {
             const base64String = await convertFileToBase64(file);
             updatedLegume.picture = base64String; // Mettre à jour l'image en base64
+            updateImagePreviewLegumes(); // Mettre à jour l'aperçu de l'image
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
             return;
         }
     } else {
-        // Si aucune nouvelle image n'est téléchargée, utilisez l'URL existante
-        updatedLegume.picture = document.getElementById('legume_picture').value;
+        const existingPictureElement = document.getElementById('legume_picture');
+        if (existingPictureElement) {
+            updatedLegume.picture = existingPictureElement.value;
+        }
     }
 
     console.log("Envoi des données au serveur :", updatedLegume);
@@ -154,13 +160,15 @@ async function updateLegume() {
         const response = await fetch(`/api/products/${currentLegumeId}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(updatedLegume)
         });
 
         if (response.ok) {
             alert("Légume mis à jour avec succès");
+            fetchProducts('Vegetable');
         } else {
             const errorText = await response.text();
             alert("Erreur lors de la mise à jour du légume: " + errorText);
@@ -183,7 +191,11 @@ async function deleteLegume() {
 
     try {
         const response = await fetch(`/api/products/${currentLegumeId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json' // Ajout du Content-Type
+            }
         });
 
         if (response.ok) {
@@ -191,7 +203,8 @@ async function deleteLegume() {
             clearLegumeDetails();
             fetchProducts('Vegetable');
         } else {
-            alert("Erreur lors de la suppression du légume");
+            const errorText = await response.text();
+            alert("Erreur lors de la suppression du légume: " + errorText);
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du légume :', error);

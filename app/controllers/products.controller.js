@@ -5,7 +5,7 @@ import path from 'path';
 
 const controller = {
   getProducts: asyncHandler(async (req, res) => {
-    const category = (req.query.category);
+    const category = req.query.category;
     if (!category) {
       const data = await datamapper.getAllProducts();
       if (data.length === 0) {
@@ -25,19 +25,16 @@ const controller = {
 
   getProductById: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const data = await datamapper.getProductById(id);
-
-    if (!id) {
+    if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
+    const data = await datamapper.getProductById(id);
     if (!data) {
       return res.status(404).json({ message: 'Product not found.' });
     }
     res.json(data);
-
   }),
-
 
   createProduct: asyncHandler(async (req, res) => {
     const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
@@ -47,10 +44,9 @@ const controller = {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Vérifiez si une image est incluse dans la requête
     if (picture) {
       const base64Image = picture.split(';base64,').pop();
-      imagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le nom du produit
+      imagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       try {
         await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
@@ -61,8 +57,7 @@ const controller = {
         return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
       }
     }
-    // console.log(picture)
-    // Créer le produit avec le chemin de l'image
+
     try {
       const data = await datamapper.createProduct(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
       res.json(data);
@@ -72,24 +67,24 @@ const controller = {
     }
   }),
 
-
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
-    let updatedImagePath = '';
 
-    if (!id) {
+    if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    if (dataToUpdate.length < 1) {
-      return res.status(400).json({ message: 'At least one field required' });
+    const existingProduct = await datamapper.getProductById(id);
+    if (!existingProduct) {
+        return res.status(404).json({ message: 'Product not found.' });
     }
 
-    // Vérifiez si une image est incluse dans la requête
+    let updatedImagePath = existingProduct.picture;
+
     if (picture) {
       const base64Image = picture.split(';base64,').pop();
-      updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le nom du produit
+      updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       try {
         await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
@@ -104,6 +99,7 @@ const controller = {
     const dataToUpdate = {
       latin_name,
       name,
+      picture: updatedImagePath,
       plantation_date,
       harvest_date,
       soil_type,
@@ -112,13 +108,7 @@ const controller = {
       category_id,
       description,
       sowing_tips,
-
     };
-
-    // Inclure le chemin de l'image mise à jour si elle existe
-    if (updatedImagePath) {
-      dataToUpdate.picture = updatedImagePath;
-    }
 
     try {
       const updatedData = await datamapper.updateProduct(id, dataToUpdate);
@@ -132,9 +122,12 @@ const controller = {
     }
   }),
 
-
   deleteProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: 'Invalid id' });
+    }
+
     const existedProduct = await datamapper.getProductById(id);
     if (!existedProduct) {
       return res.status(404).json({ message: 'Product not found' });
@@ -142,7 +135,6 @@ const controller = {
     await datamapper.deleteProduct(id);
     res.status(204).json('Product deleted');
   }),
-
 };
 
 export default controller;

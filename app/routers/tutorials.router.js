@@ -1,6 +1,7 @@
 import express from 'express';
 import Controller from "../controllers/tutorials.controller.js"
 import isAdmin from '../middlewares/isAdmin.middleware.js';
+import authMiddleware from '../middlewares/authentification.middleware.js';
 
 /**
  * A tutorial object received from the API
@@ -95,8 +96,8 @@ const router = express.Router();
 
 router.route('/').get(Controller.getTutorials);
 router.route('/:id').get(Controller.getTutorialById);
-router.route('/').post(isAdmin, Controller.createTutorial);
-router.route('/:id').patch(isAdmin, Controller.updateTutorial);
-router.route('/:id').delete(isAdmin, Controller.deleteTutorial);
+router.route('/').post(authMiddleware, isAdmin, Controller.createTutorial);
+router.route('/:id').patch(authMiddleware, isAdmin, Controller.updateTutorial);
+router.route('/:id').delete(authMiddleware, isAdmin, Controller.deleteTutorial);
 
 export default router;

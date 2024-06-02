@@ -56,12 +56,11 @@ async function fetchTutorialDetails(tutorialId) {
             document.getElementById('tutorialArticle').value = tutorial.article;
             document.getElementById('tutorialPicture').value = tutorial.picture;
             document.getElementById('tutorialTheme').value = tutorial.theme;
-            updateImagePreviewTuto(); 
+            updateImagePreviewTuto(tutorial.picture); 
 
             document.getElementById('tutorialCreatedAt').value = formatDate(tutorial.created_at);
             document.getElementById('tutorialUpdatedAt').value = tutorial.updated_at ? formatDate(tutorial.updated_at) : '';
 
-            // Ajuster la hauteur des textarea après avoir défini leurs valeurs
             adjustTextareaHeight(document.getElementById('tutorialTitle'));
             adjustTextareaHeight(document.getElementById('tutorialArticle'));
             adjustTextareaHeight(document.getElementById('tutorialPicture'));
@@ -81,6 +80,7 @@ async function saveTutorial() {
         updateTutorial();
     }
 }
+
 async function createTutorial() {
     const currentDate = new Date();
 
@@ -100,6 +100,7 @@ async function createTutorial() {
         try {
             const base64String = await convertFileToBase64(file);
             newTutorial.picture = base64String; // Mettre à jour l'image en base64
+            updateImagePreviewTuto(base64String); // Mettre à jour l'aperçu de l'image
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
@@ -113,7 +114,8 @@ async function createTutorial() {
         const response = await fetch(`/api/tutorials`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(newTutorial)
         });
@@ -159,6 +161,7 @@ async function updateTutorial() {
         try {
             const base64String = await convertFileToBase64(file);
             updatedTutorial.picture = base64String; // Mettre à jour l'image en base64
+            updateImagePreviewTuto(base64String); // Mettre à jour l'aperçu de l'image
         } catch (error) {
             console.error('Erreur lors de la conversion du fichier en base64 :', error);
             alert('Erreur lors de la conversion du fichier en base64');
@@ -173,7 +176,8 @@ async function updateTutorial() {
         const response = await fetch(`/api/tutorials/${currentTutorialId}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(updatedTutorial)
         });
@@ -191,7 +195,6 @@ async function updateTutorial() {
     }
 }
 
-
 async function deleteTutorial() {
     if (!currentTutorialId) {
         alert("Aucun tutoriel sélectionné");
@@ -205,7 +208,11 @@ async function deleteTutorial() {
 
     try {
         const response = await fetch(`/api/tutorials/${currentTutorialId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json' // Ajout du Content-Type
+            }
         });
 
         if (response.ok) {
@@ -213,12 +220,14 @@ async function deleteTutorial() {
             clearTutorialDetails();
             fetchTutorials();
         } else {
-            alert("Erreur lors de la suppression du tutoriel");
+            const errorText = await response.text();
+            alert("Erreur lors de la suppression du tutoriel: " + errorText);
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du tutoriel :', error);
     }
 }
+
 function clearTutorialDetails() {
     const tutorialTitle = document.getElementById('tutorialTitle');
     const tutorialArticle = document.getElementById('tutorialArticle');

@@ -1,6 +1,7 @@
 import express from 'express';
 import Controller from "../controllers/products.controller.js";
 import isAdmin from '../middlewares/isAdmin.middleware.js';
+import authMiddleware from '../middlewares/authentification.middleware.js';
 
 /**
 
@@ -103,10 +104,10 @@ const router = express.Router();
  */
 
 router.route('/').get(Controller.getProducts);
-router.route('/').post(isAdmin, Controller.createProduct);
+router.route('/').post(authMiddleware, isAdmin, Controller.createProduct);
 
 router.route('/:id').get(Controller.getProductById);
-router.route('/:id').patch(isAdmin, Controller.updateProduct);
-router.route('/:id').delete(isAdmin, Controller.deleteProduct);
+router.route('/:id').patch(authMiddleware, isAdmin, Controller.updateProduct);
+router.route('/:id').delete(authMiddleware, isAdmin, Controller.deleteProduct);
 
 export default router;
