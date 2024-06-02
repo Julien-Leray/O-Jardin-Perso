@@ -1,12 +1,13 @@
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
+  
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-
+  
     if (email && password) {
         try {
-            console.log('Tentative de connexion avec:', { email, password });
+            console.log(`Tentative de connexion avec : email: '${email}', password: '${password}'`);
+  
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -14,17 +15,17 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 },
                 body: JSON.stringify({ email, password })
             });
+  
             console.log('Réponse de la connexion:', response);
-
+  
             if (response.ok) {
                 const data = await response.json();
                 console.log('Données reçues:', data);
                 localStorage.setItem('token', data.token);
-                console.log('Token stocké:', data.token);
-                window.location.href = '/gestion'; // Redirige vers la page admin
+                console.log('Token stocké:', data.token);  // Stocke le jeton dans localStorage
+                window.location.href = '/gestion'; // Redirige vers la page gestion
             } else {
                 const errorData = await response.json();
-                console.log('Erreur de connexion:', errorData);
                 alert(errorData.message);
             }
         } catch (error) {
@@ -36,18 +37,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }
 });
 
-// Fonction pour obtenir le jeton depuis localStorage
 function getToken() {
-    const token = localStorage.getItem('token');
-    console.log('Token récupéré:', token);
-    return token;
+    return localStorage.getItem('token');
 }
 
-// Fonction pour faire une requête avec le jeton JWT
 async function fetchWithAuth(url, options = {}) {
     const token = getToken();
     if (!token) {
-        console.error('Pas de jeton trouvé');
+        console.error('No token found');
         throw new Error('No token found');
     }
 
@@ -56,38 +53,26 @@ async function fetchWithAuth(url, options = {}) {
         'Authorization': `Bearer ${token}`
     };
 
-    console.log('En-têtes envoyés:', headers); // Log des en-têtes
-
     const response = await fetch(url, {
         ...options,
         headers
     });
 
-    console.log('Réponse de la requête avec jeton:', response);
-
     if (response.status === 401) {
-        alert('Non autorisé, veuillez vous connecter.');
+        alert('Unauthorized, please log in again.');
         window.location.href = '/';
     }
 
     return response;
 }
 
-// Exemple d'utilisation pour accéder à une route protégée
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const token = getToken();
-        if (token) {
-            console.log('Token trouvé:', token);
-            const response = await fetchWithAuth('/gestion');
-            if (response.ok) {
-                console.log('Accès autorisé à la page admin');
-            } else {
-                console.error('Accès refusé à la page admin', response);
-            }
+        const response = await fetchWithAuth('/gestion');
+        if (response.ok) {
+            console.log('Accès autorisé à la page admin');
         } else {
-            console.log('Pas de jeton trouvé, redirection vers la page de connexion');
-            window.location.href = '/';
+            console.error('Accès refusé à la page admin');
         }
     } catch (error) {
         console.error('Erreur:', error);

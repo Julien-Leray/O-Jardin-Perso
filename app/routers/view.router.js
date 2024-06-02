@@ -6,6 +6,9 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 router.get('/', viewController.renderConnectionPage);
-router.get('/gestion', authMiddleware, isAdmin, viewController.renderGestionPage);
+
+router.get('/gestion', authMiddleware, isAdmin, (req, res) => {
+    res.render('gestion', { user: req.user });
+});
 
 export default router;
