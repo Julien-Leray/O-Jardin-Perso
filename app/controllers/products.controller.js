@@ -12,8 +12,7 @@ const controller = {
         return res.status(404).json({ message: 'No products found.' });
       }
       res.status(200).json(data);
-    }
-    else if (category) {
+    } else if (category) {
       if (category === 'Fruit' || category === 'Vegetable') {
         const data = await datamapper.getProductsByCategory(category);
         res.status(200).json(data);
@@ -48,23 +47,13 @@ const controller = {
       const base64Image = picture.split(';base64,').pop();
       imagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
-      try {
-        await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
-        imagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-        console.log('Image sauvegardée avec succès à', imagePath);
-      } catch (err) {
-        console.error('Erreur lors de l\'écriture du fichier :', err);
-        return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
-      }
+      await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
+      imagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+      console.log('Image sauvegardée avec succès à', imagePath);
     }
 
-    try {
-      const data = await datamapper.createProduct(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
-      res.json(data);
-    } catch (error) {
-      console.error('Erreur lors de la création du produit :', error);
-      res.status(500).json({ message: 'Erreur lors de la création du produit.' });
-    }
+    const data = await datamapper.createProduct(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
+    res.json(data);
   }),
 
   updateProduct: asyncHandler(async (req, res) => {
@@ -86,14 +75,9 @@ const controller = {
       const base64Image = picture.split(';base64,').pop();
       updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
-      try {
-        await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
-        updatedImagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-        console.log('Image mise à jour avec succès à', updatedImagePath);
-      } catch (err) {
-        console.error('Erreur lors de l\'écriture du fichier :', err);
-        return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
-      }
+      await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
+      updatedImagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+      console.log('Image mise à jour avec succès à', updatedImagePath);
     }
 
     const dataToUpdate = {
@@ -110,16 +94,11 @@ const controller = {
       sowing_tips,
     };
 
-    try {
-      const updatedData = await datamapper.updateProduct(id, dataToUpdate);
-      if (!updatedData) {
-        return res.status(404).json({ message: 'Product not found or no changes made.' });
-      }
-      res.status(200).json(updatedData);
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du produit :', error);
-      res.status(500).json({ message: 'Erreur lors de la mise à jour du produit.' });
+    const updatedData = await datamapper.updateProduct(id, dataToUpdate);
+    if (!updatedData) {
+      return res.status(404).json({ message: 'Product not found or no changes made.' });
     }
+    res.status(200).json(updatedData);
   }),
 
   deleteProduct: asyncHandler(async (req, res) => {
