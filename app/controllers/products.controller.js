@@ -25,11 +25,12 @@ const controller = {
 
   getProductById: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const data = await datamapper.getProductById(id);
 
-    if (!id) {
+
+    if (!id || isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
+    const data = await datamapper.getProductById(id);
 
     if (!data) {
       return res.status(404).json({ message: 'Product not found.' });
@@ -55,7 +56,6 @@ const controller = {
       try {
         await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
         imagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-        console.log('Image sauvegardée avec succès à', imagePath);
       } catch (err) {
         console.error('Erreur lors de l\'écriture du fichier :', err);
         return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
@@ -65,7 +65,7 @@ const controller = {
     // Créer le produit avec le chemin de l'image
     try {
       const data = await datamapper.createProduct(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
-      res.json(data);
+      res.status(201).json(data);
     } catch (error) {
       console.error('Erreur lors de la création du produit :', error);
       res.status(500).json({ message: 'Erreur lors de la création du produit.' });
@@ -75,7 +75,7 @@ const controller = {
 
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
+    const dataToUpdate = req.body;
     let updatedImagePath = '';
 
     if (!id) {
@@ -87,8 +87,8 @@ const controller = {
     }
 
     // Vérifiez si une image est incluse dans la requête
-    if (picture) {
-      const base64Image = picture.split(';base64,').pop();
+    if (dataToUpdate.picture) {
+      const base64Image = dataToUpdate.picture.split(';base64,').pop();
       updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le nom du produit
 
       try {
@@ -100,20 +100,6 @@ const controller = {
         return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
       }
     }
-
-    const dataToUpdate = {
-      latin_name,
-      name,
-      plantation_date,
-      harvest_date,
-      soil_type,
-      diseases,
-      watering_frequency,
-      category_id,
-      description,
-      sowing_tips,
-
-    };
 
     // Inclure le chemin de l'image mise à jour si elle existe
     if (updatedImagePath) {

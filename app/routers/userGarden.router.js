@@ -55,7 +55,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
-* GET api/me/garden
+* GET /api/me/garden
 * @summary Get all favorites
 * @tags UserGarden
 * @headers Authorization - Bearer token
@@ -66,7 +66,7 @@ const router = express.Router();
 */
 
 /**
- * POST api/me/garden
+ * POST /api/me/garden
  * @summary Add a favorite
  * @tags UserGarden
  * @param {product_id} request.body.required - The product id to add in favorites
@@ -78,7 +78,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/me/garden/{id}
+ * DELETE /api/me/garden/{id}
  * @summary Remove a favorite
  * @tags UserGarden
  * @param {number} id.path - The favorite id to remove

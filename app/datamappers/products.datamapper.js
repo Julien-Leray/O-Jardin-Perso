@@ -25,6 +25,9 @@ const datamapper = {
   async getProductById(id) {
     const query = 'SELECT * FROM product WHERE id = $1';
     const { rows } = await client.query(query, [id]);
+    if (rows.length === 0) {
+      return null;
+    }
     return rows[0];
   },
 

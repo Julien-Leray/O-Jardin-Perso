@@ -35,7 +35,7 @@ import Controller from "../controllers/connection.controller.js";
 const router = express.Router();
 
 /**
- * POST api/connection
+ * POST /api/connection
  * @summary Connect a user
  * @tags Connection
  * @param {UserConnection} request.body.required - The user to connect

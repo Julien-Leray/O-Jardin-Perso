@@ -2,9 +2,6 @@ import client from './pg.client.js';
 
 const datamapper = {
   async createUser(newUser) {
-    if (newUser.is_admin = true) {
-      newUser.is_admin = false;
-    }
 
     const fields = Object.keys(newUser);
     const values = Object.values(newUser);
@@ -13,6 +10,7 @@ const datamapper = {
     const placeholders = fields.map((_, index) => `$${index + 1}`).join(', ');
 
     const query = `INSERT INTO "user" (${fieldNames}) VALUES (${placeholders}) RETURNING *`;
+    console.log('query', query);
 
     const { rows } = await client.query(query, values);
     return rows[0];

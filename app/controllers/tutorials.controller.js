@@ -29,72 +29,65 @@ const controller = {
 
     // Vérifiez si une image est incluse dans la requête
     if (picture) {
-        const base64Image = picture.split(';base64,').pop();
-        imagePath = path.join('public/pictures', `${title.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le titre du tutoriel
+      const base64Image = picture.split(';base64,').pop();
+      imagePath = path.join('public/pictures', `${title.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le titre du tutoriel
 
-        try {
-            await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
-            imagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-            console.log('Image sauvegardée avec succès à', imagePath);
-        } catch (err) {
-            console.error('Erreur lors de l\'écriture du fichier :', err);
-            return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
-        }
+      try {
+        await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
+        imagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+        console.log('Image sauvegardée avec succès à', imagePath);
+      } catch (err) {
+        console.error('Erreur lors de l\'écriture du fichier :', err);
+        return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
+      }
     }
 
     // Créer le tutoriel avec le chemin de l'image
     try {
-        const data = await datamapper.createTutorial(title, article, imagePath, theme);
-        res.json(data);
+      const data = await datamapper.createTutorial(title, article, imagePath, theme);
+      res.status(201).json(data);
     } catch (error) {
-        console.error('Erreur lors de la création du tutoriel :', error);
-        res.status(500).json({ message: 'Erreur lors de la création du tutoriel.' });
+      console.error('Erreur lors de la création du tutoriel :', error);
+      res.status(500).json({ message: 'Erreur lors de la création du tutoriel.' });
     }
-}),
+  }),
 
 
-updateTutorial: asyncHandler(async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { title, article, picture, theme } = req.body;
-  let updatedImagePath = '';
+  updateTutorial: asyncHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+    const tutorialToUpdate = req.body;
+    let updatedImagePath = '';
 
-  if (picture) {
-      const base64Image = picture.split(';base64,').pop();
-      updatedImagePath = path.join('public/pictures', `${title.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le titre du tutoriel
+    if (tutorialToUpdate.picture) {
+      const base64Image = tutorialToUpdate.picture.split(';base64,').pop();
+      updatedImagePath = path.join('public/pictures', `${tutorialToUpdate.title.replace(/\s+/g, '_').toLowerCase()}.jpg`); // Nom du fichier basé sur le titre du tutoriel
 
       try {
-          await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
-          updatedImagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-          console.log('Image mise à jour avec succès à', updatedImagePath);
+        await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
+        updatedImagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+        console.log('Image mise à jour avec succès à', updatedImagePath);
       } catch (err) {
-          console.error('Erreur lors de l\'écriture du fichier :', err);
-          return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
+        console.error('Erreur lors de l\'écriture du fichier :', err);
+        return res.status(500).json({ message: 'Erreur lors de l\'enregistrement de l\'image.' });
       }
-  }
+    }
 
-  const dataToUpdate = {
-      title,
-      article,
-      theme,
-      updated_at: new Date().toISOString()
-  };
+    if (updatedImagePath) {
+      tutorialToUpdate.picture = updatedImagePath;
+    }
 
-  if (updatedImagePath) {
-      dataToUpdate.picture = updatedImagePath;
-  }
-
-  try {
-      const updatedData = await datamapper.updateTutorial(id, dataToUpdate);
+    try {
+      const updatedData = await datamapper.updateTutorial(id, tutorialToUpdate);
       if (!updatedData) {
-          return res.status(404).json({ message: "Tutorial not found or no changes made." });
+        return res.status(404).json({ message: "Tutorial not found or no changes made." });
       }
 
       res.status(200).json(updatedData);
-  } catch (error) {
+    } catch (error) {
       console.error('Erreur lors de la mise à jour du tutoriel :', error);
       res.status(500).json({ message: 'Erreur lors de la mise à jour du tutoriel.' });
-  }
-}),
+    }
+  }),
 
   deleteTutorial: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);

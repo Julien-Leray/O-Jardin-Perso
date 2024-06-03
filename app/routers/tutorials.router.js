@@ -1,6 +1,7 @@
 import express from 'express';
 import Controller from "../controllers/tutorials.controller.js"
 import isAdmin from '../middlewares/isAdmin.middleware.js';
+import authMiddleware from '../middlewares/authentification.middleware.js';
 
 /**
  * A tutorial object received from the API
@@ -41,7 +42,7 @@ import isAdmin from '../middlewares/isAdmin.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/tutorials
+ * GET /api/tutorials
  * @summary Get all tutorials
  * @tags Tutorials
  * @returns {Array.<Tutorial>} 200 - An array of tutorial objects
@@ -50,7 +51,7 @@ const router = express.Router();
  */
 
 /**
- * GET api/tutorials/{id}
+ * GET /api/tutorials/{id}
  * @summary Get a tutorial by id
  * @tags Tutorials
  * @param {number} id.path - Tutorial id
@@ -60,7 +61,7 @@ const router = express.Router();
  */
 
 /**
- * POST api/tutorials
+ * POST /api/tutorials
  * @summary Create a new tutorial
  * @tags Tutorials
  * @param {TutorialToSend} request.body.required - The tutorial object
@@ -71,7 +72,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/tutorials/{id}
+ * PATCH /api/tutorials/{id}
  * @summary Update a tutorial
  * @tags Tutorials
  * @param {number} id.path - Tutorial id
@@ -83,7 +84,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/tutorials/{id}
+ * DELETE /api/tutorials/{id}
  * @summary Delete a tutorial
  * @tags Tutorials
  * @param {number} id.path - Tutorial id
@@ -95,8 +96,8 @@ const router = express.Router();
 
 router.route('/').get(Controller.getTutorials);
 router.route('/:id').get(Controller.getTutorialById);
-router.route('/').post(isAdmin, Controller.createTutorial);
-router.route('/:id').patch(isAdmin, Controller.updateTutorial);
-router.route('/:id').delete(isAdmin, Controller.deleteTutorial);
+router.route('/').post(authMiddleware, isAdmin, Controller.createTutorial);
+router.route('/:id').patch(authMiddleware, isAdmin, Controller.updateTutorial);
+router.route('/:id').delete(authMiddleware, isAdmin, Controller.deleteTutorial);
 
 export default router;

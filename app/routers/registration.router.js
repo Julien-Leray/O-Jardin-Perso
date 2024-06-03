@@ -33,7 +33,7 @@ import Controller from "../controllers/registration.controller.js";
 const router = express.Router();
 
 /**
- * POST api/registration
+ * POST /api/registration
  * @summary Register a new user
  * @tags Registration
  * @param {UserRegistration} request.body.required - The user to register
@@ -45,7 +45,7 @@ const router = express.Router();
  */
 
 /**
- * POST api/registration/email
+ * POST /api/registration/email
  * @summary Check if email already exist
  * @tags Registration
  * @param {string} email.required - The email to check

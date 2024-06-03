@@ -29,6 +29,7 @@ const datamapper = {
     const setClause = fields.map((field, index) => `"${field}" = $${index + 1}`).join(', ');
 
     const query = `UPDATE tutorial SET ${setClause} WHERE id = $${fields.length + 1} RETURNING *`;
+    console.log(query);
 
     const { rows } = await client.query(query, values);
 
