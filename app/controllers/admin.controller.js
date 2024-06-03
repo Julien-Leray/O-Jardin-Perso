@@ -23,7 +23,6 @@ const controller = {
 
   createUser: asyncHandler(async (req, res) => {
     const newUser = req.body;
-    console.log(newUser);
 
     if (!newUser.email || !newUser.password || !newUser.firstname || !newUser.lastname) {
       return res.status(400).json({ message: 'Email, password, firstname and lastname are required' });

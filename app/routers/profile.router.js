@@ -22,7 +22,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/me/profile
+ * GET /api/me/profile
  * @summary Get the user profile
  * @tags Profile
  * @param {string} Authorization.header.required - The token to authenticate
@@ -33,7 +33,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/me/profile
+ * PATCH /api/me/profile
  * @summary Update the user profile
  * @tags Profile
  * @param {User} request.body.required - The user profile to update
@@ -45,7 +45,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/me/profile
+ * DELETE /api/me/profile
  * @summary Delete the user profile
  * @tags Profile
  * @param {string} Authorization.header.required - The token to authenticate

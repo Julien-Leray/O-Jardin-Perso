@@ -19,7 +19,6 @@ const controller = {
   registration: asyncHandler(async (req, res) => {
 
     const { error, value: newUser } = userSchema.validate(req.body, { abortEarly: false });
-    console.log(newUser);
 
     if (error) {
       return res.status(400).json({ message: 'Invalid input', details: error.details });
@@ -30,6 +29,7 @@ const controller = {
     }
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
+    newUser.is_admin = false;
     const userCreated = await registrationDatamapper.createUser(newUser);
 
     res.status(201).json(userCreated);
