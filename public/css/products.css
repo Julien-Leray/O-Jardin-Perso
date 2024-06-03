@@ -1,4 +1,5 @@
-/* Styles généraux pour le conteneur principal */
+
+/* Produits */
 #mainContainerFruit,
 #mainContainerVegetable {
     display: flex;
@@ -7,7 +8,7 @@
     gap: 10px; /* Espace entre les éléments */
 }
 
-/* Styles pour les conteneurs individuels */
+/* Conteneurs individuels */
 #containerLeftFruit, #containerCenterFruit, #containerRightFruit,
 #containerLeftVegetable, #containerCenterVegetable, #containerRightVegetable {
     border: 1px solid #ccc;
@@ -20,7 +21,7 @@
     flex: 1 1 30%; /* Grandir/rétrécir pour occuper 30% du conteneur */
 }
 
-/* Styles pour les labels */
+/* Labels */
 #containerLeftFruit label, #containerCenterFruit label, #containerRightFruit label,
 #containerLeftVegetable label, #containerCenterVegetable label, #containerRightVegetable label {
     display: block;
@@ -29,7 +30,7 @@
     text-align: left; /* Aligner les étiquettes à gauche */
 }
 
-/* Styles pour les inputs et textareas */
+/* Inputs et textareas */
 #containerLeftFruit input[type="text"], #containerCenterFruit input[type="text"], #containerRightFruit input[type="text"],
 #containerLeftVegetable input[type="text"], #containerCenterVegetable input[type="text"], #containerRightVegetable input[type="text"],
 #containerLeftFruit textarea, #containerCenterFruit textarea, #containerRightFruit textarea,
@@ -47,7 +48,7 @@
     overflow: hidden; /* Cacher le débordement */
 }
 
-/* Styles pour les images */
+/* Images */
 #containerLeftFruit img, #containerLeftVegetable img {
     width: 100%; /* L'image prend toute la largeur du conteneur */
     height: auto; /* Maintenir le ratio d'aspect */
@@ -55,7 +56,7 @@
     border-radius: 5px; /* Ajout d'une bordure arrondie */
 }
 
-/* Styles pour les inputs de type file */
+/* Inputs de type file */
 #containerLeftFruit input[type="file"], #containerLeftVegetable input[type="file"] {
     width: 100%;
     padding: 8px;
@@ -68,7 +69,7 @@
     background-color: #fff;
 }
 
-/* Styles pour le conteneur du bas */
+/* Conteneur du bas */
 #containerBottomFruit, #containerBottomVegetable {
     border: 1px solid #ccc;
     padding: 10px;
@@ -83,29 +84,13 @@
     flex-wrap: wrap; /* Permettre l'enroulement */
 }
 
-/* Styles pour les boutons */
-#containerBottomFruit button, #containerBottomVegetable button {
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#containerBottomFruit button:nth-child(2), #containerBottomVegetable button:nth-child(2) {
-    background-color: #dc3545; /* Couleur rouge pour le bouton de suppression */
-}
-
-/* Styles pour les labels dans le conteneur du bas */
+/* Labels dans le conteneur du bas */
 #containerBottomFruit label, #containerBottomVegetable label {
     font-weight: bold;
     text-align: left; /* Aligner les étiquettes à gauche */
 }
 
-/* Styles pour les inputs en lecture seule dans le conteneur du bas */
+/* Inputs en lecture seule dans le conteneur du bas */
 #containerBottomFruit input[type="text"], #containerBottomVegetable input[type="text"],
 #containerBottomFruit textarea, #containerBottomVegetable textarea {
     width: 200px;
@@ -134,7 +119,7 @@
     flex-direction: column;
 }
 
-/* Styles pour les cases à cocher des mois */
+/* Cases à cocher des mois */
 .month-checkboxes {
     display: flex;
     flex-wrap: wrap;

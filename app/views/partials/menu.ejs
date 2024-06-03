@@ -1,26 +1,25 @@
 <main>
 <div id="menuContenair">
     <section id="menuHeader">
-        <button onclick="fetchProducts('Vegetable')">Légume</button>
+        <button id="vegetableButton" onclick="fetchProducts('Vegetable')">Légume</button>
         <section id="legumesSection" style="display: none;">
-            <select id="legumes" onchange="handleProductSelection('Vegetable')">
+            <select id="legumes" onchange="handleProductSelection('Vegetable')" style="display: none;">
                 <option value="">--Sélectionnez un légume--</option>
                 <option value="new">Ajouter un nouveau légume</option>
             </select>
         </section>
 
-        <button onclick="fetchProducts('Fruit')">Fruit</button>
+        <button id="fruitButton" onclick="fetchProducts('Fruit')">Fruit</button>
         <section id="fruitsSection" style="display: none;">
-            <select id="fruits" onchange="handleProductSelection('Fruit')">
+            <select id="fruits" onchange="handleProductSelection('Fruit')" style="display: none;">
                 <option value="">--Sélectionnez un fruit--</option>
                 <option value="new">Ajouter un nouveau fruit</option>
             </select>
         </section>
 
-        <button onclick="fetchTutorials()">Tutoriel</button>
-        <section id="tutorialsSection">
-            <label for="tutorialsSelect"></label>
-            <select id="tutorialsSelect" onchange="handleTutorialSelection()">
+        <button id="tutorialButton" onclick="fetchTutorials()">Tutoriel</button>
+        <section id="tutorialsSection" style="display: none;">
+            <select id="tutorialsSelect" onchange="handleTutorialSelection()" style="display: none;">
                 <option value="">--Sélectionnez un tutoriel--</option>
                 <option value="new">Ajouter un nouveau tutoriel</option>
             </select>
@@ -28,5 +27,4 @@
 
         <button onclick="fetchUsers()">Utilisateur</button>
     </section>
-
-    </div>
+</div>

@@ -19,7 +19,7 @@ async function fetchUserDetails(userId) {
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('La réponse du réseau n\'était pas correcte');
         }
 
         const user = await response.json();
@@ -78,13 +78,10 @@ async function saveNewUser() {
     const address = document.getElementById('userAddressCreate').value;
     const zip_code = document.getElementById('userZipCodeCreate').value;
     const city = document.getElementById('userCityCreate').value;
-    const watering_alert = document.getElementById('userWateringAlertCreate').checked;
-    const forecast_alert = document.getElementById('userForecastAlertCreate').checked;
-    const is_admin = document.getElementById('userIsAdminCreate').checked;
 
-    // Basic validation
+    // Validation de base
     if (!email || !firstname || !lastname || !password) {
-        alert("Email, firstname, lastname, and password are required.");
+        alert("Email, prénom, nom, et mot de passe sont obligatoires.");
         return;
     }
 
@@ -93,16 +90,17 @@ async function saveNewUser() {
         firstname,
         lastname,
         password,
-        address,
-        zip_code,
-        city,
-        watering_alert,
-        forecast_alert,
-        is_admin
     };
 
+    if (address) user.address = address;
+    if (zip_code) user.zip_code = zip_code;
+    if (city) user.city = city;
+    if (document.getElementById('userWateringAlertCreate').checked !== undefined) user.watering_alert = document.getElementById('userWateringAlertCreate').checked;
+    if (document.getElementById('userForecastAlertCreate').checked !== undefined) user.forecast_alert = document.getElementById('userForecastAlertCreate').checked;
+    if (document.getElementById('userIsAdminCreate').checked !== undefined) user.is_admin = document.getElementById('userIsAdminCreate').checked;
+
     // Log the user object to see what is being sent
-    console.log('Sending user data:', JSON.stringify(user));
+    console.log('Envoi des données utilisateur :', JSON.stringify(user));
 
     try {
         const response = await fetch('/api/admin/users', {
@@ -120,7 +118,7 @@ async function saveNewUser() {
             fetchUsers();
         } else {
             const errorText = await response.text();
-            console.error('Error response from server:', errorText);
+            console.error('Réponse d\'erreur du serveur :', errorText);
             alert("Erreur lors de l'ajout de l'utilisateur : " + errorText);
         }
     } catch (error) {
@@ -137,27 +135,23 @@ async function saveEditUser() {
     const address = document.getElementById('userAddressCreate').value;
     const zip_code = document.getElementById('userZipCodeCreate').value;
     const city = document.getElementById('userCityCreate').value;
-    const watering_alert = document.getElementById('userWateringAlertCreate').checked;
-    const forecast_alert = document.getElementById('userForecastAlertCreate').checked;
-    const is_admin = document.getElementById('userIsAdminCreate').checked;
 
-    // Basic validation
+    // Validation de base
     if (!email || !firstname || !lastname) {
-        alert("Email, firstname, and lastname are required.");
+        alert("Email, prénom, et nom sont obligatoires.");
         return;
     }
 
-    const user = {
-        firstname,
-        lastname,
-        password,
-        address,
-        zip_code,
-        city,
-        watering_alert,
-        forecast_alert,
-        is_admin
-    };
+    const user = {};
+    if (firstname) user.firstname = firstname;
+    if (lastname) user.lastname = lastname;
+    if (password) user.password = password;
+    if (address) user.address = address;
+    if (zip_code) user.zip_code = zip_code;
+    if (city) user.city = city;
+    if (document.getElementById('userWateringAlertCreate').checked !== undefined) user.watering_alert = document.getElementById('userWateringAlertCreate').checked;
+    if (document.getElementById('userForecastAlertCreate').checked !== undefined) user.forecast_alert = document.getElementById('userForecastAlertCreate').checked;
+    if (document.getElementById('userIsAdminCreate').checked !== undefined) user.is_admin = document.getElementById('userIsAdminCreate').checked;
 
     try {
         const response = await fetch(`/api/admin/users/${userId}`, {
@@ -195,7 +189,7 @@ function showUserForm() {
     document.getElementById('saveNewButton').style.display = 'inline-block';
     document.getElementById('saveEditButton').style.display = 'none';
 
-    // Clear the form
+    // Effacer le formulaire
     document.getElementById('userForm').reset();
 }
 
@@ -209,12 +203,12 @@ async function fetchUsers() {
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('La réponse du réseau n\'était pas correcte');
         }
 
         const users = await response.json();
         const usersTableBody = document.getElementById('usersTableBody');
-        usersTableBody.innerHTML = ''; // Clear current table body
+        usersTableBody.innerHTML = ''; // Effacer le contenu actuel du tableau
 
         users.forEach(user => {
             const row = document.createElement('tr');
@@ -225,8 +219,8 @@ async function fetchUsers() {
                 <td>${user.firstname}</td>
                 <td>${user.lastname}</td>
                 <td>
-                    <button onclick="editUser(${user.id})">Edit</button>
-                    <button onclick="confirmDeleteUser(${user.id})">Delete</button>
+                    <button class="save-button" onclick="editUser(${user.id})">Modifier</button>
+                    <button class="delete-button" onclick="confirmDeleteUser(${user.id})">Supprimer</button>
                 </td>
             `;
 
@@ -237,5 +231,5 @@ async function fetchUsers() {
     }
 }
 
-// Fetch users on page load
+// Récupérer les utilisateurs au chargement de la page
 document.addEventListener('DOMContentLoaded', fetchUsers);

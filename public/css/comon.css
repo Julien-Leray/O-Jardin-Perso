@@ -1,3 +1,4 @@
+/* Styles globaux */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,51 +6,71 @@ body {
     background-color: #f9f9f9;
 }
 
-
+/* Boutons généraux */
 button {
-    background-color: #ff8c00;
-    color: white;
     border: none;
     padding: 10px 20px;
     margin: 10px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px; /* Pour rendre les boutons arrondis */
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #ff9f2e;
+/* Boutons enregistrer (bleu) */
+button.save-button {
+    background-color: #16a1af; /* Bleu */
 }
 
+button.save-button:hover {
+    background-color: #0e7b84; /* Bleu foncé */
+}
 
+/* Boutons supprimer (rouge) */
+button.delete-button {
+    background-color: #dc3545; /* Rouge */
+}
 
-input[type="email"], input[type="password"], select {
+button.delete-button:hover {
+    background-color: #c82333; /* Rouge foncé */
+}
+
+/* Bouton déconnexion (noir) */
+button#logoutButton {
+    background-color: #000000; /* Noir */
+}
+
+button#logoutButton:hover {
+    background-color: #333333; /* Noir foncé */
+}
+
+/* Autres boutons (orange) */
+button:not(.save-button):not(.delete-button):not(#logoutButton) {
+    background-color: #ff8c00; /* Orange */
+}
+
+button:not(.save-button):not(.delete-button):not(#logoutButton):hover {
+    background-color: #ff9f2e; /* Orange clair */
+}
+
+/* Inputs et sélecteurs */
+input[type="email"], input[type="password"], input[type="text"], select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 input[type="file"] {
     margin-top: 10px;
 }
 
-
+/* Sections cachées par défaut */
 #productsSection, #productDetails, #tutorialsSection, #tutorialDetails, #usersSection, #userFormSection {
     display: none;
 }
-
-
-
-button#addUserButton, button#saveButton, button#saveTutorialButton, button#saveNewButton, button#saveEditButton {
-    background-color: #ff8c00;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button#addUserButton:hover, button#saveButton:hover, button#saveTutorialButton:hover, button#saveNewButton:hover, button#saveEditButton:hover {
-    background-color: #ff9f2e;
-}
-

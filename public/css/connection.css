@@ -1,7 +1,6 @@
 
-
-.login-container {
-    width: 100%;
+#loginForm {
+    width: 40%;
     max-width: 400px;
     background: white;
     padding: 20px;
@@ -10,18 +9,13 @@
     text-align: center;
 }
 
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
 .login-container h1 {
     margin-bottom: 20px;
     font-size: 24px;
 }
 
-
-button#continueButton {
-    background-color: #009688;
-    color: white;
-}
-
-button#createAccountButton {
-    background-color: #ff9800;
-    color: white;
-}

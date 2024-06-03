@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/css/products.css">
     <link rel="stylesheet" href="/css/tuto.css">
     <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/connection.css">
     <script src="/js/connection.js" defer></script>
     <script src="/js/common.js" defer></script>
     <script src="/js/legumes.js" defer></script>
@@ -25,12 +27,8 @@
                 <img src="/pictures/logo/logo.png" alt="logo O'jardin">
             </div>
             <div id="authenticatedContent" style="display: none;">
-                <div id="userInfo">
-                    <h2>Informations Utilisateur</h2>
-                    <p><strong>Prénom:</strong> <span id="userFirstname"></span></p>
-                    <p><strong>Nom:</strong> <span id="userLastname"></span></p>
-                    <p><strong>Email:</strong> <span id="userEmail"></span></p>
-                    <p><strong>Administrateur:</strong> <span id="userIsAdmin"></span></p>
+                <div id="welcomeMessage">
+                    <h2>Bienvenue : <span id="username"></span></h2>
                     <button id="logoutButton">Se Déconnecter</button>
                 </div>
             </div>

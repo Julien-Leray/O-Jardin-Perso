@@ -1,4 +1,5 @@
-/* Styles généraux pour le conteneur principal */
+
+/* Tutoriels */
 #mainContainerTuto {
     display: flex;
     flex-wrap: wrap;
@@ -59,24 +60,6 @@
     align-items: center; /* Centrer les éléments verticalement */
     gap: 10px; /* Espace entre les éléments */
     flex-wrap: wrap; /* Permettre l'enroulement */
-}
-
-#contenairBottomTuto button {
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 14px;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#saveTutorialButton {
-    background-color: #007bff;
-}
-
-#contenairBottomTuto button:nth-child(2) {
-    background-color: #dc3545; /* Couleur rouge pour le bouton de suppression */
 }
 
 #contenairBottomTuto .input-group-inline {

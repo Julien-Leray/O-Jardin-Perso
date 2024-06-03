@@ -1,7 +1,8 @@
 
 <%- include('partials/header') %>
 <body>
-    <div class="container">
+    <div></div>
+    <div class="login-container">
         <form id="loginForm">
             <div class="input-group">
                 <input type="email" id="email" placeholder="Email" required>
@@ -11,6 +12,7 @@
             </div>
             <button type="submit" id="loginButton">Se Connecter</button>
         </form>
+    </div>
         <div id="authenticatedContentGestion" style="display: none;">
             <%- include('partials/menu') %>
             <%- include('partials/fruits') %>

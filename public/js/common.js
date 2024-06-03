@@ -243,35 +243,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function adjustSelectWidth(selectElement) {
-    const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.visibility = 'hidden';
-    tempDiv.style.whiteSpace = 'nowrap';
-    document.body.appendChild(tempDiv);
-
-    // Trouver la largeur maximale parmi toutes les options
-    let maxWidth = 0;
-    for (let i = 0; i < selectElement.options.length; i++) {
-        tempDiv.textContent = selectElement.options[i].text;
-        maxWidth = Math.max(maxWidth, tempDiv.clientWidth);
-    }
-
-    // Inclure un peu de marge pour le padding et la bordure
-    selectElement.style.width = `${maxWidth + 20}px`;
-
-    document.body.removeChild(tempDiv);
-}
-
 function toggleSection(sectionId, button) {
     const section = document.getElementById(sectionId);
     const allSections = document.querySelectorAll('#menuHeader > section');
     const allButtons = document.querySelectorAll('#menuHeader > button');
-
+    
     allSections.forEach(sec => {
         if (sec !== section) {
             sec.classList.remove('active');
             sec.style.display = 'none';
+            const select = sec.querySelector('select');
+            if (select) select.style.display = 'none';
         }
     });
 
@@ -286,28 +268,30 @@ function toggleSection(sectionId, button) {
     if (section.classList.contains('active')) {
         section.classList.remove('active');
         section.style.display = 'none';
+        const select = section.querySelector('select');
+        if (select) select.style.display = 'none';
     } else {
         section.classList.add('active');
-        section.style.display = 'flex';
-
-        const selectElement = section.querySelector('select');
-        if (selectElement) {
-            adjustSelectWidth(selectElement);
+        section.style.display = 'block';
+        const select = section.querySelector('select');
+        if (select) {
+            select.style.display = 'inline-block';
+            adjustSelectWidth(select);
         }
     }
 }
 
-document.querySelector('button[onclick="fetchProducts(\'Vegetable\')"]').addEventListener('click', function () {
+document.getElementById('vegetableButton').addEventListener('click', function () {
     toggleSection('legumesSection', this);
     fetchProducts('Vegetable');
 });
 
-document.querySelector('button[onclick="fetchProducts(\'Fruit\')"]').addEventListener('click', function () {
+document.getElementById('fruitButton').addEventListener('click', function () {
     toggleSection('fruitsSection', this);
     fetchProducts('Fruit');
 });
 
-document.querySelector('button[onclick="fetchTutorials()"]').addEventListener('click', function () {
+document.getElementById('tutorialButton').addEventListener('click', function () {
     toggleSection('tutorialsSection', this);
     fetchTutorials();
 });
@@ -317,10 +301,22 @@ document.querySelector('button[onclick="fetchUsers()"]').addEventListener('click
     fetchUsers();
 });
 
-// Adjust select width on content change
-document.querySelectorAll('select').forEach(select => {
-    select.addEventListener('change', function () {
-        adjustSelectWidth(this);
-    });
-});
+function adjustSelectWidth(selectElement) {
+    const tempDiv = document.createElement('div');
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.style.whiteSpace = 'nowrap';
+    document.body.appendChild(tempDiv);
 
+    // Find the maximum width among all options
+    let maxWidth = 0;
+    for (let i = 0; i < selectElement.options.length; i++) {
+        tempDiv.textContent = selectElement.options[i].text;
+        maxWidth = Math.max(maxWidth, tempDiv.clientWidth);
+    }
+
+    // Include some padding for the select element
+    selectElement.style.width = `${maxWidth + 30}px`;
+
+    document.body.removeChild(tempDiv);
+}

@@ -2,21 +2,21 @@
     <main id="mainContainerVegetable">
         <section id="containerLeftVegetable">
             <img id="legume_imagePreview" style="display: none;">
-            <input type="file" id="legume_imageUploadDownload" onchange="updateImagePreviewDownload('legume')">
+            <input type="file" id="legume_imageUploadDownload" name="legume_imageUploadDownload" onchange="updateImagePreviewDownload('legume')">
         </section>
 
         <section id="containerCenterVegetable">
             <label for="legume_name">Nom</label>
-            <textarea id="legume_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_name" name="legume_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="legume_latin_name">Nom Latin</label>
-            <textarea id="legume_latin_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_latin_name" name="legume_latin_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="legume_description">Description</label>
-            <textarea id="legume_description" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_description" name="legume_description" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
            
             <label for="legume_sowing_tips">Conseils de Semis</label>
-            <textarea id="legume_sowing_tips" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_sowing_tips" name="legume_sowing_tips" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
 
         <section id="containerRightVegetable">
@@ -31,24 +31,24 @@
                 </div>
             </div>
             <label for="legume_soil_type">Type de Sol</label>
-            <textarea id="legume_soil_type" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_soil_type" name="legume_soil_type" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="legume_diseases">Maladies</label>
-            <textarea id="legume_diseases" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_diseases" name="legume_diseases" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="legume_watering_frequency">Fréquence d'Arrosage</label>
-            <textarea id="legume_watering_frequency" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="legume_watering_frequency" name="legume_watering_frequency" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
     </main>
 
     <section id="containerBottomVegetable">
-        <button id="saveLegumeButton">Enregistrer</button>
-        <button id="deleteLegumeButton" onclick="deleteLegume()">Supprimer</button>
+        <button id="saveLegumeButton" class="save-button">Enregistrer</button>
+        <button id="deleteLegumeButton" class="delete-button" onclick="deleteLegume()">Supprimer</button>
 
         <label for="legume_created_at">Créé le</label>
-        <textarea id="legume_created_at" disabled rows="1"></textarea>
+        <textarea id="legume_created_at" name="legume_created_at" disabled rows="1"></textarea>
 
         <label for="legume_updated_at">Mis à jour le</label>
-        <textarea id="legume_updated_at" disabled rows="1"></textarea>
+        <textarea id="legume_updated_at" name="legume_updated_at" disabled rows="1"></textarea>
     </section>
 </div>

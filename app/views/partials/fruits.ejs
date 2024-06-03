@@ -2,21 +2,21 @@
     <main id="mainContainerFruit">
         <section id="containerLeftFruit">
             <img id="fruit_imagePreview" style="display: none;">
-            <input type="file" id="fruit_imageUploadDownload" onchange="updateImagePreviewDownload('fruit')">
+            <input type="file" id="fruit_imageUploadDownload" name="fruit_imageUploadDownload" onchange="updateImagePreviewDownload('fruit')">
         </section>
 
         <section id="containerCenterFruit">
             <label for="fruit_name">Nom</label>
-            <textarea id="fruit_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_name" name="fruit_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_latin_name">Nom Latin</label>
-            <textarea id="fruit_latin_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_latin_name" name="fruit_latin_name" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_description">Description</label>
-            <textarea id="fruit_description" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_description" name="fruit_description" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
            
             <label for="fruit_sowing_tips">Conseils de Semis</label>
-            <textarea id="fruit_sowing_tips" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_sowing_tips" name="fruit_sowing_tips" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
 
         <section id="containerRightFruit">
@@ -31,24 +31,24 @@
                 </div>
             </div>
             <label for="fruit_soil_type">Type de Sol</label>
-            <textarea id="fruit_soil_type" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_soil_type" name="fruit_soil_type" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_diseases">Maladies</label>
-            <textarea id="fruit_diseases" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_diseases" name="fruit_diseases" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
 
             <label for="fruit_watering_frequency">Fréquence d'Arrosage</label>
-            <textarea id="fruit_watering_frequency" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
+            <textarea id="fruit_watering_frequency" name="fruit_watering_frequency" oninput="adjustTextareaHeight(this)" rows="1"></textarea>
         </section>
     </main>
 
     <section id="containerBottomFruit">
-        <button id="saveFruitButton">Enregistrer</button>
-        <button id="deleteFruitButton" onclick="deleteFruit()">Supprimer</button>
+        <button id="saveFruitButton" class="save-button">Enregistrer</button>
+        <button id="deleteFruitButton" class="delete-button" onclick="deleteFruit()">Supprimer</button>
 
         <label for="fruit_created_at">Créé le</label>
-        <textarea id="fruit_created_at" disabled rows="1"></textarea>
+        <textarea id="fruit_created_at" name="fruit_created_at" disabled rows="1"></textarea>
 
         <label for="fruit_updated_at">Mis à jour le</label>
-        <textarea id="fruit_updated_at" disabled rows="1"></textarea>
+        <textarea id="fruit_updated_at" name="fruit_updated_at" disabled rows="1"></textarea>
     </section>
 </div>

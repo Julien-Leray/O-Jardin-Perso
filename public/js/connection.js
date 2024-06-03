@@ -34,11 +34,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
                 if (userResponse.ok) {
                     const userData = await userResponse.json();
-                    document.getElementById('userFirstname').textContent = userData.firstname;
-                    document.getElementById('userLastname').textContent = userData.lastname;
-                    document.getElementById('userEmail').textContent = userData.email;
-                    document.getElementById('userIsAdmin').textContent = userData.is_admin ? 'Oui' : 'Non';
-                    document.getElementById('userInfo').style.display = 'block';
+                    document.getElementById('username').textContent = userData.firstname;
                     document.getElementById('loginForm').style.display = 'none';
 
                     // Affiche le contenu authentifié
@@ -63,7 +59,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 document.getElementById('logoutButton').addEventListener('click', function() {
     localStorage.removeItem('token'); // Supprime le jeton du localStorage
-    document.getElementById('userInfo').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('authenticatedContent').style.display = 'none';
     document.getElementById('authenticatedContentGestion').style.display = 'none';
