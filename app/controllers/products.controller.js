@@ -28,8 +28,6 @@ const controller = {
       return res.status(400).json({ message: 'Invalid id' });
     }
     const data = await datamapper.getProductById(id);
-
-    const data = await datamapper.getProductById(id);
     if (!data) {
       return res.status(404).json({ message: 'Product not found.' });
     }

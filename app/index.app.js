@@ -7,7 +7,7 @@ import viewRouter from './routers/view.router.js';
 import notFoundMiddleware from './middlewares/notFound.middleware.js';
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware.js';
 import swagger from './services/swagger/index.swagger.js';
-import cookieParser from 'cookie-parser';
+
 
 const app = express();
 
