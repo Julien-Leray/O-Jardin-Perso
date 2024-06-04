@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "doc": "./node_modules/.bin/jsdoc -c jsdoc.json"
+    "doc": "./node_modules/.bin/jsdoc -c jsdoc.json",
+    "test": "mocha --recursive ./app/**/*.test.js --require test.config.js --require test.hooks.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "ejs": "^3.1.9",
     "express": "^4.19.2",
     "express-jsdoc-swagger": "^1.8.0",
+    "fs": "^0.0.1-security",
     "joi": "^17.13.1",
     "jsdoc": "^4.0.3",
     "jsonwebtoken": "^9.0.2",
@@ -34,6 +35,7 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "globals": "^15.2.0"
+    "globals": "^15.2.0",
+    "mocha": "^10.4.0"
   }
 }

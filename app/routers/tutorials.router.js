@@ -42,7 +42,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/tutorials
+ * GET /api/tutorials
  * @summary Get all tutorials
  * @tags Tutorials
  * @returns {Array.<Tutorial>} 200 - An array of tutorial objects
@@ -51,7 +51,7 @@ const router = express.Router();
  */
 
 /**
- * GET api/tutorials/{id}
+ * GET /api/tutorials/{id}
  * @summary Get a tutorial by id
  * @tags Tutorials
  * @param {number} id.path - Tutorial id
@@ -61,7 +61,7 @@ const router = express.Router();
  */
 
 /**
- * POST api/tutorials
+ * POST /api/tutorials
  * @summary Create a new tutorial
  * @tags Tutorials
  * @param {TutorialToSend} request.body.required - The tutorial object
@@ -72,7 +72,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/tutorials/{id}
+ * PATCH /api/tutorials/{id}
  * @summary Update a tutorial
  * @tags Tutorials
  * @param {number} id.path - Tutorial id
@@ -84,7 +84,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/tutorials/{id}
+ * DELETE /api/tutorials/{id}
  * @summary Delete a tutorial
  * @tags Tutorials
  * @param {number} id.path - Tutorial id

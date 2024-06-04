@@ -12,7 +12,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/me/alerts
+ * GET /api/me/alerts
  * @summary Get user alerts
  * @tags Alerts
  * @param {string} Authorization.header.required - The token to connect
@@ -22,7 +22,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/me/alerts
+ * PATCH /api/me/alerts
  * @summary Update user alerts
  * @tags Alerts
  * @param {string} Authorization.header.required - The token to connect

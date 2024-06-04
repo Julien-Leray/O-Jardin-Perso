@@ -28,7 +28,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/virtualGarden
+ * GET /api/virtualGarden
  * @summary Get all virtual garden products
  * @tags VirtualGarden
  * @param {string} Authorization.header.required - Bearer token
@@ -38,7 +38,7 @@ const router = express.Router();
  */
 
 /**
- * POST api/virtualGarden
+ * POST /api/virtualGarden
  * @summary Add a product to the virtual garden
  * @tags VirtualGarden
  * @param {string} Authorization.header.required - Bearer token
@@ -50,7 +50,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/virtualGarden/:id
+ * DELETE /api/virtualGarden/:id
  * @summary Remove a product from the virtual garden
  * @tags VirtualGarden
  * @param {string} Authorization.header.required - Bearer token
@@ -62,7 +62,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/virtualGarden/:id
+ * PATCH /api/virtualGarden/:id
  * @summary Update a product in the virtual garden
  * @tags VirtualGarden
  * @param {string} Authorization.header.required - Bearer token

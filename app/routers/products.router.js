@@ -41,7 +41,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 const router = express.Router();
 
 /**
- * GET api/products
+ * GET /api/products
  * @summary Get all products
  * @tags Products
  * @returns {Array.<Product>} 200 - An array of products
@@ -50,7 +50,7 @@ const router = express.Router();
  */
 
 /** 
- * GET api/products?category={category}
+ * GET /api/products?category={category}
  * @summary Get all products of a specific category
  * @tags Products
  * @param {string} category.query.required - The category name
@@ -60,7 +60,7 @@ const router = express.Router();
  */
 
 /** 
- * POST api/products
+ * POST /api/products
  * @summary Create a new product
  * @tags Products
  * @param {ProductToSend} request.body.required - The new product
@@ -71,7 +71,7 @@ const router = express.Router();
  */
 
 /**
- * GET api/products/{id}
+ * GET /api/products/{id}
  * @summary Get a product by its id
  * @tags Products
  * @param {number} id.path.required - The product id
@@ -81,7 +81,7 @@ const router = express.Router();
  */
 
 /**
- * PATCH api/products/{id}
+ * PATCH /api/products/{id}
  * @summary Update a product by its id
  * @tags Products
  * @param {number} id.path.required - The product id
@@ -94,7 +94,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE api/products/{id}
+ * DELETE /api/products/{id}
  * @summary Delete a product by its id
  * @tags Products
  * @param {number} id.path.required - The product id

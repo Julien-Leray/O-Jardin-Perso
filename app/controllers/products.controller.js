@@ -27,6 +27,7 @@ const controller = {
     if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
+    const data = await datamapper.getProductById(id);
 
     const data = await datamapper.getProductById(id);
     if (!data) {
