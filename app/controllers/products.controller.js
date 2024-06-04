@@ -7,7 +7,7 @@ const controller = {
   getProducts: asyncHandler(async (req, res) => {
     const category = req.query.category;
     if (!category) {
-      const data = await datamapper.getAllProducts();
+      const data = await datamapper.getAll();
       if (data.length === 0) {
         return res.status(404).json({ message: 'No products found.' });
       }
@@ -27,7 +27,7 @@ const controller = {
     if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
-    const data = await datamapper.getProductById(id);
+    const data = await datamapper.getById(id);
     if (!data) {
       return res.status(404).json({ message: 'Product not found.' });
     }
@@ -51,49 +51,35 @@ const controller = {
       console.log('Image sauvegardée avec succès à', imagePath);
     }
 
-    const data = await datamapper.createProduct(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
+    const data = await datamapper.create(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
     res.json(data);
   }),
 
   updateProduct: asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
+    const dataToUpdate = req.body;
 
     if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    const existingProduct = await datamapper.getProductById(id);
+    const existingProduct = await datamapper.getById(id);
     if (!existingProduct) {
-        return res.status(404).json({ message: 'Product not found.' });
+      return res.status(404).json({ message: 'Product not found.' });
     }
 
     let updatedImagePath = existingProduct.picture;
 
-    if (picture) {
+    if (dataToUpdate.picture) {
       const base64Image = picture.split(';base64,').pop();
-      updatedImagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
+      updatedImagePath = path.join('public/pictures', `${dataToUpdate.name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
-      updatedImagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+      updatedImagePath = `/pictures/${dataToUpdate.name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
       console.log('Image mise à jour avec succès à', updatedImagePath);
     }
 
-    const dataToUpdate = {
-      latin_name,
-      name,
-      picture: updatedImagePath,
-      plantation_date,
-      harvest_date,
-      soil_type,
-      diseases,
-      watering_frequency,
-      category_id,
-      description,
-      sowing_tips,
-    };
-
-    const updatedData = await datamapper.updateProduct(id, dataToUpdate);
+    const updatedData = await datamapper.update(id, dataToUpdate);
     if (!updatedData) {
       return res.status(404).json({ message: 'Product not found or no changes made.' });
     }
@@ -106,11 +92,11 @@ const controller = {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    const existedProduct = await datamapper.getProductById(id);
+    const existedProduct = await datamapper.getById(id);
     if (!existedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    await datamapper.deleteProduct(id);
+    await datamapper.delete(id);
     res.status(204).json('Product deleted');
   }),
 };

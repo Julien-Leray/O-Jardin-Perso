@@ -8,7 +8,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized: User ID not provided" });
   }
 
-  const user = await datamapper.getUserById(userId);
+  const user = await datamapper.getById(userId);
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
