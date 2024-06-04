@@ -5,7 +5,7 @@ import authMiddleware from '../middlewares/authentification.middleware.js';
 
 const router = express.Router();
 
-router.get('/gestion', viewController.renderGestionPage);
+router.get('/', viewController.renderGestionPage);
 
 
 
