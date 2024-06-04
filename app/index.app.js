@@ -23,7 +23,7 @@ app.set('views', 'app/views');
 app.use('/api', router);
 app.use('/gestion', viewRouter);
 
-app.use('/pictures', express.static(path.join(__dirname, 'public/pictures')));
+app.use('/pictures', express.static(path.join('public/pictures')));
 
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
