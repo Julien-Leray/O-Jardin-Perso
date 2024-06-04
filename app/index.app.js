@@ -18,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 
 app.set("view engine", "ejs");
-app.set('views', 'app/views');
+app.set('views', path.join('app/views'));
 
 app.use('/api', router);
 app.use('/gestion', viewRouter);
