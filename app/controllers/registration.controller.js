@@ -30,7 +30,7 @@ const controller = {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
     newUser.is_admin = false;
-    const userCreated = await registrationDatamapper.createUser(newUser);
+    const userCreated = await registrationDatamapper.create(newUser);
 
     res.status(201).json(userCreated);
   }),

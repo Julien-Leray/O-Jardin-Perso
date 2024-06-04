@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 
 const controller = {
   getAllUsers: asyncHandler(async (req, res) => {
-    const users = await datamapper.getAllUsers();
+    const users = await datamapper.getAll();
     if (!users) {
       return res.status(404).json({ message: 'No users found' });
     }
@@ -14,7 +14,7 @@ const controller = {
 
   getOneUser: asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const user = await datamapper.getUserById(id);
+    const user = await datamapper.getById(id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -35,7 +35,7 @@ const controller = {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
 
-    const user = await datamapper.createUser(newUser);
+    const user = await datamapper.create(newUser);
     res.status(201).json(user);
   }),
 
@@ -59,13 +59,13 @@ const controller = {
       userToUpdate.password = hashedPassword;
     }
 
-    const user = await datamapper.updateUser(id, userToUpdate);
+    const user = await datamapper.update(id, userToUpdate);
     res.json(user);
   }),
 
   deleteUser: asyncHandler(async (req, res) => {
     const { id } = req.params;
-    await datamapper.deleteUser(id);
+    await datamapper.delete(id);
     res.status(204).end();
   }),
 

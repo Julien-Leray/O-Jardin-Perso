@@ -16,6 +16,7 @@ const controller = {
     const userId = req.userId;
     const product_id = req.body.product_id;
 
+
     const userProduct = await datamapper.getOneVirtualGardenProduct(userId, product_id);
 
     if (userProduct) {

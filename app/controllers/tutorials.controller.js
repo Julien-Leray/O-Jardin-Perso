@@ -5,7 +5,7 @@ import path from 'path';
 
 const controller = {
   getTutorials: asyncHandler(async (req, res) => {
-    const data = await datamapper.getAllTutorials();
+    const data = await datamapper.getAll();
     if (!data) {
       return res.status(404).json({ message: "Tutorials not found." });
     }
@@ -18,7 +18,7 @@ const controller = {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    const data = await datamapper.getTutorialById(id);
+    const data = await datamapper.getById(id);
     if (!data) {
       return res.status(404).json({ message: "Tutorial not found." });
     }
@@ -38,7 +38,7 @@ const controller = {
       console.log('Image sauvegardée avec succès à', imagePath);
     }
 
-    const data = await datamapper.createTutorial(title, article, imagePath, theme);
+    const data = await datamapper.create(title, article, imagePath, theme);
     res.json(data);
   }),
 
@@ -48,35 +48,28 @@ const controller = {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    const { title, article, picture, theme } = req.body;
-    const existingTutorial = await datamapper.getTutorialById(id);
+    const dataToUpdate = req.body;
+    const existingTutorial = await datamapper.getById(id);
+
     if (!existingTutorial) {
       return res.status(404).json({ message: 'Tutorial not found.' });
     }
 
     let updatedImagePath = existingTutorial.picture;
 
-    if (picture) {
+    if (dataToUpdate.picture) {
       const base64Image = picture.split(';base64,').pop();
-      updatedImagePath = path.join('public/pictures', `${title.replace(/\s+/g, '_').toLowerCase()}.jpg`);
+      updatedImagePath = path.join('public/pictures', `${dataToUpdate.title.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       await fs.writeFile(updatedImagePath, base64Image, { encoding: 'base64' });
-      updatedImagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-      console.log('Image mise à jour avec succès à', updatedImagePath);
+      updatedImagePath = `/pictures/${dataToUpdate.title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
     }
-
-    const dataToUpdate = {
-      title,
-      article,
-      theme,
-      updated_at: new Date().toISOString()
-    };
 
     if (updatedImagePath) {
       dataToUpdate.picture = updatedImagePath;
     }
 
-    const updatedData = await datamapper.updateTutorial(id, dataToUpdate);
+    const updatedData = await datamapper.update(id, dataToUpdate);
     if (!updatedData) {
       return res.status(404).json({ message: "Tutorial not found or no changes made." });
     }
@@ -90,12 +83,12 @@ const controller = {
       return res.status(400).json({ message: 'Invalid id' });
     }
 
-    const existingTutorial = await datamapper.getTutorialById(id);
+    const existingTutorial = await datamapper.getById(id);
     if (!existingTutorial) {
       return res.status(404).json({ message: 'Tutorial not found' });
     }
 
-    await datamapper.deleteTutorial(id);
+    await datamapper.delete(id);
     res.status(204).send('Tutorial deleted');
   }),
 };
