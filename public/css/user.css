@@ -1,0 +1,70 @@
+
+/* Utilisateurs */
+#usersSection {
+    position: relative;
+}
+
+/* Bouton "Ajouter un Utilisateur" */
+#addUserButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 30px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#addUserButton:hover {
+    background-color: #ff9f2e;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #f0f0f0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Formulaire */
+#userFormSection {
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input, form button {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+}

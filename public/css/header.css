@@ -1,0 +1,141 @@
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Allows positioning of #authenticatedContent */
+}
+
+#logoHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#authenticatedContent {
+    position: absolute;
+    right: 0; /* Align to the right */
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+    display: none; /* Ensure it's hidden by default */
+}
+
+#logoDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+#logoDiv img {
+    display: block;
+}
+
+/* Menu container and header */
+#menuContenair {
+    background-color: #f6d50e;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 66%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menuHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#menuHeader > button {
+    flex: 0 1 120px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-align: center;
+    transition: flex 0.3s ease;
+    margin: 0 10px; /* Add space between buttons */
+    color: white;
+    background-color: orange;
+    position: relative;
+    z-index: 1;
+}
+
+#menuHeader > section {
+    flex: 0 1 auto;
+    display: none;
+    position: relative;
+    margin: 0 10px; /* Add space between sections */
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    max-height: 0;
+}
+
+#menuHeader > section.active {
+    display: flex;
+    max-height: 200px;
+    padding: 0;
+}
+
+#menuHeader > section select {
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 2px solid black;
+    border-radius: 30px; /* Rounded corners on both sides */
+    transition: width 0.3s ease, opacity 0.3s ease;
+    background-color: white;
+    z-index: 0;
+    margin-left: 10px; /* Space between button and select */
+}
+
+#menuHeader > section.active select {
+    width: auto; /* Auto width to fit content */
+    opacity: 1;
+    background-color: white;
+    border-radius: 30px; /* Ensure rounded corners on both sides */
+    margin-left: 10px; /* Maintain margin for visual spacing */
+}
+
+/* Media Query for larger screens */
+@media (min-width: 901px) {
+    #menuHeader {
+        justify-content: space-around; /* Distribute space around buttons */
+    }
+
+    #menuHeader > button {
+        flex: 0 1 120px; /* Fixed size for buttons on larger screens */
+        margin: 0 2px; /* Reduced margin for buttons */
+    }
+
+    #menuHeader > section {
+        flex: 0 1 auto; /* Auto size for sections on larger screens */
+        margin: 0 2px; /* Reduced margin for sections */
+    }
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 900px) {
+    #menuHeader {
+        flex-direction: column;
+        align-items: stretch; /* Stretch items to fit the container */
+    }
+
+    #menuHeader > button, #menuHeader > section {
+        flex: 1 1 100%; /* Full width for buttons and sections on smaller screens */
+        margin: 5px 0;
+    }
+}

@@ -1,4 +1,4 @@
-import e from "express";
+import express from "express";
 import datamapper from "../datamappers/admin.datamapper.js";
 import asyncHandler from "../middlewares/asyncHandler.middleware.js";
 import bcrypt from "bcrypt";
@@ -68,13 +68,8 @@ const controller = {
     await datamapper.deleteUser(id);
     res.status(204).end();
   }),
-  renderAdminPage: async (req, res) => {
-    try {
-      res.render('gestion');
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  },
+
 };
+
 
 export default controller;
