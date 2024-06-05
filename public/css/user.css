@@ -58,12 +58,14 @@ tr:nth-child(even) {
 
 .sort-button {
     background: none;
-    border: none;
+    border: solid 1px black;
     cursor: pointer;
     font-size: 14px;
     padding: 10px;
     margin-left: 5px;
     vertical-align: middle;
+    background-color: #a3a3a3;
+
 }
 
 /* Formulaire */

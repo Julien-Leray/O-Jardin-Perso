@@ -6,13 +6,13 @@
     <table id="usersTable">
         <thead>
             <tr>
-                <th><button class="sort-button" onclick="sortTable(0)">ID ⇅</button></th>
-                <th><button class="sort-button" onclick="sortTable(1)">Email ⇅</button></th>
-                <th> <button class="sort-button" onclick="sortTable(2)">Prénom ⇅</button></th>
-                <th><button class="sort-button" onclick="sortTable(3)">Nom ⇅</button></th>
-                <th><button class="sort-button" onclick="sortTable(4)">Créé le ⇅</button></th>
-                <th><button class="sort-button" onclick="sortTable(5)">Admin ⇅</button></th>
-                <th><button class="sort-button" >Actions</button></th>
+                <th>ID<button id="sortButtonId" class="sort-button" onclick="sortTable(0)">⇅</button></th>
+                <th>Email<button id="sortButtonEmail" class="sort-button" onclick="sortTable(1)">⇅</button></th>
+                <th>Prénom<button id="sortButtonPrenom" class="sort-button" onclick="sortTable(2)">⇅</button></th>
+                <th>Nom<button id="sortButtonNom" class="sort-button" onclick="sortTable(3)">⇅</button></th>
+                <th>Créé le<button id="sortButtonCreatedAt" class="sort-button" onclick="sortTable(4)">⇅</button></th>
+                <th>Admin<button id="sortButtonAdmin" class="sort-button" onclick="sortTable(5)">⇅</button></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="usersTableBody">

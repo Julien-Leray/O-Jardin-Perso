@@ -216,13 +216,13 @@ async function fetchUsers() {
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                <td>${user.id}</td>
-                <td>${user.email}</td>
-                <td>${user.firstname}</td>
-                <td>${user.lastname}</td>
-                <td>${formatDate(user.created_at)}</td>
-                <td>${user.is_admin ? 'Oui' : 'Non'}</td>
-                <td>
+                <td id="userId-${user.id}">${user.id}</td>
+                <td id="userEmail-${user.id}">${user.email}</td>
+                <td id="userFirstname-${user.id}">${user.firstname}</td>
+                <td id="userLastname-${user.id}">${user.lastname}</td>
+                <td id="userCreatedAt-${user.id}">${formatDate(user.created_at)}</td>
+                <td id="userIsAdmin-${user.id}">${user.is_admin ? 'Oui' : 'Non'}</td>
+                <td id="userActions-${user.id}">
                     <button class="save-button" onclick="editUser(${user.id})">Modifier</button>
                     <button class="delete-button" onclick="confirmDeleteUser(${user.id})">Supprimer</button>
                 </td>
