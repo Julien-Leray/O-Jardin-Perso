@@ -1,4 +1,3 @@
-
 header {
     display: flex;
     justify-content: center;
@@ -34,15 +33,14 @@ header {
     height: auto; /* Maintains aspect ratio */
 }
 
-
 /* Menu container and header */
 #menuContenair {
     background-color: #f6d50e;
     padding: 10px;
     margin-bottom: 20px;
-    width: 66%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%; /* Full width */
+    margin-left: 0; /* Remove left margin */
+    margin-right: 0; /* Remove right margin */
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -53,15 +51,15 @@ header {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: space-around;
-    max-width: 800px;
-    margin: 20px auto;
+    justify-content: center; /* Center the buttons */
+    width: 100%; /* Full width */
     padding: 10px;
     border-radius: 10px;
+    flex-direction: column; /* Stack buttons vertically */
 }
 
 #menuHeader > button {
-    flex: 0 1 120px;
+    width: 100%; /* Full width for buttons */
     padding: 10px 15px;
     font-size: 14px;
     border: none;
@@ -69,7 +67,7 @@ header {
     cursor: pointer;
     text-align: center;
     transition: flex 0.3s ease;
-    margin: 0 10px; /* Add space between buttons */
+    margin: 10px 0; /* Margin between buttons */
     color: white;
     background-color: orange;
     position: relative;
@@ -80,7 +78,7 @@ header {
     flex: 0 1 auto;
     display: none;
     position: relative;
-    margin: 0 10px; /* Add space between sections */
+    margin: 10px 0; /* Margin between sections */
     transition: max-height 0.3s ease, padding 0.3s ease;
     max-height: 0;
 }
@@ -117,34 +115,11 @@ header {
 @media (min-width: 901px) {
     #menuHeader {
         justify-content: space-around; /* Distribute space around buttons */
-    }
-
-    #menuHeader > button {
-        flex: 0 1 120px; /* Fixed size for buttons on larger screens */
-        margin: 0 2px; /* Reduced margin for buttons */
-    }
-
-    #menuHeader > section {
-        flex: 0 1 auto; /* Auto size for sections on larger screens */
-        margin: 0 2px; /* Reduced margin for sections */
-    }
-}
-
-/* Media Query for smaller screens */
-@media (max-width: 900px) {
-    #menuContenair {
-        width: 100%; /* Full width on smaller screens */
-        margin-left: 0; /* Remove left margin */
-        margin-right: 0; /* Remove right margin */
-    }
-
-    #menuHeader {
-        flex-direction: column;
-        align-items: stretch; /* Stretch items to fit the container */
+        flex-direction: row; /* Arrange buttons in a row */
     }
 
     #menuHeader > button, #menuHeader > section {
-        flex: 1 1 100%; /* Full width for buttons and sections on smaller screens */
-        margin: 5px 0;
+        flex: 1 1 100%; /* Full width for buttons and sections */
+        margin: 0 10px; /* Add space between buttons */
     }
 }
