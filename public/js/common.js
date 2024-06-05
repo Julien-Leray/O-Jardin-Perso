@@ -95,7 +95,16 @@ async function fetchProducts(category) {
 }
 
 function hideAllSections() {
-    const sections = ['tutorialsSection', 'tutorialDetails', 'usersSection', 'userFormSection', 'fruitsSection', 'fruitDetails', 'legumesSection', 'legumeDetails'];
+    const sections = [
+        'tutorialsSection',
+        'tutorialDetails',
+        'usersSection',
+        'userFormSection',
+        'fruitsSection',
+        'fruitDetails',
+        'legumesSection',
+        'legumeDetails'
+    ];
     sections.forEach(id => {
         document.getElementById(id).style.display = 'none';
     });

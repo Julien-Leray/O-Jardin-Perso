@@ -3,6 +3,7 @@ header {
     justify-content: center;
     align-items: center;
     position: relative; /* Allows positioning of #authenticatedContent */
+    flex-wrap: wrap; /* Allows elements to wrap to the next line */
 }
 
 #logoHeader {
@@ -38,9 +39,9 @@ header {
     background-color: #f6d50e;
     padding: 10px;
     margin-bottom: 20px;
-    width: 100%; /* Full width */
-    margin-left: 0; /* Remove left margin */
-    margin-right: 0; /* Remove right margin */
+    width: 66%;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -51,15 +52,15 @@ header {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: center; /* Center the buttons */
-    width: 100%; /* Full width */
+    justify-content: space-around;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 10px;
     border-radius: 10px;
-    flex-direction: column; /* Stack buttons vertically */
 }
 
 #menuHeader > button {
-    width: 100%; /* Full width for buttons */
+    flex: 0 1 120px;
     padding: 10px 15px;
     font-size: 14px;
     border: none;
@@ -67,7 +68,7 @@ header {
     cursor: pointer;
     text-align: center;
     transition: flex 0.3s ease;
-    margin: 10px 0; /* Margin between buttons */
+    margin: 0 10px; /* Add space between buttons */
     color: white;
     background-color: orange;
     position: relative;
@@ -78,7 +79,7 @@ header {
     flex: 0 1 auto;
     display: none;
     position: relative;
-    margin: 10px 0; /* Margin between sections */
+    margin: 0 10px; /* Add space between sections */
     transition: max-height 0.3s ease, padding 0.3s ease;
     max-height: 0;
 }
@@ -115,11 +116,43 @@ header {
 @media (min-width: 901px) {
     #menuHeader {
         justify-content: space-around; /* Distribute space around buttons */
-        flex-direction: row; /* Arrange buttons in a row */
+    }
+
+    #menuHeader > button {
+        flex: 0 1 120px; /* Fixed size for buttons on larger screens */
+        margin: 0 2px; /* Reduced margin for buttons */
+    }
+
+    #menuHeader > section {
+        flex: 0 1 auto; /* Auto size for sections on larger screens */
+        margin: 0 2px; /* Reduced margin for sections */
+    }
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 900px) {
+    #menuContenair {
+        width: 100%; /* Full width on smaller screens */
+        margin-left: 0; /* Remove left margin */
+        margin-right: 0; /* Remove right margin */
+    }
+
+    #menuHeader {
+        flex-direction: column;
+        align-items: stretch; /* Stretch items to fit the container */
     }
 
     #menuHeader > button, #menuHeader > section {
-        flex: 1 1 100%; /* Full width for buttons and sections */
-        margin: 0 10px; /* Add space between buttons */
+        flex: 1 1 100%; /* Full width for buttons and sections on smaller screens */
+        margin: 5px 0;
+    }
+    
+    #authenticatedContent {
+        position: static; /* Position normally in the document flow */
+        transform: none; /* Remove transform */
+        display: block; /* Ensure it's visible */
+        width: 100%; /* Full width */
+        text-align: center; /* Center text/content */
+        margin-top: 10px; /* Add some space above */
     }
 }

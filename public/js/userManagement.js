@@ -1,3 +1,4 @@
+
 let currentUserId = null;
 
 async function editUser(userId) {
@@ -194,6 +195,7 @@ function showUserForm() {
 }
 
 async function fetchUsers() {
+    hideAllSections(); // Hide all sections before displaying the user section
     try {
         const response = await fetch('/api/admin/users', {
             method: 'GET',
@@ -218,6 +220,8 @@ async function fetchUsers() {
                 <td>${user.email}</td>
                 <td>${user.firstname}</td>
                 <td>${user.lastname}</td>
+                <td>${formatDate(user.created_at)}</td>
+                <td>${user.is_admin ? 'Oui' : 'Non'}</td>
                 <td>
                     <button class="save-button" onclick="editUser(${user.id})">Modifier</button>
                     <button class="delete-button" onclick="confirmDeleteUser(${user.id})">Supprimer</button>
@@ -226,6 +230,8 @@ async function fetchUsers() {
 
             usersTableBody.appendChild(row);
         });
+
+        document.getElementById('usersSection').style.display = 'block'; // Show the user section after hiding others
     } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
     }
@@ -233,3 +239,22 @@ async function fetchUsers() {
 
 // Récupérer les utilisateurs au chargement de la page
 document.addEventListener('DOMContentLoaded', fetchUsers);
+
+function sortTable(columnIndex) {
+    const table = document.getElementById('usersTable');
+    const tbody = table.tBodies[0];
+    const rows = Array.from(tbody.rows);
+    const isAscending = table.getAttribute('data-sort-asc') === 'true';
+    
+    rows.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText.toLowerCase();
+        const cellB = rowB.cells[columnIndex].innerText.toLowerCase();
+
+        if (cellA < cellB) return isAscending ? -1 : 1;
+        if (cellA > cellB) return isAscending ? 1 : -1;
+        return 0;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+    table.setAttribute('data-sort-asc', !isAscending);
+}

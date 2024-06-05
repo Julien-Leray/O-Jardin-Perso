@@ -1,20 +1,24 @@
 <section id="usersSection" style="display: none;">
-    <h2>Liste des Utilisateurs</h2>
+    <div id="userTitle">
+        <h2>Liste des Utilisateurs</h2>
+        <button id="addUserButton" onclick="showUserForm()">Ajouter un Utilisateur</button>
+    </div>
     <table id="usersTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Actions</th>
+                <th><button class="sort-button" onclick="sortTable(0)">ID ⇅</button></th>
+                <th><button class="sort-button" onclick="sortTable(1)">Email ⇅</button></th>
+                <th> <button class="sort-button" onclick="sortTable(2)">Prénom ⇅</button></th>
+                <th><button class="sort-button" onclick="sortTable(3)">Nom ⇅</button></th>
+                <th><button class="sort-button" onclick="sortTable(4)">Créé le ⇅</button></th>
+                <th><button class="sort-button" onclick="sortTable(5)">Admin ⇅</button></th>
+                <th><button class="sort-button" >Actions</button></th>
             </tr>
         </thead>
         <tbody id="usersTableBody">
             <!-- Les utilisateurs seront insérés ici par JavaScript -->
         </tbody>
     </table>
-    <button id="addUserButton" onclick="showUserForm()">Ajouter un Utilisateur</button>
 </section>
 
 <section id="userFormSection" style="display: none;">
