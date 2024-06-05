@@ -35,24 +35,25 @@ const controller = {
   }),
 
   createProduct: asyncHandler(async (req, res) => {
-    const { latin_name, name, picture, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips } = req.body;
+    const productToCreate = req.body;
+    const { latin_name, name, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips, picture } = productToCreate;
     let imagePath = '';
 
     if (!latin_name || !name || !plantation_date || !harvest_date || !soil_type || !diseases || !watering_frequency || !category_id || !description || !sowing_tips) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    if (picture) {
-      const base64Image = picture.split(';base64,').pop();
-      imagePath = path.join('public/pictures', `${name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
+    if (productToCreate.picture) {
+      const base64Image = productToCreate.picture.split(';base64,').pop();
+      imagePath = path.join('public/pictures', `${productToCreate.name.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
-      imagePath = `/pictures/${name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+      imagePath = `/pictures/${productToCreate.name.replace(/\s+/g, '_').toLowerCase()}.jpg`;
       console.log('Image sauvegardée avec succès à', imagePath);
     }
 
-    const data = await datamapper.create(latin_name, name, imagePath, plantation_date, harvest_date, soil_type, diseases, watering_frequency, category_id, description, sowing_tips);
-    res.json(data);
+    const data = await datamapper.create(productToCreate);
+    res.status(201).json(data);
   }),
 
   updateProduct: asyncHandler(async (req, res) => {

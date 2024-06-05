@@ -16,6 +16,7 @@ class ProductDatamapper extends CoreDatamapper {
     const { rows } = await client.query(query, [category]);
     return rows;
   }
+
 }
 
 export default new ProductDatamapper();

@@ -23,7 +23,6 @@ export const mochaHooks = {
       // Lance un serveur de test
       server = await app.listen(process.env.PORT);
 
-      let authToken;
 
       // Fonction pour générer le token
       const generateToken = async () => {
