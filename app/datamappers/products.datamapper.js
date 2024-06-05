@@ -1,4 +1,5 @@
 import CoreDatamapper from './coreDatamapper.js';
+import client from './pg.client.js';
 
 class ProductDatamapper extends CoreDatamapper {
   constructor() {
