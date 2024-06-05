@@ -26,20 +26,20 @@ const controller = {
   }),
 
   createTutorial: asyncHandler(async (req, res) => {
-    const { title, article, picture, theme } = req.body;
+    const tutorialToUpdate = req.body;
     let imagePath = '';
 
-    if (picture) {
-      const base64Image = picture.split(';base64,').pop();
-      imagePath = path.join('public/pictures', `${title.replace(/\s+/g, '_').toLowerCase()}.jpg`);
+    if (tutorialToUpdate.picture) {
+      const base64Image = tutorialToUpdate.picture.split(';base64,').pop();
+      imagePath = path.join('public/pictures', `${tutorialToUpdate.title.replace(/\s+/g, '_').toLowerCase()}.jpg`);
 
       await fs.writeFile(imagePath, base64Image, { encoding: 'base64' });
-      imagePath = `/pictures/${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+      imagePath = `/pictures/${tutorialToUpdate.title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
       console.log('Image sauvegardée avec succès à', imagePath);
     }
 
-    const data = await datamapper.create(title, article, imagePath, theme);
-    res.json(data);
+    const data = await datamapper.create(tutorialToUpdate);
+    res.status(201).json(data);
   }),
 
   updateTutorial: asyncHandler(async (req, res) => {

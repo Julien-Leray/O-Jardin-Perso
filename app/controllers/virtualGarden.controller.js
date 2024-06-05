@@ -34,7 +34,6 @@ const controller = {
       return res.status(400).json({ message: "User is required" });
     }
 
-
     const data = await datamapper.addProduct(dataToAdd, userId);
 
     res.status(201).json(data);
