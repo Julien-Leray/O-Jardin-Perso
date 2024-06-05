@@ -1,4 +1,5 @@
 import datamapper from '../datamappers/profile.datamapper.js';
+import connectionDatamapper from '../datamappers/connection.datamapper.js';
 import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 import bcrypt from 'bcrypt';
 
@@ -35,6 +36,11 @@ const controller = {
 
   deleteProfile: asyncHandler(async (req, res) => {
     const userId = req.userId;
+    const adminProfile = await connectionDatamapper.findByEmail('admin@admin.com');
+
+    if (userId === adminProfile.id) {
+      return res.status(400).json({ message: 'You cannot delete the admin profile' });
+    }
     await datamapper.delete(userId);
     res.status(204).json({ message: "Profile deleted" });
   }),
