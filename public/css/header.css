@@ -1,9 +1,9 @@
-
 header {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative; /* Allows positioning of #authenticatedContent */
+    flex-wrap: wrap; /* Allows elements to wrap to the next line */
 }
 
 #logoHeader {
@@ -30,6 +30,8 @@ header {
 
 #logoDiv img {
     display: block;
+    max-width: 100%; /* Ensures the logo adapts to the screen size */
+    height: auto; /* Maintains aspect ratio */
 }
 
 /* Menu container and header */
@@ -129,6 +131,12 @@ header {
 
 /* Media Query for smaller screens */
 @media (max-width: 900px) {
+    #menuContenair {
+        width: 100%; /* Full width on smaller screens */
+        margin-left: 0; /* Remove left margin */
+        margin-right: 0; /* Remove right margin */
+    }
+
     #menuHeader {
         flex-direction: column;
         align-items: stretch; /* Stretch items to fit the container */
@@ -137,5 +145,14 @@ header {
     #menuHeader > button, #menuHeader > section {
         flex: 1 1 100%; /* Full width for buttons and sections on smaller screens */
         margin: 5px 0;
+    }
+    
+    #authenticatedContent {
+        position: static; /* Position normally in the document flow */
+        transform: none; /* Remove transform */
+        display: block; /* Ensure it's visible */
+        width: 100%; /* Full width */
+        text-align: center; /* Center text/content */
+        margin-top: 10px; /* Add some space above */
     }
 }

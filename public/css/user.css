@@ -1,14 +1,22 @@
-
 /* Utilisateurs */
 #usersSection {
     position: relative;
+    max-width: 66%; /* Max width of 66% */
+    width: 100%; /* Full width on smaller screens */
+    margin: 0 auto; /* Center align */
+}
+
+/* Container for title and button */
+#userTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
 }
 
 /* Bouton "Ajouter un Utilisateur" */
 #addUserButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     padding: 10px 20px;
     background-color: #ff8c00;
     color: white;
@@ -48,9 +56,24 @@ tr:nth-child(even) {
     background-color: #fafafa;
 }
 
+.sort-button {
+    background: none;
+    border: solid 1px black;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px;
+    margin-left: 5px;
+    vertical-align: middle;
+    background-color: #a3a3a3;
+
+}
+
 /* Formulaire */
 #userFormSection {
     margin-top: 20px;
+    max-width: 66%; /* Max width of 66% */
+    width: 100%; /* Full width on smaller screens */
+    margin: 0 auto; /* Center align */
 }
 
 form {
@@ -67,4 +90,24 @@ form input, form button {
     margin-top: 5px;
     padding: 10px;
     font-size: 16px;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+    #usersSection {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    #userTitle {
+        flex-direction: column; /* Stack title and button */
+        align-items: flex-start;
+    }
+
+    #addUserButton {
+        margin-top: 10px; /* Add margin on top for spacing */
+    }
+
+    #userFormSection {
+        width: 100%; /* Full width on smaller screens */
+    }
 }
