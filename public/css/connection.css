@@ -1,0 +1,37 @@
+#loginForm {
+    width: 40%;
+    max-width: 400px;
+    min-width: 300px; /* Ensure minimum width of 300px */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px; /* Add some padding to ensure there's space around the form */
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+    #loginForm {
+        width: 80%; /* Increase width to 80% on smaller screens */
+        min-width: unset; /* Remove minimum width to allow for better adaptability */
+    }
+
+    .login-container {
+        padding: 10px; /* Reduce padding on smaller screens */
+    }
+
+    .login-container h1 {
+        font-size: 20px; /* Slightly reduce font size for smaller screens */
+    }
+}

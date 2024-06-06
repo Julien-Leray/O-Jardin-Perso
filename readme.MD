@@ -12,3 +12,8 @@ O'Jardin est une plateforme numérique destinée aux amateurs de jardinage. L'ap
 - Déployer la BDD avec la commande "sqitch deploy"
 - Entrer les données en BDD avec la commande psql -d "nom de la BDD" -f data/seeding_v1.sql
 
+## Installation BDD de test
+
+- Créer une nouvelle BDD 'ojardin_test'
+- Installer les packages
+- Pour lancer les test : 'npm test'

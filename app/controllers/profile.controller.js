@@ -1,16 +1,20 @@
 import datamapper from '../datamappers/profile.datamapper.js';
+import connectionDatamapper from '../datamappers/connection.datamapper.js';
 import asyncHandler from '../middlewares/asyncHandler.middleware.js';
 import bcrypt from 'bcrypt';
 
 const controller = {
   getProfile: asyncHandler(async (req, res) => {
     const userId = req.userId;
-    const data = await datamapper.getProfile(userId);
+    const data = await datamapper.getById(userId);
 
     if (!data) {
-      return res.status(200).json({ message: 'No profile found.' });
+      return res.status(400).json({ message: 'No profile found.' });
     }
-    res.status(200).json(data);
+    const dataWithoutPassword = { ...data };
+    delete dataWithoutPassword.password;
+
+    res.status(200).json(dataWithoutPassword);
   }),
 
   updateProfile: asyncHandler(async (req, res) => {
@@ -26,15 +30,21 @@ const controller = {
       profileToUpdate.password = hashedPassword;
     }
 
-    const profileUpdated = await datamapper.updateProfile(profileToUpdate, userId);
-    res.json(profileUpdated);
+    const profileUpdated = await datamapper.update(userId, profileToUpdate);
+    res.status(200).json(profileUpdated);
   }),
 
   deleteProfile: asyncHandler(async (req, res) => {
     const userId = req.userId;
-    await datamapper.deleteProfile(userId);
+    const adminProfile = await connectionDatamapper.findByEmail('admin@admin.com');
+
+    if (userId === adminProfile.id) {
+      return res.status(400).json({ message: 'You cannot delete the admin profile' });
+    }
+    await datamapper.delete(userId);
     res.status(204).json({ message: "Profile deleted" });
-  })
+  }),
+
 };
 
 export default controller;

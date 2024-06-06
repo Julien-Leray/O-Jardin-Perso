@@ -1,0 +1,24 @@
+
+<%- include('partials/header') %>
+<body>
+    <div></div>
+    <div class="login-container">
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Mot de passe" required>
+            </div>
+            <button type="submit" id="loginButton">Se Connecter</button>
+        </form>
+    </div>
+        <div id="authenticatedContentGestion" style="display: none;">
+            <%- include('partials/menu') %>
+            <%- include('partials/fruits') %>
+            <%- include('partials/legumes') %>
+            <%- include('partials/tuto') %>
+            <%- include('partials/userManagement') %>
+            <%- include('partials/footer') %>
+        </div>
+    </div>

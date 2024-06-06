@@ -1,0 +1,29 @@
+<section id="tutorialDetails">
+    <div id="mainContainerTuto">
+        <div id="contenairLeftTuto">
+            
+            <label for="tutorialPicture">Image URL:</label>
+            <textarea id="tutorialPicture" name="tutorialPicture" oninput="updateImagePreviewTuto(); adjustTextareaHeight(this)" rows="1"></textarea><br>
+            <label for="tutorialImageUploadDownload">Image : 
+                <input type="file" id="tutorialImageUploadDownload" name="image" accept="image/*" onchange="updateImagePreviewDownloadTuto()">
+            </label><br>
+            <img id="imagePreviewTuto" src="" alt="Prévisualisation de l'image"><br>
+        </div>
+        <div id="contenairRightTuto">
+            <label for="tutorialTitle">Titre : </label>
+            <textarea id="tutorialTitle" name="tutorialTitle" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
+            <label for="tutorialTheme">Thème : </label>
+            <textarea id="tutorialTheme" name="tutorialTheme" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
+            <label for="tutorialArticle">Article : </label>
+            <textarea id="tutorialArticle" name="tutorialArticle" oninput="adjustTextareaHeight(this)" rows="1" required></textarea><br>
+        </div>
+    </div>
+    <div id="contenairBottomTuto">
+        <button id="saveTutorialButton" class="save-button" onclick="saveTutorial()">Enregistrer le Tutoriel</button>
+        <button class="delete-button" onclick="deleteTutorial()">Supprimer le Tutoriel</button>
+        <label for="tutorialCreatedAt">Créé le:</label>
+        <textarea id="tutorialCreatedAt" name="tutorialCreatedAt" readonly rows="1"></textarea><br>
+        <label for="tutorialUpdatedAt">Mis à jour le:</label>
+        <textarea id="tutorialUpdatedAt" name="tutorialUpdatedAt" readonly rows="1"></textarea><br>
+    </div>
+</section>
