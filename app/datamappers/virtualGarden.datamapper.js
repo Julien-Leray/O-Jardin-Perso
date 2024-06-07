@@ -31,9 +31,9 @@ class VirtualGardenDatamapper extends CoreDatamapper {
     return rows[0];
   }
 
-  async removeProduct(userId, productToRemove) {
-    const query = 'DELETE FROM user_plant_product WHERE user_id = $1 AND product_id = $2';
-    await client.query(query, [userId, productToRemove]);
+  async removeProduct(userId, productToRemove, positionToRemove) {
+    const query = 'DELETE FROM user_plant_product WHERE user_id = $1 AND product_id = $2 AND position = $3';
+    await client.query(query, [userId, productToRemove, positionToRemove]);
   }
 
   async updateProduct(userId, dataToUpdate) {

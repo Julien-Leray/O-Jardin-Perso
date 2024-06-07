@@ -14,17 +14,9 @@ const controller = {
   addProduct: asyncHandler(async (req, res) => {
     const dataToAdd = req.body;
     const userId = req.userId;
-    const product_id = req.body.product_id;
 
 
-    const userProduct = await datamapper.getOneVirtualGardenProduct(userId, product_id);
 
-    if (userProduct) {
-      const quantity = Number(userProduct.quantity) + Number(dataToAdd.quantity);
-      dataToAdd.quantity = quantity;
-      const updatedProduct = await datamapper.updateProduct(userId, dataToAdd);
-      return res.status(200).json(updatedProduct);
-    }
 
     if (!dataToAdd) {
       return res.status(400).json({ message: "Data to add is required" });
@@ -66,15 +58,19 @@ const controller = {
   removeProduct: asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id);
     const productToRemove = req.body.product_id;
+    const positionToRemove = req.body.position;
 
     if (!productToRemove) {
       return res.status(400).json({ message: "Product to remove is required" });
+    }
+    if (!positionToRemove) {
+      return res.status(400).json({ message: "Position to remove is required" });
     }
     if (userId !== req.userId || !userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    await datamapper.removeProduct(userId, productToRemove);
+    await datamapper.removeProduct(userId, productToRemove, positionToRemove);
 
     res.status(204).json({ message: "Product removed" });
   })
