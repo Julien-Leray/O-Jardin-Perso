@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.set("view engine", "ejs");
 app.set('views', 'app/views');
 
-app.use('/api', router);
+app.use('/', router);
 app.use('/gestion', viewRouter);
 
 app.use(errorHandlerMiddleware);
