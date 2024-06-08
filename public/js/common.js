@@ -61,7 +61,7 @@ async function fetchProducts(category) {
     if (!category) return;
 
     try {
-        const response = await fetch(`/api/products?category=${category}`);
+        const response = await fetch(`/api/api/products?category=${category}`);
         const products = await response.json();
 
         let productsSelect, sectionId;
