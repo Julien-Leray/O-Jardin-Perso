@@ -1,4 +1,3 @@
-# Utiliser l'image officielle Node.js
 FROM node:20.12.2
 
 # Installer les dépendances nécessaires pour Sqitch et PostgreSQL
@@ -10,15 +9,8 @@ RUN apt-get update && apt-get install -y postgresql-client \
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /usr/src/app
 
-# Copier le fichier package.json
-COPY package.json ./package.json
-
-# Définir les variables d'environnement
-ENV PORT=4000
-ENV PGDATABASE=ojardin
-ENV PGPASSWORD=ojardin
-ENV PGUSER=ojardin
-ENV JWT_SECRET=ojardin
+# Copier le fichier package.json et package-lock.json (si présent)
+COPY package*.json ./
 
 # Installer les dépendances du projet
 RUN npm install
@@ -32,6 +24,13 @@ RUN echo "[core]" > sqitch.conf && \
     echo "top_dir = migrations" >> sqitch.conf && \
     echo "[engine \"pg\"]" >> sqitch.conf && \
     echo "target = db:pg:ojardin" >> sqitch.conf
+
+# Définir les variables d'environnement constantes
+ENV PORT=4000
+ENV PGDATABASE=ojardin
+ENV PGPASSWORD=ojardin
+ENV PGUSER=ojardin
+ENV JWT_SECRET=ojardin
 
 # Exposer le port sur lequel l'application tourne
 EXPOSE 4000
