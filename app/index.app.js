@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 app.set('views', 'app/views');
 
 app.use('/api', router);
-app.use('/', viewRouter);
+app.use('/gestion', viewRouter);
 
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
