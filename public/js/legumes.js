@@ -8,7 +8,7 @@ async function fetchLegumeDetails(legumeId) {
     currentLegumeId = legumeId;
 
     try {
-        const response = await fetch(`/api/api/products/${legumeId}`);
+        const response = await fetch(`${apiBaseUrl}/products/${legumeId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch legume details');
         }
@@ -85,7 +85,7 @@ async function createLegume() {
     }
 
     try {
-        const response = await fetch('/api/api/products', {
+        const response = await fetch('${apiBaseUrl}/products', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ async function updateLegume() {
     console.log("Envoi des données au serveur :", updatedLegume);
 
     try {
-        const response = await fetch(`/api/api/products/${currentLegumeId}`, {
+        const response = await fetch(`${apiBaseUrl}/products/${currentLegumeId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ async function deleteLegume() {
     }
 
     try {
-        const response = await fetch(`/api/api/products/${currentLegumeId}`, {
+        const response = await fetch(`${apiBaseUrl}/products/${currentLegumeId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,

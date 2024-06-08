@@ -2,7 +2,7 @@ let currentTutorialId = null;
 
 async function fetchTutorials() {
     try {
-        const response = await fetch('/api/api/tutorials');
+        const response = await fetch('${apiBaseUrl}/tutorials');
         const tutorials = await response.json();
 
         const tutorialsSelect = document.getElementById('tutorialsSelect');
@@ -48,7 +48,7 @@ async function fetchTutorialDetails(tutorialId) {
     currentTutorialId = tutorialId;
 
     try {
-        const response = await fetch(`/api/api/tutorials/${tutorialId}`);
+        const response = await fetch(`${apiBaseUrl}/tutorials/${tutorialId}`);
         const tutorial = await response.json();
 
         if (tutorial) {
@@ -111,7 +111,7 @@ async function createTutorial() {
     }
 
     try {
-        const response = await fetch(`/api/api/tutorials`, {
+        const response = await fetch(`${apiBaseUrl}/tutorials`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ async function updateTutorial() {
     }
 
     try {
-        const response = await fetch(`/api/api/tutorials/${currentTutorialId}`, {
+        const response = await fetch(`${apiBaseUrl}/tutorials/${currentTutorialId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ async function deleteTutorial() {
     }
 
     try {
-        const response = await fetch(`/api/api/tutorials/${currentTutorialId}`, {
+        const response = await fetch(`${apiBaseUrl}/tutorials/${currentTutorialId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,

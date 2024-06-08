@@ -8,7 +8,7 @@ async function fetchFruitDetails(fruitId) {
     currentFruitId = fruitId;
 
     try {
-        const response = await fetch(`/api/api/products/${fruitId}`);
+        const response = await fetch(`${apiBaseUrl}/products/${fruitId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch fruit details');
         }
@@ -85,7 +85,7 @@ async function createFruit() {
     }
 
     try {
-        const response = await fetch('/api/api/products', {
+        const response = await fetch('${apiBaseUrl}/products', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ async function updateFruit() {
     console.log("Envoi des données au serveur :", updatedFruit);
 
     try {
-        const response = await fetch(`/api/api/products/${currentFruitId}`, {
+        const response = await fetch(`${apiBaseUrl}/products/${currentFruitId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ async function deleteFruit() {
     }
 
     try {
-        const response = await fetch(`/api/api/products/${currentFruitId}`, {
+        const response = await fetch(`${apiBaseUrl}/products/${currentFruitId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,

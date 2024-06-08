@@ -31,6 +31,7 @@ ENV PGDATABASE=ojardin
 ENV PGPASSWORD=ojardin
 ENV PGUSER=ojardin
 ENV JWT_SECRET=ojardin
+ENV API_BASE_URL=/api/api
 
 # Exposer le port sur lequel l'application tourne
 EXPOSE 4000

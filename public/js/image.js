@@ -6,7 +6,7 @@ function updateImagePreviewTuto(imageUrl = null) {
     }
 
     if (imageUrl) {
-        imagePreview.src = imageUrl;
+        imagePreview.src = `${apiBaseUrl}${imageUrl}`;
         imagePreview.style.display = 'block';
     } else {
         const fileInput = document.getElementById('tutorialImageUploadDownload');
@@ -39,7 +39,7 @@ function updateImagePreviewFruits(imageUrl = null) {
     }
     
     if (imageUrl) {
-        imagePreview.src = imageUrl;
+        imagePreview.src = `${apiBaseUrl}${imageUrl}`;
         imagePreview.style.display = 'block';
     } else {
         const fileInput = document.getElementById('fruit_imageUploadDownload');
@@ -72,7 +72,7 @@ function updateImagePreviewLegumes(imageUrl = null) {
     }
 
     if (imageUrl) {
-        imagePreview.src = imageUrl;
+        imagePreview.src = `${apiBaseUrl}${imageUrl}`;
         imagePreview.style.display = 'block';
     } else {
         const fileInput = document.getElementById('legume_imageUploadDownload');

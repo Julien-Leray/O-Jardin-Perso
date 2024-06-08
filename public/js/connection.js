@@ -8,7 +8,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         try {
             console.log(`Tentative de connexion avec : email: '${email}', password: '${password}'`);
 
-            const response = await fetch('/api/api/login', {
+            const response = await fetch('${apiBaseUrl}/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 console.log('Token stocké:', data.token);  // Stocke le jeton dans localStorage
 
                 // Récupérer les informations de l'utilisateur
-                const userResponse = await fetch('/api/api/me/profile', {
+                const userResponse = await fetch('${apiBaseUrl}/me/profile', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${data.token}`
