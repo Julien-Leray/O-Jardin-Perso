@@ -25,18 +25,17 @@ RUN echo "[core]" > sqitch.conf && \
     echo "[engine \"pg\"]" >> sqitch.conf && \
     echo "target = db:pg:ojardin" >> sqitch.conf
 
-# Créer un script pour générer le fichier .env avec les données directement incluses
-RUN echo '#!/bin/sh' > create_env.sh && \
-    echo 'echo "PORT=4000" > .env' >> create_env.sh && \
-    echo 'echo "PGDATABASE=ojardin" >> .env' >> create_env.sh && \
-    echo 'echo "PGPASSWORD=ojardin" >> .env' >> create_env.sh && \
-    echo 'echo "PGUSER=ojardin" >> .env' >> create_env.sh && \
-    echo 'echo "JWT_SECRET=ojardin" >> .env' >> create_env.sh && \
-    echo 'echo "API_BASE_URL=/api" >> .env' >> create_env.sh && \
-    chmod +x create_env.sh
+# Créer le fichier .env avec les données directement incluses
+RUN echo "PORT=4000" > .env && \
+    echo "PGDATABASE=ojardin" >> .env && \
+    echo "PGPASSWORD=ojardin" >> .env && \
+    echo "PGUSER=ojardin" >> .env && \
+    echo "JWT_SECRET=ojardin" >> .env && \
+    echo "API_BASE_URL=/api" >> .env && \
+
 
 # Exposer le port sur lequel l'application tourne
 EXPOSE 4000
 
 # Commande par défaut pour démarrer l'application
-CMD ["sh", "-c", "./create_env.sh && sqitch deploy && node index.js"]
+CMD ["sh", "-c", "sqitch deploy && node index.js"]
