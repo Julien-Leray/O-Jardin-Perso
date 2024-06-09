@@ -12,7 +12,7 @@ async function editUser(userId) {
 
 async function fetchUserDetails(userId) {
     try {
-        const response = await fetch(`${apiBaseUrl}/admin/users/${userId}`, {
+        const response = await fetch(`/api/admin/users/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -53,7 +53,7 @@ async function confirmDeleteUser(userId) {
 
 async function deleteUser(userId) {
     try {
-        const response = await fetch(`${apiBaseUrl}/admin/users/${userId}`, {
+        const response = await fetch(`/api/admin/users/${userId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -104,7 +104,7 @@ async function saveNewUser() {
     console.log('Envoi des données utilisateur :', JSON.stringify(user));
 
     try {
-        const response = await fetch('${apiBaseUrl}/admin/users', {
+        const response = await fetch('/api/admin/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ async function saveEditUser() {
     if (document.getElementById('userIsAdminCreate').checked !== undefined) user.is_admin = document.getElementById('userIsAdminCreate').checked;
 
     try {
-        const response = await fetch(`${apiBaseUrl}/admin/users/${userId}`, {
+        const response = await fetch(`/api/admin/users/${userId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ function showUserForm() {
 async function fetchUsers() {
     hideAllSections(); // Hide all sections before displaying the user section
     try {
-        const response = await fetch('${apiBaseUrl}/admin/users', {
+        const response = await fetch('/api/admin/users', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`

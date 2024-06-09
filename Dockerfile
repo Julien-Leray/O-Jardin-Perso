@@ -30,8 +30,7 @@ RUN echo "PORT=4000" > .env && \
     echo "PGDATABASE=ojardin" >> .env && \
     echo "PGPASSWORD=ojardin" >> .env && \
     echo "PGUSER=ojardin" >> .env && \
-    echo "JWT_SECRET=ojardin" >> .env && \
-    echo "API_BASE_URL=/api" >> .env 
+    echo "JWT_SECRET=ojardin" >> .env 
 
 
 # Exposer le port sur lequel l'application tourne

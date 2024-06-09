@@ -1,3 +1,5 @@
+const apiBaseUrl = process.env.API_BASE_URL
+
 document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
@@ -8,7 +10,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         try {
             console.log(`Tentative de connexion avec : email: '${email}', password: '${password}'`);
 
-            const response = await fetch('${apiBaseUrl}/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,7 +27,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 console.log('Token stocké:', data.token);  // Stocke le jeton dans localStorage
 
                 // Récupérer les informations de l'utilisateur
-                const userResponse = await fetch('${apiBaseUrl}/me/profile', {
+                const userResponse = await fetch('/api/me/profile', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${data.token}`
