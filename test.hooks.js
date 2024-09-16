@@ -17,7 +17,7 @@ export const mochaHooks = {
   async beforeAll() {
     try {
       // Exécute `sqitch deploy` pour appliquer les migrations
-      await execPromise('sqitch deploy db:pg:ojardin_test');
+      await execPromise('sqitch deploy db:pg://ojardin_test:ojardin_test@localhost/ojardin');
       console.log('Migrations appliquées avec succès');
 
       // Lance un serveur de test
