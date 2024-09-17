@@ -8,6 +8,7 @@ import virtualGardenRouter from './virtualGarden.router.js';
 import alertsRouter from './alerts.router.js';
 import profileRouter from './profile.router.js';
 import adminRouter from './admin.router.js';
+import contactRouter from './contact.router.js';
 
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.use('/me/virtual-garden', virtualGardenRouter);
 router.use('/me/alerts', alertsRouter);
 router.use('/me/profile', profileRouter);
 router.use('/admin', adminRouter);
+router.use('/contact', contactRouter);
 
 
 export default router;
